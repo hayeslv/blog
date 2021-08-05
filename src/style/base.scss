@@ -1,0 +1,168 @@
+// 主色调
+// $primarycolor: #FF6600;
+
+// 设计图宽度
+$design_width: 1920;
+// 设计图高度
+$design_height: 1080;
+
+body{
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+p, h1, h2, h3, h4, h5, h6{
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+// 高度
+@mixin height($height) {
+  height: ($height*100/$design_height)+vh;
+}
+@mixin minHeight($height) {
+  min-height: ($height*100/$design_height)+vh;
+}
+@mixin maxHeight($height) {
+  max-height: ($height*100/$design_height)+vh;
+}
+// 宽度
+@mixin width($width) {
+  width: ($width*100/$design_width)+vw;
+}
+// 根据高度制定的宽度（图片使用）
+@mixin widthFromHeight($width) {
+  width: ($width*100/$design_height)+vh;
+}
+@mixin minWidth($width) {
+  min-width: ($width*100/$design_width)+vw;
+}
+@mixin maxWidth($width) {
+  max-width: ($width*100/$design_width)+vw;
+}
+
+
+// 行高
+@mixin lineHeight($height) {
+  line-height: ($height*100/$design_height)+vh;
+}
+
+
+// 外边距
+@mixin margin($param) {
+  margin: ($param*100/$design_height)+vh;
+}
+@mixin margin2($param1, $param2) {
+  margin: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw;
+}
+@mixin margin3($param1, $param2, $param3) {
+  margin: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw ($param3*100/$design_height)+vh;
+}
+@mixin margin4($param1, $param2, $param3, $param4) {
+  margin: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw ($param3*100/$design_height)+vh ($param4*100/$design_width)+vw;
+}
+@mixin marginTop($height) {
+  margin-top: ($height*100/$design_height)+vh;
+}
+@mixin marginBottom($height) {
+  margin-bottom: ($height*100/$design_height)+vh;
+}
+@mixin marginRight($width) {
+  margin-right: ($width*100/$design_width)+vw;
+}
+@mixin marginLeft($width) {
+  margin-left: ($width*100/$design_width)+vw;
+}
+
+// 内边距
+@mixin padding($param) {
+  padding: ($param*100/$design_height)+vh;
+}
+@mixin padding2($param1, $param2) {
+  padding: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw;
+}
+@mixin padding3($param1, $param2, $param3) {
+  padding: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw ($param3*100/$design_height)+vh;
+}
+@mixin padding4($param1, $param2, $param3, $param4) {
+  padding: ($param1*100/$design_height)+vh ($param2*100/$design_width)+vw ($param3*100/$design_height)+vh ($param4*100/$design_width)+vw;
+}
+@mixin paddingTop($height) {
+  padding-top: ($height*100/$design_height)+vh;
+}
+@mixin paddingBottom($height) {
+  padding-bottom: ($height*100/$design_height)+vh;
+}
+@mixin paddingRight($width) {
+  padding-right: ($width*100/$design_width)+vw;
+}
+@mixin paddingLeft($width) {
+  padding-left: ($width*100/$design_width)+vw;
+}
+
+// 字体大小
+@mixin fontSize($height) {
+  font-size:($height*100/$design_height)+vh;
+}
+
+// 弧度
+@mixin borderRaduis($height) {
+  border-radius:($height*100/$design_height)+vh;
+}
+@mixin borderRaduis4($param1, $param2, $param3, $param4) {
+  border-radius:($param1*100/$design_height)+vh ($param2*100/$design_height)+vh ($param3*100/$design_height)+vh ($param4*100/$design_height)+vh;
+}
+
+// 距离
+@mixin top($height) {
+  top:($height*100/$design_height)+vh;
+}
+@mixin bottom($height) {
+  bottom:($height*100/$design_height)+vh;
+}
+@mixin left($width) {
+  left:($width*100/$design_width)+vw;
+}
+@mixin right($width) {
+  right:($width*100/$design_width)+vw;
+}
+
+// 移动自身
+@mixin translate($width, $height) {
+  transform: translate(($width*100/$design_width)+vw , ($height*100/$design_height)+vh);
+}
+@mixin translateY($height) {
+  transform: translateY(($height*100/$design_height)+vh);
+}
+@mixin translateX($width) {
+  transform: translateX(($width*100/$design_width)+vw);
+}
+
+// 边框
+@mixin border($height, $type, $color) {
+  border: ($height*100/$design_height)+vh $type $color;
+}
+@mixin borderTop($height, $type, $color) {
+  border-top: ($height*100/$design_height)+vh $type $color;
+}
+@mixin borderBottom($height, $type, $color) {
+  border-bottom: ($height*100/$design_height)+vh $type $color;
+}
+@mixin borderRight($width, $type, $color) {
+  border-right: ($width*100/$design_width)+vw $type $color;
+}
+@mixin borderLeft($width, $type, $color) {
+  border-left: ($width*100/$design_width)+vw $type $color;
+}
+
+@mixin boxShadow($param1, $param2, $param3, $param4, $color) {
+  box-shadow: ($param1*100/$design_height)+vh ($param2*100/$design_height)+vh ($param3*100/$design_height)+vh ($param4*100/$design_height)+vh $color;
+}
+@mixin boxShadowInset($param1, $param2, $param3, $param4, $color) {
+  box-shadow: ($param1*100/$design_height)+vh ($param2*100/$design_height)+vh ($param3*100/$design_height)+vh ($param4*100/$design_height)+vh $color inset;
+}
+
