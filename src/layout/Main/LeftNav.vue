@@ -11,6 +11,7 @@
 
 <script>
 import { headerNav } from '@enum/nav.js';
+import { commonRouteList } from '@/router';
 export default {
   data() {
     return {
@@ -30,9 +31,9 @@ export default {
       if (this.navList.length <= 0) return;
 
       // 左侧导航默认选中项
-      // this.defaultActive = this.navList[0].index;
-      // 路由跳转至默认选中项
-      // this.$router.push(this.navList[0].index);
+      let path = this.$route.path;
+      if (path === '/') path = commonRouteList[0].redirect || '/';
+      this.defaultActive = path;
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

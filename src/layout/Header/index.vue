@@ -52,7 +52,7 @@ export default {
         // 初始化下方导航和路由显示内容
         this.handleSelect(headerNav[i].index.toString());
       }
-    }, 100);
+    }, 200);
   },
   methods: {
     handleSelect(key, keyPath) {
