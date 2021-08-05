@@ -30,9 +30,9 @@ export default {
       if (this.navList.length <= 0) return;
 
       // 左侧导航默认选中项
-      this.defaultActive = this.navList[0].index;
+      // this.defaultActive = this.navList[0].index;
       // 路由跳转至默认选中项
-      this.$router.push(this.navList[0].index);
+      // this.$router.push(this.navList[0].index);
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);

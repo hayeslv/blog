@@ -1,5 +1,7 @@
 <template>
-  <div>规范</div>
+  <div>
+    <h2>文字</h2>
+  </div>
 </template>
 
 <script>

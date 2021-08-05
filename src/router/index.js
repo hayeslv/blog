@@ -60,6 +60,14 @@ const standardTypeRouteList = [
   }
 ];
 
+// 通用路由
+export const commonRouteList = [
+  {
+    path: '*',
+    redirect: '/chart/column'
+  }
+];
+
 export const routes = [
   ...chartTypeRouteList,
   ...standardTypeRouteList,
@@ -67,10 +75,7 @@ export const routes = [
     path: '/baidu-map',
     component: () => import('@view/Map/Baidu/index.vue')
   },
-  {
-    path: '*',
-    redirect: '/chart/column'
-  }
+  ...commonRouteList
 ];
 
 const router = new VueRouter({

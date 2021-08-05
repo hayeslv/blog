@@ -30,6 +30,7 @@
 
 <script>
 import { headerNav } from '@enum/nav.js';
+import { commonRouteList } from '@/router';
 export default {
   data() {
     return {
@@ -39,9 +40,19 @@ export default {
   },
   mounted() {
     // 初始化选中第一项
-    this.$nextTick(() => {
-      headerNav && headerNav[0] && this.handleSelect(headerNav[0].index);
-    });
+    setTimeout(() => {
+      let { path } = this.$route;
+      if (path === '/') path = commonRouteList[0].redirect || '/';
+      for (let i = 0; i < headerNav.length; i++) {
+        const navList = headerNav[i].navList || [];
+        const list = navList.filter(item => item.index === path);
+        if (list.length === 0) continue;
+        // 初始化头部高亮
+        list[0] && (this.activeIndex = headerNav[i].index.toString());
+        // 初始化下方导航和路由显示内容
+        this.handleSelect(headerNav[i].index.toString());
+      }
+    }, 100);
   },
   methods: {
     handleSelect(key, keyPath) {
