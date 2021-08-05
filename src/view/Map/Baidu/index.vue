@@ -54,7 +54,6 @@ export default {
       const BMap = window.BMap;
       this.BMap = BMap;
       this.BMapLib = window.BMapLib;
-      console.log(this.BMapLib);
       const map = (this.map = new BMap.Map('map', {
         enableMapClick: false // 禁用默认的弹窗
       }));

@@ -35,7 +35,6 @@ export default {
     //   const toScreenHeightRate = screenHeight / height; // 转成屏幕分辨率的高
     //   width = width * toScreenHeightRate;
     //   height = height * toScreenHeightRate;
-    //   console.log(rate);
     //   style += ` transform: scale(${rate}, ${rate}); overflow-y: hidden;  overflow-x: scoll;`;
     // }
     // style += `transform-origin: left top; width: ${width}px; height: ${height}px;`;

@@ -30,8 +30,6 @@ export const scaleRate = () => {
   const scaleStr = window.document.body.style.transform;
   const reg = /scale\((.*),(.*)\)/;
   reg.test(scaleStr);
-  console.log(RegExp.$1);
-  console.log(RegExp.$2);
 };
 
 // 获取当前窗口可视区的比例

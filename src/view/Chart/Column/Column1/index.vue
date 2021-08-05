@@ -41,7 +41,6 @@ export default {
   methods: {
     // 切换tab
     selectorChange(index) {
-      console.log(index);
     },
     initData() {
       this.getEchartData();

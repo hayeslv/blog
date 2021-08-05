@@ -54,12 +54,12 @@ export default {
 .global-selector{
   display: flex;
   align-items: center;
-  @include height(28);
+  height: 28px;
   :first-of-type{
-    @include borderRaduis4(6,0,0,6);
+    border-radius: 6 0 0 6;
   }
   :last-of-type{
-    @include borderRaduis4(0,6,6,0);
+    border-radius: 0 6 6 0;
   }
 }
 .global-select{
@@ -67,8 +67,8 @@ export default {
   background-color: #00385a;
   .inner{
     position: relative;
-    @include height(28);
-    @include lineHeight(28);
+    height: 28px;
+    line-height: 28px;
     background-color: rgba(0,23,65,0.8);
     box-sizing: border-box;
     display: flex;
@@ -83,20 +83,20 @@ export default {
       transition-duration: 0.3s;
     }
     span{
-      @include fontSize(12);
+      font-size: 12px;
       width: 100%;
       height: 100%;
       box-sizing: border-box;
-      @include height(28);
-      @include lineHeight(28);
-      @include padding2(0, 18);
+      height: 28px;
+      line-height: 28px;
+      padding: 0 18px;;
       background: rgba(0,23,65,0.8);
       color: rgba(255,255,255,0.8);
       cursor: pointer;
       transition-duration: 0.3s;
     }
     span:hover{
-      @include boxShadowInset(0, 0, 8, 0, rgba(251,139,21,0.5));
+      box-shadow: 0, 0, 8, 0, rgba(251,139,21,0.5) inset;
     }
   }
 }
@@ -105,7 +105,7 @@ export default {
   .inner{
     span{
       color: #FDAD43;
-      @include boxShadowInset(0, 0, 8, 0, rgba(251,139,21,0.6));
+      box-shadow: 0, 0, 8, 0, rgba(251,139,21,0.6) inset;
     }
   }
 }

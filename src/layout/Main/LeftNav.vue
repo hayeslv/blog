@@ -23,20 +23,24 @@ export default {
     this.$bus.$on('HeadNavSelect', this.headNavSelect);
   },
   methods: {
-    headNavSelect(key) {
+    headNavSelect(key, setFirstNav) {
       const navItem = headerNav.filter(item => item.index.toString() === key.toString())[0];
       if (!navItem) return;
       // 初始化左侧导航
       this.navList = navItem.navList || [];
       if (this.navList.length <= 0) return;
 
-      // 左侧导航默认选中项
       let path = this.$route.path;
       if (path === '/') path = commonRouteList[0].redirect || '/';
       this.defaultActive = path;
+      if (setFirstNav) { // 是否设置第一项为当前路由
+        this.defaultActive = this.navList[0].index; // 左侧导航默认选中项
+        this.$router.push(this.navList[0].index);
+      } else {
+        this.defaultActive = path;
+      }
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
     }
   }
 };

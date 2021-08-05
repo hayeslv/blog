@@ -8,7 +8,6 @@ const getBaiduPointData = require('./jsonData/monitorPoint');
 
 const getBaiduMapApi = (mapApi, mapRouter) => {
   mapRouter.get('/baidu/getBaiduPoint', mapApi, ctx => {
-    console.log(getBaiduPointData);
     ctx.body = {
       code: 200,
       data: getBaiduPointData

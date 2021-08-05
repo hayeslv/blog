@@ -56,7 +56,10 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      this.$bus.$emit('HeadNavSelect', key);
+      // 如果keyPath有值，说明是组件的回调函数，而不是主动调用的
+      let setFirstNav = null;
+      if (keyPath) setFirstNav = true;
+      this.$bus.$emit('HeadNavSelect', key, setFirstNav);
     }
   }
 };

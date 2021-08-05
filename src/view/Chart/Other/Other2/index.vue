@@ -34,7 +34,6 @@ export default {
     this.initData();
     // 添加点击事件
     this.myChart.on('click', function(params) {
-      console.log(params);
     });
   },
   beforeDestroy() {
