@@ -5,6 +5,8 @@
  */
 
 const path = require('path');
+const webpack = require('webpack');
+
 const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
@@ -49,5 +51,10 @@ module.exports = {
   //   };
   // },
   // productionGzip: true,
-  productionSourceMap: false
+  productionSourceMap: false,
+  configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' })
+    ]
+  }
 };

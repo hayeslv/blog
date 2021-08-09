@@ -70,6 +70,15 @@ const componentTypeRouteList = [
       title: '文件上传',
       icon: 'el-icon-upload'
     }
+  },
+  {
+    path: '/component/css-effect',
+    component: () => import('@view/Component/CSSEffect'),
+    meta: {
+      type: 'component',
+      title: 'CSS效果',
+      icon: 'el-icon-lollipop'
+    }
   }
 ];
 
