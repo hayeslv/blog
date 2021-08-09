@@ -4,7 +4,7 @@
  * @Description: Description
 -->
 <template>
-  <div class="left-one">
+  <div class="view-content">
     <Column1 class="column"></Column1>
     <Column2 class="column"></Column2>
     <Column3 class="column"></Column3>
@@ -21,10 +21,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left-one{
-  position: absolute;
-  top: 110px;
-  left: 70px;
+.view-content{
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .column{
   margin-bottom: 20px;

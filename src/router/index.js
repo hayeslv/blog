@@ -60,6 +60,19 @@ const standardTypeRouteList = [
   }
 ];
 
+// 组件路由
+const componentTypeRouteList = [
+  {
+    path: '/component/upload',
+    component: () => import('@view/Component/Upload'),
+    meta: {
+      type: 'component',
+      title: '文件上传',
+      icon: 'el-icon-upload'
+    }
+  }
+];
+
 // 通用路由
 export const commonRouteList = [
   {
@@ -71,6 +84,7 @@ export const commonRouteList = [
 export const routes = [
   ...chartTypeRouteList,
   ...standardTypeRouteList,
+  ...componentTypeRouteList,
   {
     path: '/baidu-map',
     component: () => import('@view/Map/Baidu/index.vue')

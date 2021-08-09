@@ -26,6 +26,17 @@ export const headerNav = (function() {
     },
     {
       index: '3',
+      title: '组件',
+      navList: routeList.filter(item => item.meta && item.meta.type === 'component').map(item => {
+        return {
+          index: item.path,
+          title: item.meta && item.meta.title,
+          icon: item.meta && item.meta.icon
+        };
+      })
+    },
+    {
+      index: '4',
       title: '规范',
       navList: routeList.filter(item => item.meta && item.meta.type === 'standard').map(item => {
         return {

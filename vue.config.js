@@ -17,6 +17,7 @@ module.exports = {
       .set('@comp', resolve('src/components'))
       .set('@layout', resolve('src/layout'))
       .set('@enum', resolve('src/common/enum'))
+      .set('@config', resolve('src/common/config'))
       .set('@image', resolve('src/assets/image'));
   },
 
@@ -26,6 +27,10 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:3000'
+      },
+      // 楚伟的机器
+      '/pre': {
+        target: 'http://139.159.156.184:9001'
       }
     }
   },

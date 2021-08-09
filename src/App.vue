@@ -28,16 +28,12 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   background-color: #fff;
   color: #000;
   user-select:none;
-}
-.web-screen{
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -46,7 +42,7 @@ export default {
   height: 64px;
 }
 .app-main{
-  flex: 1;
+  height: calc(100% - 64px);
 }
 
 </style>

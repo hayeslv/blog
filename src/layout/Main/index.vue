@@ -24,7 +24,12 @@ export default {
   display: flex;
   .router-view{
     flex: 1;
+    height: 100%;
     position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 20px;
   }
 }
 </style>

@@ -65,7 +65,7 @@ export default {
 
 <style lang="scss" scoped>
 .column{
-  margin-top: 20px;
+  color: #fff;
 }
 .canvas{
   width: 100%;
