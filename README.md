@@ -4,6 +4,13 @@
 
 
 
+sass版本
+
+```bash
+# node版本 v14
+npm i sass-loader@10.1.1 node-sass@4.14.1 -D
+```
+
 
 
 
