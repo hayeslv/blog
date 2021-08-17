@@ -4,12 +4,21 @@
  * @Description: Description
 -->
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view></router-view>
+  <Header class="app-header-nav"></Header>
+  <Main class="app-main"></Main>
 </template>
+
+<script>
+import Main from '@/layout/Main';
+import Header from '@/layout/Header';
+export default{
+  name: 'App',
+  components: { Main, Header },
+  setup() {
+    
+  },
+}
+</script>
 
 <style>
 html, body{
@@ -30,5 +39,13 @@ html, body{
   /* 上下结构 */
   display: flex;
   flex-direction: column;
+}
+
+.app-header-nav{
+  width: 100%;
+  height: 64px;
+}
+.app-main{
+  height: calc(100% - 64px);
 }
 </style>

@@ -12,10 +12,14 @@ module.exports = {
 
   chainWebpack: (config) => {
     config.resolve.alias
-      .set('@view', resolve('src/view'))
+      .set('@views', resolve('src/views'))
+      .set('@api', resolve('src/common/request/api'))
+      .set('@config', resolve('src/common/config'))
       .set('@comp', resolve('src/components'))
       .set('@layout', resolve('src/layout'))
-      .set('@image', resolve('src/assets/image'));
+      .set('@enum', resolve('src/common/enum'))
+      .set('@image', resolve('src/assets/image'))
+      .set('@bus', resolve('src/utils/bus'));
   },
 
   //是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建。
@@ -23,7 +27,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000'
+        target: 'http://localhost:7001'
       },
       // 楚伟的机器
       '/pre': {
