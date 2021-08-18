@@ -24,6 +24,9 @@
           </el-submenu>
         </template>
       </template>
+      <div class="user">
+        <el-button @click="resetData">重置数据</el-button>
+      </div>
     </el-menu>
   </div>
 </template>
@@ -32,7 +35,15 @@
 import { headerNav } from '@enum/nav.js';
 import { commonRouteList } from '@/router';
 import bus from '@bus'
+import { CommonApi } from '@api'
 export default {
+  setup() {
+    const resetData = async () => {
+      const res = await CommonApi.resetDB()
+      console.log(res);
+    }
+    return { resetData }
+  },
   data() {
     return {
       activeIndex: '1',
@@ -73,6 +84,7 @@ export default {
 .nav-menu-header{
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   padding-right: 30px;
   :hover{
     background-color: #fff !important;

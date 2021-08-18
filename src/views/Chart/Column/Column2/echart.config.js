@@ -21,8 +21,11 @@ const getDataList = dataList => {
   let yAxisDataList = [];
   let valueList = [];
   if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
-  yAxisDataList = dataList.map(item => item.value);
-  valueList = dataList;
+  yAxisDataList = dataList.map(item => item.value1);
+  valueList = dataList.map(item => {
+    return { name: item.name, vlaue: item.value1 }
+  });
+  console.log(valueList);
   return { yAxisDataList, valueList };
 };
 

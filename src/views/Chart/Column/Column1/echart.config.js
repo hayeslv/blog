@@ -16,7 +16,7 @@ const getDataList = dataList => {
   let valueList = [];
   if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
   yAxisDataList = dataList.map(item => item.name);
-  valueList = dataList.map(item => item.value);
+  valueList = dataList.map(item => item.value1);
   return { yAxisDataList, valueList };
 };
 

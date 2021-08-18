@@ -5,6 +5,13 @@
  */
 import http from './index.js';
 
+const CommonApi = {
+  // 重置数据
+  resetDB: params => {
+    return http.get('/dbdata/mockdata', params);
+  }
+}
+
 // 柱状图API
 const ColumnApi = {
   // 柱状图1
@@ -70,6 +77,7 @@ const BaiduApi = {
 };
 
 export {
+  CommonApi,
   ColumnApi,
   LineApi,
   PieApi,
