@@ -2,3 +2,18 @@ h1, h2, h3, h4, h5, h6, p{
   padding: 0;
   margin: 0;
 }
+
+$dy-color-primary: #409eff; // 主色调
+$dy-text-color-regular: #606266; // 平常文字色
+$dy-text-color-placeholder: #c0c4cc; // 文字placeholder色
+
+[class*=" dy-icon-"], [class^=dy-icon-] {
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: baseline;
+  display: inline-block;
+}
+

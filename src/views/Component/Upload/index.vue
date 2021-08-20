@@ -1,3 +1,8 @@
+<!--
+ * @Author: Lvhz
+ * @Date: 2021-08-17 15:54:02
+ * @Description: 文件上传
+-->
 <template>
   <div>
     <div class="block">
@@ -6,7 +11,7 @@
     </div>
     <div class="liner"></div>
     <div class="block">
-      <h2>Element-UI 文件缩略图（设置只接受图片、自动上传）</h2>
+      <h2>Element-UI 图片墙（自动上传）</h2>
       <FileUploadEluiImage></FileUploadEluiImage>
     </div>
   </div>

@@ -69,6 +69,15 @@ const componentTypeRouteList = [
     }
   },
   {
+    path: '/component/upload-big-file',
+    component: () => import('@views/Component/UploadBigFile'),
+    meta: {
+      type: 'component',
+      title: '大文件上传',
+      icon: 'el-icon-upload'
+    }
+  },
+  {
     path: '/component/css-effect',
     component: () => import('@views/Component/CSSEffect'),
     meta: {

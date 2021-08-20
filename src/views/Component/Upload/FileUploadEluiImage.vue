@@ -5,45 +5,31 @@
 --> 
 <template>
   <div>
-    <!-- <el-upload 
-      ref="upload" 
-      :action="action" 
-      :headers="headers" 
-      :limit="3" 
-      list-type="picture-card" 
-      accept="image/*" 
-      :before-upload="onBeforeUpload" 
-      :on-success="SuccessHandler">
-      <template v-slot:default>
-        <i class="el-icon-plus"></i>  
-      <template>
-      <div v-slot:file slot-scope="{file}" class="img-wrap">
-        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-        <span class="el-upload-list__item-actions">
-          <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-            <i class="el-icon-zoom-in"></i>
-          </span>
-          <span class="el-upload-list__item-delete" @click="handleRemove(file)">
-            <i class="el-icon-delete"></i>
-          </span>
-        </span>
-      </div>
-    </el-upload> -->
-    <!-- <div style="margin-top: 10px;">
-      <el-button type="primary" @click="uploadClickHandler">上传（可删除）</el-button>
-    </div> -->
+    <el-upload
+      ref="upload"
+      :action="action"
+      :headers="headers"
+      list-type="picture-card"
+      :on-success="successCallback"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="handleRemove">
+      <i class="el-icon-plus"></i>
+    </el-upload>
     <div style="margin-top: 10px;">
       <el-button type="primary" @click="submitHandler">表单保存（获取图片列表）</el-button>
       <el-button type="primary" @click="clearAllHandler">清除全部图片</el-button>
     </div>
-    <el-dialog v-model:visible="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
+    <el-dialog v-model="dialogVisible">
+      <div class="preview-wrap">
+        <img class="preview-img" :src="dialogImageUrl" alt="">
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { Authorization } from '@config';
+import { toRaw } from '@vue/reactivity'
 export default {
   data() {
     return {
@@ -64,6 +50,8 @@ export default {
     },
     // dialog预览
     handlePictureCardPreview(file) {
+      file = toRaw(file)
+      console.log(file);
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
@@ -76,17 +64,22 @@ export default {
     //   this.$refs.upload.submit();
     // },
     // 上传成功回调
-    SuccessHandler(res, file, fileList) {
+    successCallback(res, file, fileList) {
       if (res.code !== 200) { // 上传失败
         this.$message({ type: 'error', message: res.msg || res.message || '上传失败' });
         this.$refs.upload.handleRemove(file); // 清除上传失败的文件
         return;
       }
+      console.log(res);
+      console.log(file);
+      // 传回的对象是Proxy，可以通过vue中的toRaw（）方法获取原始对象
+      console.log(toRaw(fileList));
+      console.log(JSON.parse(JSON.stringify(fileList))); // 或者通过json序列化的方式
       this.fileList = fileList;
     },
     // 提交
     submitHandler() {
-      console.log(this.fileList);
+      console.log(toRaw(this.fileList));
     },
     // 清除全部图片
     clearAllHandler() {
@@ -97,9 +90,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 是否让图片铺满（铺满则打开，显示图片正常比例则注释掉这里）
-.img-wrap{
-  height: 100%;
-  width: 100%;
+.preview-wrap{
+  display: flex;
+  justify-content: center;
+}
+.preview-img{
+  height: 300px;
+  width: 300px;
+}
+// 去掉删除提示语
+/deep/.el-upload-list__item.is-success.focusing .el-icon-close-tip{
+  display: none !important;
 }
 </style>
