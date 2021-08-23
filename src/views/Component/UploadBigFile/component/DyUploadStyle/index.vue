@@ -53,12 +53,14 @@ const props = defineProps({
     border-color: $dy-color-primary;
   }
   .dy-icon-upload{
+    pointer-events: none;
     font-size: 50px;
     color: $dy-text-color-placeholder;
     margin: 40px 0 16px;
     line-height: 50px;
   }
   .dy-upload__text{
+    pointer-events: none;
     font-size: 14px;
     text-align: center;
     color: $dy-text-color-regular;

@@ -16,7 +16,6 @@ const httpClient = new HttpClient(config);
 const instance = httpClient.httpInstance;
 instance.defaults.headers.post['Content-Type'] = 'application/json';
 
-// 请求拦截器 管理token
 instance.interceptors.request.use(
   config => {
     config.headers['accessToken'] = localStorage.getItem('accessToken');
@@ -30,7 +29,6 @@ instance.interceptors.request.use(
 // 响应拦截
 instance.interceptors.response.use(
   response => {
-    // header config在这里处理就可以了，应用层只需要数据
     const { data } = response;
     if (parseInt(data.code) !== responseCode.SUCCESS) {
       console.error(response.msg || '获取源头失败');
@@ -40,7 +38,7 @@ instance.interceptors.response.use(
   },
   error => {
     console.error(error);
-    return {};
+    return error.response.data;
   }
 );
 
