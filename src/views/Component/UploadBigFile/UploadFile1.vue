@@ -1,7 +1,7 @@
 <!--
  * @Author: Lvhz
  * @Date: 2021-08-20 09:56:10
- * @Description: Description
+ * @Description: 普通上传（加拖拽功能）
 -->
 <template>
   <div>
@@ -13,6 +13,7 @@
       @drop="handlerDrop"
     ></DyUploadStyle>
     <input ref="fileInput" style="display: none;" type="file" name="file" @change="handlerFileChange">
+    <el-progress style="margin-top: 20px; width: 500px;" :stroke-width="20" :text-inside="true" :percentage="uploadProgress" />
     <el-button type="primary" style="margin-top: 20px;" @click="handlerSubmit">点击上传</el-button>
   </div>
 </template>
@@ -27,6 +28,7 @@ import { ref } from 'vue'
 const fileInput = ref(null)
 const fileRef = ref(null)
 const imgSrc = ref(null)
+const uploadProgress = ref(0)
 
 const handlerClick = () => {
   fileInput.value.click()
@@ -47,7 +49,11 @@ const handlerSubmit = async () => {
     name: 'file',
     file: fileRef.value
   }
-  const res = await CommonApi.uploadfile(params)
+  const res = await CommonApi.uploadfile(params, {
+    onUploadProgress: (progress) => {
+      uploadProgress.value = Number(((progress.loaded / progress.total) * 100).toFixed(2))
+    }
+  })
   console.log(res);
   if(res.code === 200) {
     ElMessage.success('上传成功')
@@ -69,7 +75,6 @@ const handlerDragleave = e => {
 // 放下
 const handlerDrop = async e => {
   e.preventDefault()
-
   const fileList = e.dataTransfer.files
   e.target.style.borderColor = '#eee'
   const file = fileList[0];
@@ -78,7 +83,6 @@ const handlerDrop = async e => {
   // 图片转base64
   const base64Src = await file2Base64(file)
   imgSrc.value = base64Src
-  
 }
 </script>
 

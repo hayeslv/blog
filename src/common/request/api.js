@@ -11,9 +11,9 @@ const CommonApi = {
     return http.get('/dbdata/mockdata', params);
   },
   // 文件上传（独立的文件）
-  uploadfile: params => {
+  uploadfile: (params, config = {}) => {
     // return http.postFormData('/uploadfile', params);
-    return http.postFile('/uploadfile', params);
+    return http.postFile('/uploadfile', params, config);
   }
 }
 

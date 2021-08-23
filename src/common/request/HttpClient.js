@@ -66,7 +66,7 @@ export default class HttpClient {
     });
   }
   // 针对文件图片等二进制数据，需要使用到FormData入参
-  postFile(url, params = {}) {
+  postFile(url, params = {}, config = {}) {
     let formData = new FormData()
     for(let key in params) {
       if(Object.prototype.hasOwnProperty.call(params, key)) {
@@ -86,7 +86,8 @@ export default class HttpClient {
         function(){
           return formData;
         }
-      ]
+      ],
+      ...config
     });
   }
   put(url, params = {}) {
