@@ -6,27 +6,15 @@
 <template>
   <div class="dy-upload">
     <!-- 拖拽层 -->
-    <div class="dy-upload-dragger" v-if="!props.src">
+    <div class="dy-upload-dragger">
       <i class="dy-icon-upload iconfont icon-upload-cloud" alt=""></i>
       <div class="dy-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-    </div>
-    <div class="dy-upload__image-wrap" v-else>
-      <img class="dy-upload__show-image" :src="props.src" alt="">
     </div>
     <!-- <input class="dy-upload__input" type="file"> -->
   </div>
 </template>
 
-<script setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  src: {
-    type: String,
-    default: ''
-  }
-})
-
+<script>
 </script>
 
 <style lang="scss" scoped>
@@ -66,14 +54,6 @@ const props = defineProps({
       font-style: normal;
       color: $dy-color-primary;
     }
-  }
-}
-.dy-upload__image-wrap{
-  width: 100%;
-  height: 100%;
-  .dy-upload__show-image{
-    width: 100%;
-    height: 100%;
   }
 }
 </style>

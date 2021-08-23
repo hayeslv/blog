@@ -9,6 +9,11 @@ const CommonApi = {
   // 重置数据
   resetDB: params => {
     return http.get('/dbdata/mockdata', params);
+  },
+  // 文件上传（独立的文件）
+  uploadfile: params => {
+    // return http.postFormData('/uploadfile', params);
+    return http.postFile('/uploadfile', params);
   }
 }
 

@@ -3,12 +3,11 @@
  * @Date: 2020-05-07 09:23:14
  * @Descripttion: 业务层面处理请求/响应
  */
+// import qs from 'qs'
 import HttpClient from './HttpClient.js';
 import { responseCode } from './constant.js';
 
 const config = {
-  // baseURL: process.env.VUE_APP_API_URL || '/gzcm-api',
-  //baseURL:'https://v.wanli.red:9017/municipal/one-page-service',
   baseURL: process.env.VUE_APP_API_URL,
   timeout: 60000
 };
