@@ -1,7 +1,7 @@
 /*
  * @Author: Lvhz
  * @Date: 2021-08-24 15:42:29
- * @Description: Description
+ * @Description: 计算文件chunk
  */
 self.onmessage = (e) => {
   // 接受主线程传递的数据

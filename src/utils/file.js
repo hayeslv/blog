@@ -208,3 +208,72 @@ export const calculateHashSample = file => {
     }
   })
 }
+
+// web-worker和idle同时使用
+export const calculateHashDouble = async chunks => {
+  
+  if(!Array.isArray(chunks)) {
+    console.error('error form calculateHashDouble：参数错误（请传入数组）')
+    return
+  }
+  const sparkMD5 = require('spark-md5')
+
+  const half = Math.floor(chunks.length / 2)
+  const preChunks = chunks.slice(0, half)
+  const nextChunks = chunks.slice(half, chunks.length)
+
+  const promiseAll = []
+  promiseAll.push(calculateSectionIdle(preChunks))
+  promiseAll.push(calculateSectionWorker(nextChunks))
+  const res = await Promise.all(promiseAll)
+  const spark = new sparkMD5.ArrayBuffer()
+  const list = [...res[0], ...res[1]]
+  list.forEach(item => spark.append(item))
+  return spark.end()
+
+  function calculateSectionIdle (chunks, cb = () => {}) {
+    const appendResultList = []
+    return new Promise((resolve) => {
+      let count = 0
+      // 将每个切片添加进spark
+      const appendToSpark = (file) => {
+        return new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.readAsArrayBuffer(file)
+          reader.onload = (e) => {
+            resolve(e.target.result)
+          }
+        })
+      }
+      const workLoop = async (deadline) => {
+        while (count < chunks.length && deadline.timeRemaining() > 1) {
+          // 空闲时间，且有任务
+          const appendResult = await appendToSpark(chunks[count].file)
+          appendResultList.push(appendResult)
+          count++
+          if (count < chunks.length) {
+            cb({ progress: Number(((100 * count) / chunks.length).toFixed(2)) })
+          } else {
+            cb({ progress: 100 })
+            resolve(appendResultList)
+          }
+        }
+        window.requestIdleCallback(workLoop)
+      }
+      window.requestIdleCallback(workLoop)
+    })
+  }
+  function calculateSectionWorker (chunks, cb = () => {}) {
+    return new Promise((resolve) => {
+      const worker = new Worker('/static/fileSection.js')
+      worker.postMessage({ chunks: chunks })
+      worker.onmessage = (e) => {
+        cb(e)
+        const { sectionList } = e.data
+        if (sectionList) {
+          resolve(sectionList)
+        }
+      }
+    })
+  }
+}

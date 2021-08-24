@@ -5,6 +5,7 @@
  *              1、web-worker计算md5
  *              2、利用空闲时间（idle，react中的原理）计算md5
  *              3、抽样hash
+ *              4、一半使用web-worker，一半使用idle
 -->
 <template>
   <div>
@@ -14,12 +15,13 @@
 
     <el-button type="primary" style="margin-top: 20px;" @click="handlerWebworker">web-worker</el-button>
     <el-button type="primary" style="margin-top: 20px;" @click="handlerIdle">idle</el-button>
+    <el-button type="primary" style="margin-top: 20px;" @click="handlerDouble">double（没必要）</el-button>
     <el-button type="primary" style="margin-top: 20px;" @click="handlerSample">抽样hash</el-button>
   </div>
 </template>
 
 <script setup>
-import { file2Base64, createFileChunk, calculateHashWorker, calculateHashIdle, calculateHashSample } from '@/utils/file'
+import { file2Base64, createFileChunk, calculateHashWorker, calculateHashIdle, calculateHashSample, calculateHashDouble } from '@/utils/file'
 // import { CommonApi } from '@api'
 // import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
@@ -74,6 +76,17 @@ const handlerSample = async () => {
   console.time('sample')
   const hash = await calculateHashSample(fileRef.value)
   console.timeEnd('sample')
+  console.log(hash);
+}
+
+// 同时使用web-worker和idle（没必要）
+const handlerDouble = async () => {
+  // 会快一些，但是快的不明显，并且进度条不好做（读文件和append hash分开了。实际上append hash才是比较花时间的）
+  if(!fileRef.value) return
+  const chunks = await createFileChunk(fileRef.value, CHUNK_SIZE)
+  console.time('double')
+  const hash = await calculateHashDouble(chunks)
+  console.timeEnd('double')
   console.log(hash);
 }
 
