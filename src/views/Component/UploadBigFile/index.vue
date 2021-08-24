@@ -15,6 +15,11 @@
       <UploadFile2></UploadFile2>
     </div>
     <div class="liner"></div>
+    <div class="block">
+      <h2>3、计算md5（大文件上传前提）</h2>
+      <UploadFile3></UploadFile3>
+    </div>
+    <div class="liner"></div>
   </div>
 </template>
 
@@ -22,6 +27,7 @@
 import './assets/font.css'
 import UploadFile1 from './UploadFile1'
 import UploadFile2 from './UploadFile2'
+import UploadFile3 from './UploadFile3'
 </script>
 
 <style lang="scss" scoped>

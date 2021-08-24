@@ -24,7 +24,7 @@ export const isImage = async (file) => {
   }
   return false
 
-  
+
   // 二进制转字符串
   function blobToString(blob) {
     return new Promise((resolve) => {
@@ -64,4 +64,147 @@ export const isImage = async (file) => {
     const isPng = (res === '89 50 4E 47 0D 0A 1A 0A')
     return isPng
   }
+}
+
+// 文件切片：计算文件chunk（默认500KB）
+// 使用web-worker计算chunk：在public下写fileChunk.js文件
+// export const createFileChunk3 = (file, size = 500 * 1024) => {
+//   return new Promise((resolve) => {
+//     const worker = new Worker('/static/fileChunk.js')
+//     worker.postMessage({ file, size })
+//     worker.onmessage = (e) => {
+//       const { chunks } = e.data
+//       if (chunks) {
+//         resolve(chunks)
+//       }
+//     }
+//   })
+// }
+// 文件切片：计算文件chunk（默认500KB）
+//! 利用空闲时间计算切片
+// export const createFileChunk2 = (file, size = 500 * 1024) => {
+//   return new Promise((resolve, reject) => {
+//     if(!(file instanceof File)) {
+//       console.error('error form createFileChunk：参数错误（不是文件格式）')
+//       reject('error form createFileChunk：参数错误（不是文件格式）')
+//     }
+//     const chunks = []
+//     let cur = 0
+  
+//     const workLoop = deadline => {
+//       while (cur < file.size && deadline.timeRemaining() > 1) {
+//         // 空闲时间，且有fileSize还没计算完成
+//         chunks.push({ index: cur, file: file.slice(cur, cur + size) })
+//         cur += size
+//         if(cur >= file.size) {
+//           resolve(chunks)
+//         }
+//       }
+//       window.requestIdleCallback(workLoop)
+//     }
+//     window.requestIdleCallback(workLoop)
+//   })
+// }
+// !原先的方法
+export const createFileChunk = (file, size = 500 * 1024) => {
+  if(!(file instanceof File)) {
+    console.error('error form createFileChunk：参数错误（不是文件格式）')
+    return []
+  }
+  const chunks = []
+  let cur = 0
+  while (cur < file.size) {
+    chunks.push({ index: cur, file: file.slice(cur, cur + size) })
+    cur += size
+  }
+  return chunks
+}
+
+// 使用web-worker计算文件hash
+// 1、将spark-md5.min.js从node_modules复制到public/static目录下
+// 2、在public下写hash.js文件
+export const calculateHashWorker = (chunks, cb = () => {}) => {
+  return new Promise((resolve) => {
+    const worker = new Worker('/static/hash.js')
+    worker.postMessage({ chunks: chunks })
+    worker.onmessage = (e) => {
+      cb(e)
+      const { hash } = e.data
+      if (hash) {
+        resolve(hash)
+      }
+    }
+  })
+}
+
+// 使用空闲时间计算文件hash
+export const calculateHashIdle = (chunks, cb = () => {}) => {
+  const sparkMD5 = require('spark-md5')
+  return new Promise((resolve) => {
+    const spark = new sparkMD5.ArrayBuffer()
+    let count = 0
+    // 将每个切片添加进spark
+    const appendToSpark = (file) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.readAsArrayBuffer(file)
+        reader.onload = (e) => {
+          spark.append(e.target.result)
+          resolve()
+        }
+      })
+    }
+    const workLoop = async (deadline) => {
+      while (count < chunks.length && deadline.timeRemaining() > 1) {
+        // 空闲时间，且有任务
+        await appendToSpark(chunks[count].file)
+        count++
+        if (count < chunks.length) {
+          cb({ progress: Number(((100 * count) / chunks.length).toFixed(2)) })
+        } else {
+          cb({ progress: 100 })
+          resolve(spark.end())
+        }
+      }
+      window.requestIdleCallback(workLoop)
+    }
+    window.requestIdleCallback(workLoop)
+  })
+}
+
+// 抽样hash
+export const calculateHashSample = file => {
+  const sparkMD5 = require('spark-md5')
+  return new Promise((resolve, reject) => {
+    if(!(file instanceof File)) {
+      console.error('error form calculateHashSample：参数错误（不是文件格式）')
+      reject('error form calculateHashSample：参数错误（不是文件格式）')
+    }
+    const spark = new sparkMD5.ArrayBuffer()
+    const reader = new FileReader()
+
+    const size = file.size
+    const offset = 2 * 1024 * 1024 // 第一个区块（2M），最后一个区块，数据全要
+    const chunks = [file.slice(0, offset)] // 中间的，取前中后各两个字节
+
+    let cur = offset
+    while (cur < size) {
+      if (cur + offset >= size) { // 最后一个区块
+        chunks.push(file.slice(cur, cur + offset))
+      } else {
+        // 中间的区块
+        const mid = (cur + offset) / 2
+        const end = cur + offset
+        chunks.push(file.slice(cur, cur + 2))
+        chunks.push(file.slice(mid, mid + 2))
+        chunks.push(file.slice(end - 2, end))
+      }
+      cur += offset
+    }
+    reader.readAsArrayBuffer(new Blob(chunks))
+    reader.onload = (e) => {
+      spark.append(e.target.result)
+      resolve(spark.end())
+    }
+  })
 }
