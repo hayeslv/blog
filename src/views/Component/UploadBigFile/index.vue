@@ -10,12 +10,18 @@
       <UploadFile1></UploadFile1>
     </div>
     <div class="liner"></div>
+    <div class="block">
+      <h2>2、二进制确认文件格式（png、jpg、gif）</h2>
+      <UploadFile2></UploadFile2>
+    </div>
+    <div class="liner"></div>
   </div>
 </template>
 
 <script setup>
 import './assets/font.css'
 import UploadFile1 from './UploadFile1'
+import UploadFile2 from './UploadFile2'
 </script>
 
 <style lang="scss" scoped>
