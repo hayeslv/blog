@@ -22,8 +22,6 @@
 
 <script setup>
 import { file2Base64, createFileChunk, calculateHashWorker, calculateHashIdle, calculateHashSample, calculateHashDouble } from '@/utils/file'
-// import { CommonApi } from '@api'
-// import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
 
 const CHUNK_SIZE = 1 * 1024 * 1024 // 初始化切片大小为 1M

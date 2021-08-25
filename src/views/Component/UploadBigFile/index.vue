@@ -21,8 +21,13 @@
     </div>
     <div class="liner"></div>
     <div class="block">
-      <h2>4、切片上传</h2>
+      <h2>4、切片上传，文件合并</h2>
       <UploadFile4></UploadFile4>
+    </div>
+    <div class="liner"></div>
+    <div class="block">
+      <h2>5、断点续传</h2>
+      <UploadFile5></UploadFile5>
     </div>
     <div class="liner"></div>
   </div>
@@ -34,6 +39,7 @@ import UploadFile1 from './UploadFile1'
 import UploadFile2 from './UploadFile2'
 import UploadFile3 from './UploadFile3'
 import UploadFile4 from './UploadFile4'
+import UploadFile5 from './UploadFile5'
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <!--
  * @Author: Lvhz
  * @Date: 2021-08-20 09:56:10
- * @Description: 切片上传 + 文件合并，这里直接使用抽样hash（因为快）
+ * @Description: 断点续传
 -->
 <template>
   <div>
@@ -23,7 +23,7 @@
 <script setup>
 import { createFileChunk, calculateHashSample } from '@/utils/file'
 import { CommonApi } from '@api'
-// import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { ref, computed } from 'vue'
 
 const CHUNK_SIZE = 200 * 1024 // 初始化切片大小为 200kb
@@ -49,7 +49,21 @@ const handlerSubmit = async () => {
   if(!fileRef.value) return
 
   const hash = await calculateHashSample(fileRef.value)
-  const chunks = chunkList.value.map((chunk, index) => {
+
+  // 问一下后端，文件是否上传过，如果没有，是否有存在的切片
+  const res = await CommonApi.checkfile({
+    hash: hash,
+    ext: fileRef.value.name.split('.').pop()
+  })
+  const { uploaded, uploadedList } = res.data
+  console.log(uploadedList);
+
+  if (uploaded) {
+    return ElMessage.success('秒传成功')
+  }
+
+  // 分隔文件，切片
+  chunkList.value = chunkList.value.map((chunk, index) => {
     // 切片的名字，hash + index
     const name = hash + '-' + index
     return {
@@ -57,28 +71,35 @@ const handlerSubmit = async () => {
       name,
       index,
       chunk: chunk.file,
-      progress: 0
+      progress: uploadedList.includes(name) ? 100 : 0
     }
   })
+
   // 上传切片
-  await uploadChunks(chunks)
+  await uploadChunks(chunkList.value, uploadedList)
   // 切片传送完毕，发送合并切片请求
   await mergeRequest(fileRef.value, CHUNK_SIZE, hash)
 }
 // 上传切片
-const uploadChunks = async chunks => {
-  const requests = chunks.map((chunk) => {
+const uploadChunks = async (chunks, uploadedList = []) => {
+  const requests = chunks
+  .filter(chunk => !uploadedList.includes(chunk.name))
+  .map((chunk) => {
     return {
-      chunk: chunk.chunk,
-      hash: chunk.hash,
-      name: chunk.name
+      form: {
+        chunk: chunk.chunk,
+        hash: chunk.hash,
+        name: chunk.name
+      },
+      index: chunk.index
     }
-  }).map((params, index) => CommonApi.uploadfileChunk(params, {
+  }).map((params) => CommonApi.uploadfileChunk(params.form, {
     onUploadProgress: (progress) => {
       // 不是整体的进度条了，而是每个区块有自己的进度条，整体的进度条需要计算
-      chunkList.value[index].progress = Number(((progress.loaded / progress.total) * 100).toFixed(2))
+      chunkList.value[params.index].progress = Number(((progress.loaded / progress.total) * 100).toFixed(2))
     }
   }))
+  console.log(requests);
   await Promise.all(requests)
 }
 const mergeRequest = async (file, size, hash) => {

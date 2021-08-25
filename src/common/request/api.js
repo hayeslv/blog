@@ -22,6 +22,10 @@ const CommonApi = {
   mergefile: params => {
     return http.post('/mergefile', params);
   },
+  // 检查文件
+  checkfile: params => {
+    return http.post('/checkfile', params);
+  }
 }
 
 // 柱状图API
