@@ -12,9 +12,16 @@ const CommonApi = {
   },
   // 文件上传（独立的文件）
   uploadfile: (params, config = {}) => {
-    // return http.postFormData('/uploadfile', params);
     return http.postFile('/uploadfile', params, config);
-  }
+  },
+  // 文件切片上传
+  uploadfileChunk: (params, config = {}) => {
+    return http.postFile('/uploadfileChunk', params, config);
+  },
+  // 切片合并
+  mergefile: params => {
+    return http.post('/mergefile', params);
+  },
 }
 
 // 柱状图API
