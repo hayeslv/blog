@@ -30,6 +30,11 @@
       <UploadFile5></UploadFile5>
     </div>
     <div class="liner"></div>
+    <div class="block">
+      <h2>6、并发数控制+报错重试</h2>
+      <UploadFile6></UploadFile6>
+    </div>
+    <div class="liner"></div>
   </div>
 </template>
 
@@ -40,6 +45,7 @@ import UploadFile2 from './UploadFile2'
 import UploadFile3 from './UploadFile3'
 import UploadFile4 from './UploadFile4'
 import UploadFile5 from './UploadFile5'
+import UploadFile6 from './UploadFile6'
 </script>
 
 <style lang="scss" scoped>
