@@ -38,7 +38,7 @@ instance.interceptors.response.use(
   },
   error => {
     console.error(error);
-    return error.response.data;
+    throw new Error(error.response.data);
   }
 );
 

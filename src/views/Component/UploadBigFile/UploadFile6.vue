@@ -26,7 +26,7 @@ import { CommonApi } from '@api'
 import { ElMessage } from 'element-plus'
 import { ref, computed } from 'vue'
 
-const CHUNK_SIZE = 200 * 1024 // 初始化切片大小为 200kb
+const CHUNK_SIZE = 100 * 1024 // 初始化切片大小为 200kb
 
 const fileInput = ref(null)
 const fileRef = ref(null)
@@ -91,7 +91,8 @@ const uploadChunks = async (chunks, uploadedList = []) => {
         hash: chunk.hash,
         name: chunk.name
       },
-      index: chunk.index
+      index: chunk.index,
+      error: 0
     }
   })
 
@@ -110,25 +111,41 @@ const mergeRequest = async (file, size, hash) => {
 // 发送请求
 const sendRequest = (chunks, limit = 3) => {
   // 核心的思路是用一个数组，数组的长度是limit
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const len = chunks.length // 总任务数
     let count = 0 // 已完成任务数
+    let isStop = false
     const start = async () => {
+      if (isStop) return
       const task = chunks.shift()
       if(task) {
         const { form, index } = task
-        await CommonApi.uploadfileChunk(form, {
-          onUploadProgress: (progress) => {
-            chunkList.value[index].progress = Number(((progress.loaded / progress.total) * 100).toFixed(2))
+        try {
+          await CommonApi.uploadfileChunk(form, {
+            onUploadProgress: (progress) => {
+              chunkList.value[index].progress = Number(((progress.loaded / progress.total) * 100).toFixed(2))
+            }
+          })
+          if(count === len - 1) {
+            // 完成最后一个任务
+            resolve()
+          } else {
+            count++
+            // 当前任务完成，启动下一个任务
+            start()
           }
-        })
-        if(count === len - 1) {
-          // 完成最后一个任务
-          resolve()
-        } else {
-          count++
-          // 当前任务完成，启动下一个任务
-          start()
+        } catch (error) {
+          chunkList.value[index].progress = -1
+          console.log(chunkList.value);
+          if (task.error < 3) {
+            task.error++
+            chunks.unshift(task)
+            start()
+          }else {
+            // 错误三次
+            isStop = true
+            reject(error)
+          }
         }
       }
     }
