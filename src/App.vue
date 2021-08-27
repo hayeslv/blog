@@ -4,19 +4,12 @@
  * @Description: Description
 -->
 <template>
-  <Header class="app-header-nav"></Header>
-  <Main class="app-main"></Main>
+  <router-view />
 </template>
 
 <script>
-import Main from '@/layout/Main';
-import Header from '@/layout/Header';
 export default{
   name: 'App',
-  components: { Main, Header },
-  setup() {
-    
-  },
 }
 </script>
 
@@ -24,28 +17,9 @@ export default{
 html, body{
   padding: 0;
   margin: 0;
+  height: 100%;
 }
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #fff;
-  color: #000;
-  text-align: left;
-  /* 上下结构 */
-  display: flex;
-  flex-direction: column;
-}
-
-.app-header-nav{
-  width: 100%;
-  height: 64px;
-}
-.app-main{
-  height: calc(100% - 64px);
+#app{
+  height: 100%;
 }
 </style>

@@ -100,7 +100,12 @@ export const routes = [
   ...chartTypeRouteList,
   ...standardTypeRouteList,
   ...componentTypeRouteList,
-  ...commonRouteList
+  ...commonRouteList,
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
 ];
 
 const router = createRouter({

@@ -17,6 +17,11 @@ $dy-text-color-placeholder: #c0c4cc; // 文字placeholder色
   display: inline-block;
 }
 
+
+#app {
+  height: 100%;
+}
+
 .clearfix:after{
   content:"";/*设置内容为空*/
   height:0;/*高度为0*/
