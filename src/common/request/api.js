@@ -5,6 +5,7 @@
  */
 import http from './index.js';
 
+// 公共API
 const CommonApi = {
   // 重置数据
   resetDB: params => {
@@ -25,6 +26,14 @@ const CommonApi = {
   // 检查文件
   checkfile: params => {
     return http.post('/checkfile', params);
+  }
+}
+
+// 用户API
+const UserApi = {
+  // 登录
+  login: params => {
+    return http.get('/login', params);
   }
 }
 
@@ -93,6 +102,7 @@ const BaiduApi = {
 };
 
 export {
+  UserApi,
   CommonApi,
   ColumnApi,
   LineApi,

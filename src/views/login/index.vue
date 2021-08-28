@@ -38,17 +38,13 @@
 </template>
 
 <script setup>
-import { USER_STATE, USER_GETTER, USER_MUTATION } from '@/store/modules/user';
+import { USER_STATE, USER_ACTION } from '@/store/modules/user';
 import { reactive, ref, nextTick, inject } from 'vue'
 
 const user = inject(USER_STATE);
-const userGetter = inject(USER_GETTER);
-const userMutation = inject(USER_MUTATION);
-console.log(user);
-userGetter()
-console.log(user);
-userMutation({ name: 'dylan', age: 27, address: '广州', phone: '13037111111' })
-console.log(user);
+// const userGetter = inject(USER_GETTER);
+// const userMutation = inject(USER_MUTATION);
+const userAction = inject(USER_ACTION);
 
 // loginForm表单
 const loginForm = reactive({
@@ -85,9 +81,15 @@ const showPwd = () => {
 }
 const handleLogin = () => {
   form.value.validate(valid => {
-    console.log(valid);
     if(valid) {
-      console.log(valid);
+      loading.value = true
+      console.log(user);
+      userAction('login', loginForm).then(() => {
+        console.log(user);
+        loading.value = false
+      }).catch(() => {
+        loading.value = false
+      })
     } else {
       console.log('error submit!!')
       return false

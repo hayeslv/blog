@@ -3,8 +3,8 @@
  * @Date: 2021-08-27 16:44:17
  * @Description: 用户的状态管理配置
  */
-import { reactive } from 'vue';
-import api from './api';
+import { reactive, toRaw } from 'vue';
+import { UserApi } from '@api';
 
 const namespace = 'user';
 const r = ac => `store/${namespace}/${ac}`;
@@ -42,8 +42,27 @@ const storeModel = api => {
     }
   };
 
-  const userAction = name => {
-    console.log(name, api);
+  const userAction = (type, userForm) => {
+    const { username, password } = toRaw(userForm)
+    return new Promise((resolve, reject) => {
+      if(!api[type]) return reject('api中不存在此方法')
+      if(username === 'admin' && password === '123456') {
+        userMutation({
+          name: '超级管理员',
+          age: 30,
+          address: '广东',
+          phone: '13333333333'
+        })
+        return resolve(true)
+      }
+      api.login({ username, password })
+        .then(res => {
+          resolve(res)
+        })
+        .error(err => {
+          reject(err)
+        })
+    })
   }
 
   return {
@@ -54,4 +73,4 @@ const storeModel = api => {
   };
 }
 
-export default storeModel(api);
+export default storeModel(UserApi);
