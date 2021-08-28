@@ -8,8 +8,16 @@
 </template>
 
 <script>
+import store from '@/store'
+import _ from 'lodash'
+import { provide } from 'vue'
 export default{
   name: 'App',
+  setup() {
+    _.each(store, (item, index) => {
+      provide(index, item)
+    })
+  }
 }
 </script>
 
