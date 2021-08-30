@@ -38,18 +38,13 @@
 </template>
 
 <script setup>
-import { reactive, ref, nextTick, onBeforeMount, getCurrentInstance, computed } from 'vue'
+import { reactive, ref, nextTick, onBeforeMount, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 // vuex
 const store = useStore()
-const token = computed(() => store.state.user.token)
-const setToken = () => store.commit('user/m_token', '?????')
-if(!token.value){
-  console.log(token.value);
-  setToken()
-  console.log(token.value);
-}
+// const token = computed(() => store.state.user.token)
+const setToken = (token) => store.commit('user/m_token', token || null)
 
 const { proxy } = getCurrentInstance()
 
@@ -103,6 +98,7 @@ const handleLogin = () => {
   form.value.validate(valid => {
     if(valid) {
       loading.value = true
+      setToken('my-token')
       router.push({ path: redirect || '/', query: otherQuery })
     } else {
       console.log('error submit!!')
