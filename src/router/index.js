@@ -4,6 +4,7 @@
  * @Description: Description
  */
 import { createRouter, createWebHistory } from 'vue-router';
+import Layout from '@/layout'
 
 // 图表路由
 const chartTypeRouteList = [
@@ -101,6 +102,20 @@ export const routes = [
   ...standardTypeRouteList,
   ...componentTypeRouteList,
   ...commonRouteList,
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/home',
+    children: [
+      {
+        name: 'Home',
+        path: 'home',
+        component: () => import('@/views/home'),
+        meta: { title: '首页', icon: 'dashboard', affix: true }
+      }
+    ],
+    
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index'),

@@ -6,7 +6,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-// import store from './store';
+import store from './store';
 
 import './icons'
 
@@ -16,7 +16,7 @@ import 'element-plus/lib/theme-chalk/index.css'
 import GlobalComp from './plugins/globalComp';
 
 createApp(App)
-  // .use(store)
+  .use(store)
   .use(router)
   .use(ElementUI)
   .use(GlobalComp)

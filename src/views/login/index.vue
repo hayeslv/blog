@@ -38,18 +38,25 @@
 </template>
 
 <script setup>
-import { USER_STATE, USER_ACTION } from '@/store/modules/user';
-import { reactive, ref, nextTick, inject } from 'vue'
+import { reactive, ref, nextTick, onBeforeMount, getCurrentInstance, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+// vuex
+const store = useStore()
+const token = computed(() => store.state.user.token)
+const setToken = () => store.commit('user/m_token', '?????')
+if(!token.value){
+  console.log(token.value);
+  setToken()
+  console.log(token.value);
+}
 
-const user = inject(USER_STATE);
-// const userGetter = inject(USER_GETTER);
-// const userMutation = inject(USER_MUTATION);
-const userAction = inject(USER_ACTION);
+const { proxy } = getCurrentInstance()
 
 // loginForm表单
 const loginForm = reactive({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: '123456'
 })
 const validatePassword = (rule, value, callback) => {
   if (value.length < 6) {
@@ -67,6 +74,18 @@ const form = ref(null)
 const passowrdInput = ref(null)
 const passwordType = ref('password')
 const loading = ref(false)
+// 路由
+const router = useRouter()
+let redirect = null
+let otherQuery = {}
+// 路由监听
+onBeforeMount(() => {
+  const query = proxy.$route.query
+  if (query) {
+    redirect = query.redirect
+    otherQuery = getOtherQuery(query)
+  }
+})
 
 // 眼睛：密码icon点击事件
 const showPwd = () => {
@@ -79,22 +98,27 @@ const showPwd = () => {
     passowrdInput.value.focus()
   })
 }
+// 登录点击
 const handleLogin = () => {
   form.value.validate(valid => {
     if(valid) {
       loading.value = true
-      console.log(user);
-      userAction('login', loginForm).then(() => {
-        console.log(user);
-        loading.value = false
-      }).catch(() => {
-        loading.value = false
-      })
+      router.push({ path: redirect || '/', query: otherQuery })
     } else {
       console.log('error submit!!')
       return false
     }
   })
+}
+
+// 获取除redirect之外的参数
+function getOtherQuery(query) {
+  return Object.keys(query).reduce((acc, cur) => {
+    if (cur !== 'redirect') {
+      acc[cur] = query[cur]
+    }
+    return acc
+  }, {})
 }
 </script>
 

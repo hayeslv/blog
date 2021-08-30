@@ -1,8 +1,24 @@
 /*
  * @Author: Lvhz
  * @Date: 2021-08-27 16:44:17
- * @Description: 用户的状态管理配置
+ * @Description: 使用provide替代vuex。用户的状态管理配置
  */
+//使用
+// import { USER_STATE, USER_ACTION } from '@/store/modules/user';
+// const user = inject(USER_STATE);
+// const userGetter = inject(USER_GETTER);
+// const userMutation = inject(USER_MUTATION);
+// const userAction = inject(USER_ACTION);
+
+// userAction('login', loginForm).then(() => {
+//   console.log(user);
+//   loading.value = false
+//   router.push({ path: redirect || '/', query: otherQuery })
+// }).catch(() => {
+//   loading.value = false
+// })
+
+
 import { reactive, toRaw } from 'vue';
 import { UserApi } from '@api';
 
