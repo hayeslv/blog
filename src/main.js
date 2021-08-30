@@ -9,6 +9,7 @@ import router from './router';
 import store from './store';
 
 import './icons'
+import '@/style/index.scss' // global css
 
 import ElementUI from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'

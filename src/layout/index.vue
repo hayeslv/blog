@@ -5,8 +5,12 @@
 -->
 <template>
   <div :class="classObj" class="app-wrapper">
-    <sidebar class="sidebar-container" />
+    <Sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
+      <!-- <div :class="{'fixed-header': fixedHeader}">
+        <navbar />
+        <tags-view v-if="needTagsView" />
+      </div> -->
       <app-main />
     </div>
   </div>
@@ -15,7 +19,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
-import { AppMain } from './components'
+import { AppMain, Sidebar } from './components'
 
 // vuex
 const store = useStore()
@@ -28,6 +32,7 @@ const classObj = computed(() => {
   }
 })
 const needTagsView = computed(() => store.state.settings.needTagsView)
+// const fixedHeader = computed(() => store.state.settings.fixedHeader)
 
 </script>
 
