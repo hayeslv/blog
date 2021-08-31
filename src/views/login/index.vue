@@ -38,13 +38,11 @@
 </template>
 
 <script setup>
-import { reactive, ref, nextTick, onBeforeMount, getCurrentInstance } from 'vue'
+import { reactive, ref, nextTick, onBeforeMount, getCurrentInstance, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 // vuex
 const store = useStore()
-// const token = computed(() => store.state.user.token)
-const setToken = (token) => store.commit('user/m_token', token || null)
 
 const { proxy } = getCurrentInstance()
 
@@ -95,10 +93,11 @@ const showPwd = () => {
 }
 // 登录点击
 const handleLogin = () => {
-  form.value.validate(valid => {
+  form.value.validate(async valid => {
     if(valid) {
       loading.value = true
-      setToken('my-token')
+      await store.dispatch('user/login', toRaw(loginForm))
+      loading.value = false
       router.push({ path: redirect || '/', query: otherQuery })
     } else {
       console.log('error submit!!')

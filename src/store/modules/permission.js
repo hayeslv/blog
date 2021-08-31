@@ -1,3 +1,8 @@
+/*
+ * @Author: Lvhz
+ * @Date: 2021-08-31 08:51:06
+ * @Description: Description
+ */
 import { asyncRoutes, constantRoutes } from '@/router'
 
 /**
@@ -47,7 +52,7 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }, roles = 'admin') {
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {

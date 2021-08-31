@@ -3,6 +3,7 @@
  * @Date: 2021-08-30 16:40:01
  * @Description: Description
  */
+import { setToken } from '@/utils/auth'
 const state = {
   _id: '',
   email: '',
@@ -30,17 +31,29 @@ const mutations = {
     state.email = user.email;
   },
   m_token(state, token) {
-    localStorage.setItem('token', token);
     state.token = token;
   }
 };
 
 const actions = {
-  // login: async({ state, commit }, data) => {
-  //   const res = await http.post('/user/login', data);
-  //   commit('m_token', res.data.token);
-  //   return res;
-  // },
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+    console.log(username, password);
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, reject) => {
+      commit('m_token', 'my-token')
+      setToken('my-token')
+      resolve()
+      // login({ username: username.trim(), password: password }).then(response => {
+      //   const { data } = response
+      //   commit('SET_TOKEN', data.token)
+      //   setToken(data.token)
+      //   resolve()
+      // }).catch(error => {
+      //   reject(error)
+      // })
+    })
+  },
   // detail: async({ state, commit }, data) => {
   //   const res = await http.get('/user/info');
   //   if (res.code === 0) {
