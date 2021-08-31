@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * @Author: Lvhz
  * @Date: 2021-08-17 10:32:13
@@ -97,11 +98,17 @@ export const commonRouteList = [
   }
 ];
 
-export const routes = [
-  ...chartTypeRouteList,
-  ...standardTypeRouteList,
-  ...componentTypeRouteList,
-  ...commonRouteList,
+/**
+ * constantRoutes
+ * 基础路由，不需要任何权限
+ * 所有角色都可以访问
+ */
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
   {
     path: '/',
     component: Layout,
@@ -114,13 +121,23 @@ export const routes = [
         meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ],
-    
   },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+
+]
+
+export const routes = [
+  // ...chartTypeRouteList,
+  // ...standardTypeRouteList,
+  // ...componentTypeRouteList,
+  // ...commonRouteList,
+  ...constantRoutes
 ];
 
 const router = createRouter({

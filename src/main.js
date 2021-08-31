@@ -9,6 +9,7 @@ import router from './router';
 import store from './store';
 
 import './icons'
+import './permission' // 权限控制
 import '@/style/index.scss' // global css
 
 import ElementUI from 'element-plus'

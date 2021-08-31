@@ -33,17 +33,18 @@ import variables from '@/style/variables.scss'
 
 // vuex
 const store = useStore()
-const activeMenu = () => {
+const activeMenu = computed(() => {
   const route = useRoute()
   const { meta, path } = route
   if (meta.activeMenu) {
     return meta.activeMenu
   }
   return path
-}
+})
 const showLogo = computed(() => store.state.settings.sidebarLogo)
 const sidebar = computed(() => store.state.app.sidebar)
 const isCollapse = computed(() => !sidebar.value.opened)
+const permission_routes = computed(() => store.state.permission.routes)
 
 // export default {
 //   components: { SidebarItem, Logo },
