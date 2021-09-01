@@ -1,3 +1,8 @@
+<!--
+ * @Author: Lvhz
+ * @Date: 2021-08-30 17:56:50
+ * @Description: Description
+-->
 <script>
 export default {
   name: 'MenuItem',
@@ -12,8 +17,8 @@ export default {
       default: ''
     }
   },
-  render(h, context) {
-    const { icon, title } = context.props
+  render() {
+    const { icon, title } = this
     const vnodes = []
 
     if (icon) {

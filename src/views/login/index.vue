@@ -97,8 +97,10 @@ const handleLogin = () => {
     if(valid) {
       loading.value = true
       await store.dispatch('user/login', toRaw(loginForm))
-      loading.value = false
-      router.push({ path: redirect || '/', query: otherQuery })
+      setTimeout(() => {
+        loading.value = false
+        router.push({ path: redirect || '/', query: otherQuery })
+      }, 1000)
     } else {
       console.log('error submit!!')
       return false
