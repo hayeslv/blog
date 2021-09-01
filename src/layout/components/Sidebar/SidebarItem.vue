@@ -13,7 +13,7 @@
       </app-link>
     </template>
 
-    <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template #title>
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
@@ -25,7 +25,7 @@
         :base-path="resolvePath(child.path)"
         class="nest-menu"
       />
-    </el-sub-menu>
+    </el-submenu>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
 
 export default {
-  name: 'SidebarItem',
+  name: 'sidebar-item',
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {

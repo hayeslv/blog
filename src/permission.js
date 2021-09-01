@@ -20,7 +20,7 @@ router.beforeEach(async (to) => {
     } else {
       const accessRoutes = await store.dispatch('permission/generateRoutes')
       accessRoutes.forEach(route => {
-        router.addRoutes(route)
+        router.addRoute(route)
       })
       return true
     }

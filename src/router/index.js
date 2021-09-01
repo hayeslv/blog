@@ -6,6 +6,8 @@
  */
 import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout'
+/* Router Modules */
+import componentsRouter from './modules/components'
 
 // 图表路由
 const chartTypeRouteList = [
@@ -129,7 +131,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-
+  componentsRouter,
 ]
 
 export const routes = [
