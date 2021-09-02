@@ -19,10 +19,13 @@ router.beforeEach(async (to) => {
       return true
     } else {
       const accessRoutes = await store.dispatch('permission/generateRoutes')
+      console.log(accessRoutes);
       accessRoutes.forEach(route => {
         router.addRoute(route)
       })
+      if (to.matched.length == 0) { router.push(to.path); }
       return true
+      // next({ ...to, replace: true })
     }
   } else {
     // 没有token

@@ -4,7 +4,7 @@
  * @Description: 大文件上传（独立页面组件）
 -->
 <template>
-  <div>
+  <div class="components-container">
     <div class="block">
       <h2>1、普通上传（加拖拽功能）</h2>
       <UploadFile1></UploadFile1>
