@@ -1,24 +1,24 @@
 /*
  * @Author: Lvhz
- * @Date: 2021-09-01 14:23:57
- * @Description: Description
+ * @Date: 2021-09-03 11:07:30
+ * @Description: 图表组件
  */
 import Layout from '@/layout'
 
 const componentsRouter = {
-  path: '/components',
+  path: '/chart-comp',
   component: Layout,
-  name: 'ComponentDemo',
+  name: 'ChartComp',
   meta: {
-    title: '组件',
-    icon: 'component'
+    title: '图表组件',
+    icon: 'chart'
   },
   children: [
     {
-      path: 'upload-big-file',
-      component: () => import('@/views/Component/UploadBigFile'),
-      name: 'UploadBigFile',
-      meta: { title: '大文件上传' }
+      path: 'column',
+      component: () => import('@/views/Chart/Column'),
+      name: 'Column',
+      meta: { title: '柱状图' }
     },
     {
       path: 'css-effect',

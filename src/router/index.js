@@ -8,6 +8,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout'
 /* Router Modules */
 import componentsRouter from './modules/components'
+import chartRouter from './modules/chart'
 
 // 图表路由
 const chartTypeRouteList = [
@@ -132,6 +133,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   componentsRouter,
+  chartRouter,
 ]
 
 export const routes = [

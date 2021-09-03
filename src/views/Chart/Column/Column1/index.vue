@@ -17,7 +17,7 @@
 <script>
 import * as echarts from 'echarts';
 import { getOption } from './echart.config.js';
-import { ColumnApi } from '@api';
+// import { ColumnApi } from '@api';
 export default {
   data() {
     return {
@@ -47,12 +47,13 @@ export default {
       this.getEchartData();
     },
     async getEchartData() {
-      try {
-        const res = await ColumnApi.getColumn_1_data();
-        this.dataList = res.data || [];
-      } catch (error) {
-        throw new Error(error);
-      }
+      // 接口调用
+      // try {
+      //   const res = await ColumnApi.getColumn_1_data();
+      //   this.dataList = res.data || [];
+      // } catch (error) {
+      //   throw new Error(error);
+      // }
       this.echartRender();
     },
     echartRender() {
