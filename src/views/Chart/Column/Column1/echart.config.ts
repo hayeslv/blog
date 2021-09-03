@@ -3,12 +3,15 @@
  * @Date: 2021-01-21 11:12:44
  * @Description: Description
  */
-const echarts = require('echarts');
+import * as echarts from 'echarts';
 // import { getHeightRate } from '@/common/js/util.js';
 
+interface ChartDataList {
+  name: string,
+  value: number
+}
 
-// const yAxisDataList = ['天元区', '芦淞区', '荷塘区', '石峰区', '云龙区'];
-// const dataList = [5000, 2200, 1000, 500, 1200];
+// 测试数据
 const DemoDataList = [
   { name: '天元区', value: 5000 },
   { name: '芦淞区', value: 2200 },
@@ -16,20 +19,25 @@ const DemoDataList = [
   { name: '石峰区', value: 500 },
   { name: '云龙区', value: 1200 },
 ]
-const colorList = ['rgba(0, 103, 255 ,0)', 'rgba(0, 210, 255, 1)'];
+const colorList = ['rgba(0, 103, 255 ,0)', 'rgba(0, 210, 255, 1)']
 
-const getDataList = dataList => {
-  let yAxisDataList = [];
-  let valueList = [];
+const getDataList = (dataList: Array<ChartDataList>) => {
+  let yAxisDataList: Array<string> = [];
+  let valueList: Array<number> = [];
   if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
   yAxisDataList = dataList.map(item => item.name);
   valueList = dataList.map(item => item.value);
   return { yAxisDataList, valueList };
 };
 
-export function getOption(dataList) {
-  console.log(dataList);
-  const { yAxisDataList, valueList } = getDataList(DemoDataList);
+export function getOption(dataList: Array<ChartDataList>) {
+  let data 
+  if(Array.isArray(dataList) && dataList.length > 0) {
+    data = dataList
+  } else {
+    data = DemoDataList
+  }
+  const { yAxisDataList, valueList } = getDataList(data);
   return {
     backgroundColor: 'transparent',
     grid: {
@@ -81,7 +89,7 @@ export function getOption(dataList) {
       },
       label: {
         normal: {
-          formatter: (params) => {
+          formatter: (params: any) => {
             return '{f|' + params.data + '}';
           },
           rich: {

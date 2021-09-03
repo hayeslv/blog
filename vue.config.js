@@ -37,6 +37,25 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    config
+      .resolve.extensions.add('.ts').add('.tsx')
+      .end().end()
+      .module
+      .rule('typescript')
+      .test(/\.tsx?$/)
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('ts-loader')
+      .loader('ts-loader')
+      .options({
+        transpileOnly: true,
+        appendTsSuffixTo: [
+          '\\.vue$',
+        ],
+        happyPackMode: false,
+      })
+      .end();
   },
 
   //是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建。

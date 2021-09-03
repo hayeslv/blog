@@ -17,6 +17,7 @@ import 'element-plus/lib/theme-chalk/index.css'
 
 import GlobalComp from './plugins/globalComp';
 
+
 createApp(App)
   .use(store)
   .use(router)

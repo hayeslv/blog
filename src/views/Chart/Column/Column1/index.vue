@@ -16,14 +16,15 @@
 
 <script>
 import * as echarts from 'echarts';
-import { getOption } from './echart.config.js';
+import { getOption } from './echart.config';
+import { ref, toRaw } from 'vue'
 // import { ColumnApi } from '@api';
 export default {
-  data() {
-    return {
-      myChart: null,
-      dataList: []
-    };
+  setup() {
+    const myChart = ref(null)
+    const dataList = ref([])
+
+    return { myChart, dataList }
   },
   watch: {
     // 每当数据发送变化时，重新进行图表渲染
@@ -41,7 +42,7 @@ export default {
   methods: {
     // 切换tab
     selectorChange(index) {
-      console.log(index);
+      console.log(index)
     },
     initData() {
       this.getEchartData();
@@ -61,7 +62,7 @@ export default {
         this.clearEchart();
       }
       this.myChart = echarts.init(this.$refs.charts);
-      const option = getOption(this.dataList);
+      const option = getOption(toRaw(this.dataList));
       this.myChart.setOption(option);
     },
     // 清理echart
