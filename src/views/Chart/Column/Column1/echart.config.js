@@ -9,6 +9,13 @@ const echarts = require('echarts');
 
 // const yAxisDataList = ['天元区', '芦淞区', '荷塘区', '石峰区', '云龙区'];
 // const dataList = [5000, 2200, 1000, 500, 1200];
+const DemoDataList = [
+  { name: '天元区', value: 5000 },
+  { name: '芦淞区', value: 2200 },
+  { name: '荷塘区', value: 1000 },
+  { name: '石峰区', value: 500 },
+  { name: '云龙区', value: 1200 },
+]
 const colorList = ['rgba(0, 103, 255 ,0)', 'rgba(0, 210, 255, 1)'];
 
 const getDataList = dataList => {
@@ -16,12 +23,13 @@ const getDataList = dataList => {
   let valueList = [];
   if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
   yAxisDataList = dataList.map(item => item.name);
-  valueList = dataList.map(item => item.value1);
+  valueList = dataList.map(item => item.value);
   return { yAxisDataList, valueList };
 };
 
 export function getOption(dataList) {
-  const { yAxisDataList, valueList } = getDataList(dataList);
+  console.log(dataList);
+  const { yAxisDataList, valueList } = getDataList(DemoDataList);
   return {
     backgroundColor: 'transparent',
     grid: {
@@ -79,8 +87,8 @@ export function getOption(dataList) {
           rich: {
             f: {
               color: 'rgba(255,255,255,0.9)',
-              fontSize: 14,
-              padding: [0, 0, 4, -2]
+              fontSize: 12,
+              padding: [0, 0, 0, -2]
             }
           },
           position: 'right',
