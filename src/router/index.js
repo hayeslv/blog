@@ -9,6 +9,7 @@ import Layout from '@/layout'
 /* Router Modules */
 import componentsRouter from './modules/components'
 import chartRouter from './modules/chart'
+import coreRouter from './modules/core'
 
 // 图表路由
 const chartTypeRouteList = [
@@ -134,6 +135,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   componentsRouter,
   chartRouter,
+  coreRouter
 ]
 
 export const routes = [

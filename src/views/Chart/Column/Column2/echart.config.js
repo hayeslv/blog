@@ -7,11 +7,11 @@
 const colorList = ['#FACC14', '#31DA64', '#3196FA'];
 
 
-// const dataList = [
-//   { name: '今日结案', value: 3456 },
-//   { name: '今日立案', value: 3456 },
-//   { name: '今日上报', value: 8456 }
-// ];
+const dataList = [
+  { name: '今日结案', value: 3456 },
+  { name: '今日立案', value: 3456 },
+  { name: '今日上报', value: 8456 }
+];
 // const yAxisDataList = [];
 // dataList.forEach(value => {
 //   yAxisDataList.push(value.value);
@@ -21,15 +21,13 @@ const getDataList = dataList => {
   let yAxisDataList = [];
   let valueList = [];
   if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
-  yAxisDataList = dataList.map(item => item.value1);
-  valueList = dataList.map(item => {
-    return { name: item.name, vlaue: item.value1 }
-  });
-  console.log(valueList);
+  yAxisDataList = dataList.map(item => item.value);
+  valueList = dataList;
   return { yAxisDataList, valueList };
 };
 
-export function getOption(dataList) {
+export function getOption(dataList1) {
+  console.log(dataList1);
   const { yAxisDataList, valueList } = getDataList(dataList);
   return {
     backgroundColor: 'transparent',

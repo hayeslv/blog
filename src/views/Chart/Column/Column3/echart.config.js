@@ -8,11 +8,11 @@ const echarts = require('echarts');
 const nameList = ['立案数', '结案数'];
 const colorList = ['#00baff', '#008065'];
 
-// const dataList = [
-//   { name: '景观管理', liAnNum: 3456, jieAnNum: 3000 },
-//   { name: '环境管理', liAnNum: 3156, jieAnNum: 3300 },
-//   { name: '市政管理', liAnNum: 2356, jieAnNum: 2100 }
-// ];
+const dataList = [
+  { name: '景观管理', liAnNum: 3456, jieAnNum: 3000 },
+  { name: '环境管理', liAnNum: 3156, jieAnNum: 3300 },
+  { name: '市政管理', liAnNum: 2356, jieAnNum: 2100 }
+];
 
 // const seriesDataList1 = dataList.map(item => item.liAnNum);
 // const seriesDataList2 = dataList.map(item => item.jieAnNum);
@@ -27,7 +27,8 @@ const getDataList = dataList => {
   return { seriesDataList1, seriesDataList2, typeNameList };
 };
 
-export function getOption(dataList) {
+export function getOption(dataList1) {
+  console.log(dataList1);
   const { seriesDataList1, seriesDataList2, typeNameList } = getDataList(dataList);
   return {
     backgroundColor: 'transparent',
