@@ -291,6 +291,332 @@ const promise = new myPromise((resolve, reject) => {
 有了上面的想法，我们再结合 Promise/A+ 规范梳理一下思路：
 
 1. then的参数 `onFulfilled` 和 `onRejected` 可以缺省，如果 `onFulfilled` 或者 `onRejected` 不是函数，将其忽略，且依旧可以在下面的then中获取到之前返回的值；「规范 Promise/A+ 2.2.1、2.2.1.1、2.2.1.2」
+2. promise可以then多次，每次执行完 promise.then 方法后返回的都是一个 “新的promise”；「规范 Promise/A+ 2.2.7」
+3. 如果then的返回值x是一个普通值，那么就会把这个结果作为参数，传递给下一个then的成功回调中。
+4. 如果then中抛出了异常，那么就会把这个异常作为参数，传递给下一个then的失败回调中。「规范 Promise/A+ 2.2.7.2」
+5. 如果then的返回值x是一个promise，那么会等这个promise执行完，promise如果成功，就会走下一个then的成功；如果失败，就会走下一个then的失败；如果抛出异常，就走下一个then的失败。「规范 Promise/A+ 2.2.7.3、2.2.7.4」
+6. 如果then的返回值x和promise是同一个引用对象，造成循环引用，则抛出异常，把异常传递给下一个then的失败回调中。「规范 Promise/A+ 2.3.1」
+7. 如果then的返回值x是一个promise，且x同时调用resolve函数和reject函数，则第一次调用优先，其他所有调用被忽略。「规范 Promise/A+ 2.3.3.3.3」
+
+
+
+我们将代码补充完整：
+
+```js
+const PENDING = 'PENDING'
+const FULFILLED = 'FULFILLED'
+const REJECTED = 'REJECTED'
+
+//! x可能是一个proimise
+const resolvePromise = (promise2, x, resolve, reject) => {
+  // 自己等待自己完成是错误的实现，用一个类型错误，结束掉promise  Promise/A+ 2.3.1
+  if(promise2 === x) {
+    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+  }
+  // 只能调用一次
+  let called;
+  // 后续的条件要严格判断，保证代码能和别的库一起使用
+  if((typeof x === 'object' && x !== null) || typeof x === 'function') {
+    try {
+      // 为了判断 resolve 过的就不用再 reject 了（比如 reject 和 resolve 同时调用的时候）
+      let then = x.then
+      if(typeof then === 'function') {
+        // 不要写成 x.then，直接写成 then.call 就可以了。因为 x.then 会再次取值，Object.defineProperty
+        then.call(x, y => { // 根据promise的状态决定是成功还是失败
+          if(called) return;
+          called = true;
+          // 递归解析的过程（因为可能promise中还有promise）
+          resolvePromise(promise2, y, resolve, reject);
+        }, r => {
+          // 只要失败就失败
+          if(called) return;
+          called = true;
+          reject(r);
+        });
+      } else {
+        // 如果x.then是个普通值就直接返回 resolve 作为结构
+        resolve(x);
+      }
+    } catch (e) {
+      if(called) return;
+      called = true;
+      reject(e)
+    }
+  } else {
+    // 如果 x 是个普通值就直接返回resolve作为结果
+    resolve(x)
+  }
+}
+
+class myPromise {
+  constructor(executor) {
+    this.status = PENDING;
+    this.value = undefined;
+    this.reason = undefined;
+    this.onResolvedCallbacks = [];
+    this.onRejectedCallbacks = [];
+
+    let resolve = value => {
+      if(this.status === PENDING) {
+        this.status = FULFILLED;
+        this.value = value;
+        this.onResolvedCallbacks.forEach(fn => fn())
+      }
+    }
+
+    let reject = reason => {
+      if(this.status === PENDING) {
+        this.status = REJECTED;
+        this.reason = reason;
+        this.onRejectedCallbacks.forEach(fn => fn())
+      }
+    }
+
+    try {
+      executor(resolve, reject);
+    } catch (error) {
+      reject(error);
+    }
+  }
+
+  then(onFulfilled, onRejected) {
+    // 解决 onFulfilled，onRejected 没有传值的问题
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v;
+    // 因为错误的值要让后面访问到，所以这里也要抛出个错误，不然会在之后 then 的 resolve 中捕获
+    onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
+    // 每次调用then都返回一个新的promise
+    let promise2 = new myPromise((resolve, reject) => {
+      if(this.status === FULFILLED) {
+        // Promise/A+ 2.2.4 --- setTimeout
+        setTimeout(() => {
+          try {
+            let x = onFulfilled(this.value);
+            // x可能是一个promise
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        }, 0)
+      }
+
+      if(this.status === REJECTED) {
+        setTimeout(() => {
+          try {
+            let x = onRejected(this.reason);
+            resolvePromise(promise2, x, resolve, reject);
+          } catch (e) {
+            reject(e)
+          }
+        }, 0)
+      }
+
+      if(this.status === PENDING) {
+        this.onResolvedCallbacks.push(() => {
+          setTimeout(() => {
+            try {
+              let x = onFulfilled(this.value);
+              resolvePromise(promise2, x, resolve, reject);
+            } catch (e) {
+              reject(e)
+            }
+          }, 0)
+        })
+        this.onRejectedCallbacks.push(() => {
+          setTimeout(() => {
+            try {
+              let x = onRejected(this.reason);
+              resolvePromise(promise2, x, resolve, reject);
+            } catch (e) {
+              reject(e)
+            }
+          }, 0)
+        })
+      }
+    })
+
+    return promise2;
+
+    // if(this.status === FULFILLED) {
+    //   onFulfilled(this.value)
+    // }
+    // if(this.status === REJECTED) {
+    //   onRejected(this.reason)
+    // }
+    // if(this.status === PENDING) {
+    //   this.onResolvedCallbacks.push(() => {
+    //     onFulfilled(this.value)
+    //   })
+    //   this.onRejectedCallbacks.push(() => {
+    //     onRejected(this.reason)
+    //   })
+    // }
+  }
+}
+
+// 测试代码
+const promise = new myPromise((resolve, reject) => {
+  reject('失败');
+}).then().then().then(data => {
+  console.log(data);
+}, err => {
+  console.log('err', err);
+})
+```
+
+控制台输出：err 失败
+
+至此，我们已经完成了promise最关键的部分：then的链式调用和值的穿透。搞清楚了then的链式调用和值的穿透，你也就搞清楚了Promise。
+
+
+
+### 测试Promise是否符合规范
+
+Promise/A+规范提供了一个专门的测试脚本，可以测试所编写的代码是否符合Promise/A+的规范。
+
+首先，在 promise 实现的代码中，增加以下代码:
+
+```js
+MyPromise.deferred  = function() {
+  const defer = {}
+  defer.promise = new MyPromise((resolve, reject) => {
+    defer.resolve = resolve
+    defer.reject = reject
+  })
+  return defer
+}
+
+module.exports = MyPromise
+```
+
+安装测试脚本：
+
+```bash
+npm install -g promises-aplus-tests
+```
+
+如果当前的 promise 源码的文件名为 promise3.js
+
+那么在对应的目录执行以下命令:
+
+```js
+promises-aplus-tests promise3.js
+```
+
+promises-aplus-tests 中共有 872 条测试用例。以上代码，可以完美通过所有用例。
+
+
+
+### setTimeout问题
+
+​	由于原生的Promise是V8引擎提供的微任务，我们无法还原V8引擎的实现，所以这里使用setTimeout模拟异步。所以原生的是微任务，这里是宏任务。
+
+Promise A+ 规范3.1中也提到了：这可以通过 ”宏任务“ 机制（例如setTimeout或setImmediate）或 ”微任务“ 机制（例如 MutationObserver）来实现process.nextTick。
+
+
+
+## Promise的API
+
+虽然上述的promise源码已经符合 Promise/A+ 的规范，但是原生的 Promise 还提供了一些其他方法，如：
+
+- Promise.resolve()
+- Promise.reject()
+- Promise.prototype.catch()
+- Promise.prototype.finally()
+- Promise.all()
+- Promise.race()
+
+下面具体说一下每个方法的实现：
+
+### Promise.resolve
+
+默认产生一个成功的promise
+
+```ts
+static resolve(data) {
+  return new Promise((resolve, reject) => {
+    resolve(data);
+  })
+}
+```
+
+这里需要注意的是，**promise.resolve 是具备等待功能的**。如果参数是 promise 则会等待这个 Promise 解析完毕，再向下执行，所以这里需要在resolve方法中做一个小小的处理：
+
+```js
+let resolve = value => {
+  // ====== 新增逻辑 ======
+  // 如果 value 是一个promise，那我们的库中应该也要实现一个递归解析
+  if(value instanceof Promise) {
+    // 递归解析
+    return value.then(resolve, reject)
+  }
+  // ====================
+  if(this.status === PENDING) {
+    this.status = FULFILLED;
+    this.value = value;
+    this.onResolvedCallbacks.forEach(fn => fn())
+  }
+}
+```
+
+测试一下：
+
+```js
+Promise.resolve(new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('ok');
+  }, 3000);
+})).then(data=>{
+  console.log(data,'success')
+}).catch(err=>{
+  console.log(err,'error')
+})
+```
+
+控制台等待 `3s` 后输出：
+
+```js
+"ok success"
+```
+
+
+
+### Promise.reject
+
+默认产生一个失败的promise，Promise.reject 是直接将值变成错误结果。
+
+```js
+static reject(reason) {
+  return new Promise((resolve, reject) => {
+    reject(reason);
+  })
+}
+```
+
+
+
+### Promise.prototype.catch
+
+Promise.prototype.catch 用来捕获 promise 的异常，**就相当于一个没有成功的then**。
+
+```js
+Promise.prototype.catch = function(errCallback) {
+  return this.then(null, errCallback)
+}
+```
+
+
+
+### Promise.prototype.finally
+
+finally 表示不是最终的意思，而是无论如何都会执行的意思。如果返回一个promise会等待这个promise也执行完毕。如果返回的是成功的promise，会采用上一次的结果；如果返回的是失败的promise，会用这个失败的结果，传到 catch 中。
+
+
+
+
+
+
+
+
 
 
 

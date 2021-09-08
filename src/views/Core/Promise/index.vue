@@ -11,7 +11,8 @@
 
 <script>
 // import './promise1'
-import './promise2'
+// import './promise2'
+import './promise3'
 export default {
 };
 </script>
