@@ -9,7 +9,23 @@ export const props = {
   size: {
     type: String as PropType<ButtonSize>,
     validator(val: string): boolean {
-      return ['large', 'medium', 'small', 'mini', ''].includes(val)
+      return ['medium', 'small', 'mini', ''].includes(val)
     }
-  }
+  },
+  type: {
+    type: String as PropType<ButtonType>,
+    validator(val: string): boolean {
+      return ['primary', 'success', 'warning', 'danger', 'info', 'text'].includes(val)
+    }
+  },
+  nativeType: {
+    type: String as PropType<ButtonNativeType>,
+    default: 'button'
+  },
+  plain: Boolean,
+  round: Boolean,
+  circle: Boolean,
+  loading: Boolean,
+  disabled: Boolean,
+  icon: String
 }

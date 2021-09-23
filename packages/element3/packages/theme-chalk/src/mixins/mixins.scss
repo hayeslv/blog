@@ -1,0 +1,10 @@
+@import 'function';
+
+@mixin b($block) {
+  $B: $namespace + '-' + $block !global;
+
+  // @content相当于占位符，可以把 @include调用b时 {} 内的东西放到这里
+  .#{$B} {
+    @content
+  }
+}
