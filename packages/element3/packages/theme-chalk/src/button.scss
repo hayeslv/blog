@@ -1,6 +1,5 @@
 @charset "UTF-8";
 @import 'common/var';
-@import 'mixins/button';
 @import 'mixins/mixins';
 
 @include b(button) {

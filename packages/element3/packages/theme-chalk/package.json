@@ -2,7 +2,8 @@
   "name": "element-theme-chalk",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.css",
+  "style": "lib/index.css",
   "scripts": {
     "build": "gulp build"
   },
@@ -10,9 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-cssmin": "^0.1.7",
-    "gulp-sass": "^3.1.0"
-  }
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-sass": "^4.1.1"
+  },
+  "dependencies": {}
 }

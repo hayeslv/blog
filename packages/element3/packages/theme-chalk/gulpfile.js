@@ -3,14 +3,14 @@
  * @Date: 2021-09-23 17:15:23
  * @Description: Description
  */
-
+'use strict'
 const { series, src, dest } = require('gulp')
-const sass = require('gulp-scss')
+const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const cssmin = require('gulp-cssmin')
 
 function compile() {
-  return src('./src/*.sass')
+  return src('./src/*.scss')
     .pipe(sass.sync())
     .pipe(
       autoprefixer({

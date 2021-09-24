@@ -23,8 +23,14 @@ const componentsRouter = {
     {
       path: 'css-effect',
       component: () => import('@/views/Component/CSSEffect'),
-      name: 'UploadBigFile1',
+      name: 'CssEffect',
       meta: { title: 'css样式' }
+    },
+    {
+      path: 'elec-signature',
+      component: () => import('@/views/Component/Signature'),
+      name: 'Signature',
+      meta: { title: '电子签名' }
     },
   ]
 }
