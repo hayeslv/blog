@@ -2,9 +2,6 @@
  * @Author: Lvhz
  * @Date: 2021-09-24 09:18:21
  * @Description: 电子签名
- npm install vue-esign --save
- import vueEsign from 'vue-esign'
-  Vue.use(vueEsign)
 -->
 <template>
   <div>

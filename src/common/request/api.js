@@ -4,9 +4,15 @@
  * @Descripttion: API
  */
 import http from './index.js';
+import HttpClient from './HttpClient.js';
 
 // 公共API
 const CommonApi = {
+  // 示例：另外一个系统的接口时
+  normalUpload: params => {
+    const httpClient = new HttpClient();
+    return httpClient.formData('/base/v1/file/normalUpload', params)
+  },
   // 重置数据
   resetDB: params => {
     return http.get('/dbdata/mockdata', params);

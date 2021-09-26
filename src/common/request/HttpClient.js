@@ -65,6 +65,19 @@ export default class HttpClient {
       }
     });
   }
+  formData(url, params = {}) {
+    const formData = new FormData()
+    Object.keys(params).forEach(key => {
+      formData.append(key, params[key])
+    })
+    return this.request(url, {
+      data: formData,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    });
+  }
   // 针对文件图片等二进制数据，需要使用到FormData入参
   postFile(url, params = {}, config = {}) {
     let formData = new FormData()
