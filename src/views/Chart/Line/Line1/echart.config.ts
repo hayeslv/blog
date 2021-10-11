@@ -3,34 +3,21 @@
  * @Date: 2021-04-14 10:20:23
  * @Description: Description
  */
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 // import { getHeightRate } from '@/common/js/util.js';
 
 const colorList = ['#3196FA', '#11C372', '#FACC14'];
 const nameList = ['上报数（件）', '立案数（件）', '结案数（件）'];
 
-// const dataList = [
-//   { time: 0, sbNum: 100, laNum: 50, jaNum: 233 },
-//   { time: 1, sbNum: 138, laNum: 50, jaNum: 10 },
-//   { time: 2, sbNum: 350, laNum: 60, jaNum: 20 },
-//   { time: 3, sbNum: 173, laNum: 70, jaNum: 12 },
-//   { time: 4, sbNum: 180, laNum: 80, jaNum: 13 },
-//   { time: 5, sbNum: 150, laNum: 90, jaNum: 50 },
-//   { time: 6, sbNum: 178, laNum: 30, jaNum: 70 },
-//   { time: 7, sbNum: 100, laNum: 40, jaNum: 50 },
-//   { time: 8, sbNum: 138, laNum: 50, jaNum: 40 },
-//   { time: 9, sbNum: 350, laNum: 60, jaNum: 60 },
-//   { time: 10, sbNum: 180, laNum: 60, jaNum: 100 },
-//   { time: 11, sbNum: 233, laNum: 70, jaNum: 200 },
-// ]
-
-// const xAxisDataList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-// const yAxisData1 = [100, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180, 233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234];
-// const yAxisData2 = [50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60, 300, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180];
-// const yAxisData3 = [233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234, 50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60];
+type ChartDataList = {
+  name: number,
+  value1: number,
+  value2: number,
+  value3: number,
+}
 
 // hex转换成rgba
-const hexToRgba = (hex, opacity) => {
+const hexToRgba = (hex: string, opacity: number) => {
   let rgbaColor = '';
   const reg = /^#[\da-f]{6}$/i;
   if (reg.test(hex)) {
@@ -39,7 +26,7 @@ const hexToRgba = (hex, opacity) => {
   return rgbaColor;
 };
 
-const areaStyle = (index) => {
+const areaStyle = (index: number) => {
   return {
     normal: {
       color: new echarts.graphic.LinearGradient(0, 0, 0, 1,
@@ -57,17 +44,20 @@ const areaStyle = (index) => {
   };
 };
 
-const getDataList = dataList => {
-  let xAxisDataList = [], yAxisData1 = [], yAxisData2 = [], yAxisData3 = [];
-  if (!dataList || !Array.isArray(dataList)) return { xAxisDataList, yAxisData1, yAxisData2, yAxisData3 };
-  xAxisDataList = dataList.map(item => item.time);
-  yAxisData1 = dataList.map(item => item.sbNum || 0);
-  yAxisData2 = dataList.map(item => item.laNum || 0);
-  yAxisData3 = dataList.map(item => item.jaNum || 0);
+// const xAxisDataList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+// const yAxisData1 = [100, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180, 233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234];
+// const yAxisData2 = [50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60, 300, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180];
+// const yAxisData3 = [233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234, 50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60];
+const getDataList = (dataList: Array<ChartDataList>) => {
+  let xAxisDataList: Array<number> = [], yAxisData1: Array<number> = [], yAxisData2: Array<number> = [], yAxisData3: Array<number> = [];
+  xAxisDataList = dataList.map(item => item.name);
+  yAxisData1 = dataList.map(item => item.value1 || 0);
+  yAxisData2 = dataList.map(item => item.value2 || 0);
+  yAxisData3 = dataList.map(item => item.value3 || 0);
   return { xAxisDataList, yAxisData1, yAxisData2, yAxisData3 };
 };
 
-export const getOption = dataList => {
+export const getOption = (dataList: Array<ChartDataList>) => {
   const { xAxisDataList, yAxisData1, yAxisData2, yAxisData3 } = getDataList(dataList);
   return {
     backgroundColor: 'transparent',
@@ -95,12 +85,12 @@ export const getOption = dataList => {
         type: 'line'
       },
       extraCssText: `font-size:14px;line-height:24px;color:rgba(255,255,255,0.65);background:rgba(0,0,0,0.6);box-shadow:0 0 3px rgba(0, 0, 0, 0.2)`,
-      formatter: function(params) {
+      formatter: function(params: any) {
         let html = '';
         html += `
           <div style="font-size: 12px;">${params[0].name || 0}时</div>
         `;
-        params.forEach(v => {
+        params.forEach((v: any) => {
           html += `
           <div style="display:flex; justify-content: space-between;">
             <div style="display:flex; align-items: center;">

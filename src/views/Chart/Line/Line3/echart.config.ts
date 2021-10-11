@@ -3,38 +3,30 @@
  * @Date: 2021-04-14 10:20:23
  * @Description: Description
  */
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 // import { getHeightRate } from '@/common/js/util.js';
 
 const nameList = ['标准最低室内温度', '实时平均室温'];
 
-// const dataList = [
-//   { date: '11时', realNum: '21', needNum: '18' },
-//   { date: '12时', realNum: '19', needNum: '18' },
-//   { date: '13时', realNum: '22', needNum: '18' },
-//   { date: '14时', realNum: '25', needNum: '12' },
-//   { date: '15时', realNum: '21', needNum: '20' },
-//   { date: '16时', realNum: '21', needNum: '20' },
-//   { date: '17时', realNum: '13', needNum: '18' },
-//   { date: '18时', realNum: '17', needNum: '14' },
-//   { date: '19时', realNum: '15', needNum: '16' },
-//   { date: '20时', realNum: '14', needNum: '20' }
-// ];
+type ChartDataList = {
+  name: number,
+  value1: number,
+  value2: number,
+}
+
 // const xAxisList = dataList.map(item => item.date);
 // const realNumList = dataList.map(item => item.realNum);
 // const needNumList = dataList.map(item => item.needNum);
-
-const getDataList = dataList => {
-  let xAxisList = [], realNumList = [], needNumList = [];
-  if (!dataList || !Array.isArray(dataList)) return { xAxisList, realNumList, needNumList };
-  xAxisList = dataList.map(item => item.date || 0);
-  realNumList = dataList.map(item => item.realNum || 0);
-  needNumList = dataList.map(item => item.needNum || 0);
+const getDataList = (dataList: Array<ChartDataList>) => {
+  let xAxisList: Array<number> = [], realNumList: Array<number> = [], needNumList: Array<number> = [];
+  xAxisList = dataList.map(item => item.name || 0);
+  realNumList = dataList.map(item => item.value1 || 0);
+  needNumList = dataList.map(item => item.value2 || 0);
   return { xAxisList, realNumList, needNumList };
 
 };
 
-export const getOption = dataList => {
+export const getOption = (dataList: Array<ChartDataList>) => {
   const { xAxisList, realNumList, needNumList } = getDataList(dataList);
   return {
     tooltip: {

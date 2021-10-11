@@ -4,7 +4,7 @@
  * @Description: 本年按时结案率
 -->
 <template>
-  <div class="column">
+  <div class="echart-wrap">
     <PanelBac title="柱状图 1" :height="210">
       <template v-slot:selector>
         <Selector :list="['本月', '本年']" @change="selectorChange"></Selector>
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.column{
+.echart-wrap{
   color: #fff;
 }
 .canvas{

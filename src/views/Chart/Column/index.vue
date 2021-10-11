@@ -5,9 +5,9 @@
 -->
 <template>
   <div class="view-content">
-    <Column1 class="column"></Column1>
-    <Column2 class="column"></Column2>
-    <Column3 class="column"></Column3>
+    <Column1 class="echart-panel"></Column1>
+    <Column2 class="echart-panel"></Column2>
+    <Column3 class="echart-panel"></Column3>
   </div>
 </template>
 
@@ -18,6 +18,43 @@ import Column3 from './Column3';
 export default {
   components: { Column1, Column2, Column3 }
 };
+
+
+// 解决 渐变柱状图的图例也会变成渐变方法
+// legend: {
+//   formatter: function(value) {
+//     let key = 0;
+//     for(let i=0; i<nameList.length; i++) {
+//       if(value === nameList[i]) key = i;
+//     }
+//     return `{${key}|}{word|这段文本采用样式b}`;
+//   },
+//   textStyle: {
+//     color: '#fff',
+//     fontSize: getHeightRate() * 20,
+//     rich: {
+//       0: {
+//         width: getHeightRate() * 20,
+//         height: getHeightRate() * 10,
+//         backgroundColor: colorList[0]
+//       },
+//       1: {
+//         width: getHeightRate() * 20,
+//         height: getHeightRate() * 10,
+//         backgroundColor: colorList[1]
+//       },
+//       2: {
+//         width: getHeightRate() * 20,
+//         height: getHeightRate() * 10,
+//         backgroundColor: colorList[2]
+//       },
+//       word: {
+//         color: '#bbb',
+//         fontSize: getHeightRate() * 20
+//       }
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -25,10 +62,11 @@ export default {
   box-sizing: border-box;
   padding: 20px;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   flex-wrap: wrap;
 }
-.column{
+.echart-panel{
   margin-bottom: 20px;
+  margin-right: 50px;
 }
 </style>

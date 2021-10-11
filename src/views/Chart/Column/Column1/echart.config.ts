@@ -6,7 +6,7 @@
 import * as echarts from 'echarts';
 // import { getHeightRate } from '@/common/js/util.js';
 
-interface ChartDataList {
+type ChartDataList = {
   name: string,
   value: number
 }
