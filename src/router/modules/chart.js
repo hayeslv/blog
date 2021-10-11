@@ -21,6 +21,18 @@ const componentsRouter = {
       meta: { title: '柱状图' }
     },
     {
+      path: 'line',
+      component: () => import('@/views/Chart/Line'),
+      name: 'Line',
+      meta: { title: '折线图' }
+    },
+    {
+      path: 'pie',
+      component: () => import('@/views/Chart/Pie'),
+      name: 'Pie',
+      meta: { title: '饼图' }
+    },
+    {
       path: 'css-effect',
       component: () => import('@/views/Component/CSSEffect'),
       name: 'UploadBigFile1',

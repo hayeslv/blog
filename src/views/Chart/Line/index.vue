@@ -6,17 +6,17 @@
 <template>
   <div class="left-one">
     <Line1 class="line"></Line1>
-    <Line2 class="line"></Line2>
-    <Line3 class="line"></Line3>
+    <!-- <Line2 class="line"></Line2>
+    <Line3 class="line"></Line3> -->
   </div>
 </template>
 
 <script>
 import Line1 from './Line1';
-import Line2 from './Line2';
-import Line3 from './Line3';
+// import Line2 from './Line2';
+// import Line3 from './Line3';
 export default {
-  components: { Line1, Line2, Line3 }
+  components: { Line1 }
 };
 
 

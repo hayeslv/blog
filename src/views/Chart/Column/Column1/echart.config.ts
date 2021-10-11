@@ -11,14 +11,6 @@ interface ChartDataList {
   value: number
 }
 
-// 测试数据
-const DemoDataList = [
-  { name: '天元区', value: 5000 },
-  { name: '芦淞区', value: 2200 },
-  { name: '荷塘区', value: 1000 },
-  { name: '石峰区', value: 500 },
-  { name: '云龙区', value: 1200 },
-]
 const colorList = ['rgba(0, 103, 255 ,0)', 'rgba(0, 210, 255, 1)']
 
 const getDataList = (dataList: Array<ChartDataList>) => {
@@ -31,13 +23,7 @@ const getDataList = (dataList: Array<ChartDataList>) => {
 };
 
 export function getOption(dataList: Array<ChartDataList>) {
-  let data 
-  if(Array.isArray(dataList) && dataList.length > 0) {
-    data = dataList
-  } else {
-    data = DemoDataList
-  }
-  const { yAxisDataList, valueList } = getDataList(data);
+  const { yAxisDataList, valueList } = getDataList(dataList);
   return {
     backgroundColor: 'transparent',
     grid: {

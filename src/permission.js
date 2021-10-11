@@ -19,7 +19,6 @@ router.beforeEach(async (to) => {
       return true
     } else {
       const accessRoutes = await store.dispatch('permission/generateRoutes')
-      console.log(accessRoutes);
       accessRoutes.forEach(route => {
         router.addRoute(route)
       })
@@ -30,10 +29,8 @@ router.beforeEach(async (to) => {
   } else {
     // 没有token
     if (whiteList.indexOf(to.path) !== -1) {
-      console.log(123);
       return true
     } else {
-      console.log(222);
       router.replace({path: `/login`})
       return false
       // next(`/login?redirect=${to.path}`)

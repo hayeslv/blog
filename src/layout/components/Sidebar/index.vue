@@ -45,7 +45,6 @@ const showLogo = computed(() => store.state.settings.sidebarLogo)
 const sidebar = computed(() => store.state.app.sidebar)
 const isCollapse = computed(() => !sidebar.value.opened)
 const permission_routes = computed(() => store.state.permission.routes)
-console.log(permission_routes.value);
 // export default {
 //   components: { SidebarItem, Logo },
 //   computed: {

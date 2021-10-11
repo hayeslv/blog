@@ -9,7 +9,7 @@
       <template v-slot:selector>
         <Selector :list="['本月', '本年']" @change="selectorChange"></Selector>
       </template>
-      <div ref="charts" class="canvas"></div>
+      <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
 </template>
@@ -17,60 +17,63 @@
 <script>
 import * as echarts from 'echarts';
 import { getOption } from './echart.config';
-import { ref, toRaw } from 'vue'
+import { ref, toRaw, watch, onMounted, onUnmounted } from 'vue'
 // import { ColumnApi } from '@api';
+
+const demoList = [
+  { name: '天元区', value: 5000 },
+  { name: '芦淞区', value: 2200 },
+  { name: '荷塘区', value: 1000 },
+  { name: '石峰区', value: 500 },
+  { name: '云龙区', value: 1200 },
+]
 export default {
   setup() {
-    const myChart = ref(null)
-    const dataList = ref([])
+    let myChart = null
+    let chartsRef = ref()
+    // let dataList = ref([])
+    let dataList = ref(demoList)
 
-    return { myChart, dataList }
-  },
-  watch: {
-    // 每当数据发送变化时，重新进行图表渲染
-    dataList() {
-      this.echartRender();
+    const initData = () => {
+      getEchartData()
     }
-  },
-  mounted() {
-    this.myChart = echarts.init(this.$refs.charts);
-    this.initData();
-  },
-  beforeUnmount() {
-    this.myChart && this.myChart.dispose();
-  },
-  methods: {
-    // 切换tab
-    selectorChange(index) {
-      console.log(index)
-    },
-    initData() {
-      this.getEchartData();
-    },
-    async getEchartData() {
+    const getEchartData = async () => {
       // 接口调用
       // try {
       //   const res = await ColumnApi.getColumn_1_data();
-      //   this.dataList = res.data || [];
+      //   dataList.value = res.data || [];
       // } catch (error) {
       //   throw new Error(error);
       // }
-      this.echartRender();
-    },
-    echartRender() {
-      if (this.myChart) {
-        this.clearEchart();
-      }
-      this.myChart = echarts.init(this.$refs.charts);
-      const option = getOption(toRaw(this.dataList));
-      this.myChart.setOption(option);
-    },
-    // 清理echart
-    clearEchart() {
-      this.myChart && this.myChart.dispose();
-      this.myChart = null;
+      echartRender();
     }
-  }
+    const echartRender = () => {
+      if (myChart) clearEchart();
+      myChart = echarts.init(chartsRef.value);
+      const option = getOption(toRaw(dataList.value));
+      myChart.setOption(option);
+    }
+    const clearEchart = () => {
+      myChart && myChart.dispose();
+      myChart = null;
+    }
+    const selectorChange = (index) => {
+      getEchartData(index)
+    }
+
+    watch(dataList, () => {
+      echartRender()
+    })
+
+    onMounted(() => {
+      initData();
+    })
+    onUnmounted(() => {
+      myChart && myChart.dispose();
+    })
+
+    return { chartsRef, selectorChange }
+  },
 };
 </script>
 
