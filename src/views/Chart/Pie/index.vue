@@ -4,10 +4,10 @@
  * @Description: Description
 -->
 <template>
-  <div class="left-one">
-    <Pie1 class="pie"></Pie1>
-    <Pie2 class="pie"></Pie2>
-    <Pie3 class="pie"></Pie3>
+  <div class="view-content">
+    <Pie1 class="echart-panel"></Pie1>
+    <Pie2 class="echart-panel"></Pie2>
+    <Pie3 class="echart-panel"></Pie3>
   </div>
 </template>
 
@@ -21,12 +21,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left-one{
-  position: absolute;
-  top: 110px;
-  left: 70px
+.view-content{
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
 }
-.pie{
+.echart-panel{
   margin-bottom: 20px;
+  margin-right: 50px;
 }
 </style>

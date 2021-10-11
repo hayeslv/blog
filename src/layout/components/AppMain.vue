@@ -1,10 +1,16 @@
+<!--
+ * @Author: Lvhz
+ * @Date: 2021-08-30 17:32:21
+ * @Description: Description
+-->
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <router-view />
+    <!-- <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
-    </transition>
+    </transition> -->
   </section>
 </template>
 

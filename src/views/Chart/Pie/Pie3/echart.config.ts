@@ -4,7 +4,13 @@
  * @Description: Description
  */
 
-var colorList = ['#7F58FF', '#FF4F5C', '#FDAD43', '#11C372', '#009DFF'];
+const colorList = ['#7F58FF', '#FF4F5C', '#FDAD43', '#11C372', '#009DFF'];
+
+type ChartDataList = {
+  name: string,
+  value: number,
+  rate: string
+}
 
 // const dataList = [
 //   { name: '白天亮灯', value: 6543, rate: '35%' }, 
@@ -14,15 +20,15 @@ var colorList = ['#7F58FF', '#FF4F5C', '#FDAD43', '#11C372', '#009DFF'];
 //   { name: '最多字段数4', value: 4543, rate: '20%' }
 // ];
 
-const getDataList = dataList => {
-  let seriesData = [], legendData = [];
+const getDataList = (dataList: Array<ChartDataList>) => {
+  let seriesData: Array<ChartDataList> = [], legendData: Array<string> = [];
   if (!dataList || !Array.isArray(dataList)) return { seriesData, legendData };
   seriesData = dataList;
   legendData = dataList.map(item => item.name || '');
   return { seriesData, legendData };
 };
 
-export const getOption = dataList => {
+export const getOption = (dataList: Array<ChartDataList>) => {
   const { seriesData, legendData } = getDataList(dataList);
   return {
     backgroundColor: 'transparent',
@@ -33,8 +39,8 @@ export const getOption = dataList => {
       backgroundColor: 'rgba(13,5,30,.6)',
       borderWidth: 1,
       padding: 5,
-      formatter: function(parms) {
-        var str = parms.marker + '' + parms.data.name + '</br>' +
+      formatter: function(parms: any) {
+        const str = parms.marker + '' + parms.data.name + '</br>' +
                 '数量：' + parms.data.value + '件</br>' +
                 '占比：' + parms.percent + '%';
         return str;
@@ -47,7 +53,7 @@ export const getOption = dataList => {
       align: 'left',
       top: 'middle',
       icon: 'circle',
-      formatter: function(name) {
+      formatter: function(name: any) {
         const item = seriesData.filter(item => item.name === name)[0];
         return `{name|${item.name}}{value|${item.rate}}`;
       },
@@ -77,7 +83,7 @@ export const getOption = dataList => {
       hoverOffset: 4,
       itemStyle: {
         normal: {
-          color: function(params) {
+          color: function(params: any) {
             return colorList[params.dataIndex];
           }
         }

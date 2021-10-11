@@ -116,7 +116,7 @@ export const getOption = (dataList: Array<ChartDataList>) => {
       axisLabel: {
         textStyle: {
           color: 'rgba(255,255,255,0.65)',
-          fontSize: 16
+          fontSize: 12
         },
         // interval: 0, // x轴间距
         formatter: '{value}时'
@@ -134,7 +134,7 @@ export const getOption = (dataList: Array<ChartDataList>) => {
       axisLabel: {
         textStyle: {
           color: 'rgba(255,255,255,0.65)',
-          fontSize: 16
+          fontSize: 12
         }
       },
       axisLine: { // 竖坐标轴
