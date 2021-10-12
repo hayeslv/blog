@@ -5,6 +5,17 @@
  */
 
 const colorList = ['0, 157, 255', '127, 88, 255', '255, 79, 92', '253, 173, 67', '17, 195, 114', '0, 204, 255'];
+
+type ChartDataList = {
+  name: string,
+  value: number
+}
+type SeriesList = {
+  name: string,
+  value: number,
+  textStyle: any
+}
+
 // const dataList = [
 //   { name: '抛洒滴漏', value: 333 },
 //   { name: '违法排污', value: 113 },
@@ -14,9 +25,8 @@ const colorList = ['0, 157, 255', '127, 88, 255', '255, 79, 92', '253, 173, 67',
 //   { name: '垃圾满溢', value: 222 }
 // ];
 
-const getDataList = dataList => {
-  const seriesList = [];
-  if (!dataList || !Array.isArray(dataList)) return { seriesList };
+const getDataList = (dataList: Array<ChartDataList>) => {
+  const seriesList: Array<SeriesList> = [];
   dataList.forEach((item, index) => {
     seriesList.push({
       name: `${item.name} ${item.value}`,
@@ -35,7 +45,7 @@ const getDataList = dataList => {
   return { seriesList };
 };
 
-export const getOption = dataList => {
+export const getOption = (dataList: Array<ChartDataList>) => {
   const { seriesList } = getDataList(dataList);
   return {
     series: [{

@@ -7,14 +7,16 @@
   <div class="view-content">
     <Other1 class="echart-panel"></Other1>
     <Other2 class="echart-panel"></Other2>
+    <Other3 class="echart-panel"></Other3>
   </div>
 </template>
 
 <script>
 import Other1 from './Other1';
 import Other2 from './Other2';
+import Other3 from './Other3';
 export default {
-  components: { Other1, Other2 }
+  components: { Other1, Other2, Other3 }
 };
 </script>
 

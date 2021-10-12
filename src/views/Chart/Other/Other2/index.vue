@@ -1,11 +1,11 @@
 <!--
  * @Author: Lvhz
  * @Date: 2021-04-13 10:55:07
- * @Description: 
+ * @Description: 词云图： echarts + echarts-wordcloud
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="其他图 2" :height="210">
+    <PanelBac title="echart词云图" :height="210">
       <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
