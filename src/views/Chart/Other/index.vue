@@ -6,15 +6,15 @@
 <template>
   <div class="view-content">
     <Other1 class="echart-panel"></Other1>
-    <!-- <Other2 class="echart-panel"></Other2> -->
+    <Other2 class="echart-panel"></Other2>
   </div>
 </template>
 
 <script>
 import Other1 from './Other1';
-// import Other2 from './Other2';
+import Other2 from './Other2';
 export default {
-  components: { Other1,  }
+  components: { Other1, Other2 }
 };
 </script>
 

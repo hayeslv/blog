@@ -13,25 +13,6 @@ const colorList = ['0, 157, 255', '127, 88, 255', '255, 79, 92', '253, 173, 67',
 //   { name: '渣土乱倒', value: 444 },
 //   { name: '垃圾满溢', value: 222 }
 // ];
-// const seriesList = [];
-// for (let i = 0; i < dataList.length; i++) {
-//   const item = dataList[i];
-//   seriesList.push({
-//     name: `${item.name} ${item.value}`,
-//     value: item.value,
-//     textStyle: {
-//       normal: {
-//         backgroundColor: `rgba(${colorList[i]}, 0.3)`,
-//         color: `rgb(${colorList[i]})`,
-//         borderRadius: 20,
-//         padding: [10, 20, 10, 20]
-//       },
-//       emphasis: {
-//         color: '#fff'
-//       }
-//     }
-//   });
-// }
 
 const getDataList = dataList => {
   const seriesList = [];
@@ -41,12 +22,10 @@ const getDataList = dataList => {
       name: `${item.name} ${item.value}`,
       value: item.value,
       textStyle: {
-        normal: {
-          backgroundColor: `rgba(${colorList[index]}, 0.3)`,
-          color: `rgb(${colorList[index]})`,
-          borderRadius: 20,
-          padding: [6, 12, 6, 12]
-        },
+        backgroundColor: `rgba(${colorList[index]}, 0.3)`,
+        color: `rgb(${colorList[index]})`,
+        borderRadius: 20,
+        padding: [6, 12, 6, 12],
         emphasis: {
           color: '#fff'
         }
