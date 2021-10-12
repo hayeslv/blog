@@ -33,6 +33,12 @@ const componentsRouter = {
       meta: { title: '饼图' }
     },
     {
+      path: 'other',
+      component: () => import('@/views/Chart/Other'),
+      name: 'Other',
+      meta: { title: '其他图' }
+    },
+    {
       path: 'css-effect',
       component: () => import('@/views/Component/CSSEffect'),
       name: 'UploadBigFile1',
