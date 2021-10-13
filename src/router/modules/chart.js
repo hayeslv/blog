@@ -39,6 +39,12 @@ const componentsRouter = {
       meta: { title: '其他图' }
     },
     {
+      path: 'screen',
+      component: () => import('@/views/Chart/Screen'),
+      name: 'Screen',
+      meta: { title: '大屏组件' }
+    },
+    {
       path: 'css-effect',
       component: () => import('@/views/Component/CSSEffect'),
       name: 'UploadBigFile1',
