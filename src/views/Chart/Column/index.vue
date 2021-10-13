@@ -10,6 +10,7 @@
     <Column3 class="echart-panel"></Column3>
     <Column4 class="echart-panel"></Column4>
     <Column5 class="echart-panel"></Column5>
+    <Column6 class="echart-panel"></Column6>
   </div>
 </template>
 
@@ -19,8 +20,9 @@ import Column2 from './Column2';
 import Column3 from './Column3';
 import Column4 from './Column4';
 import Column5 from './Column5';
+import Column6 from './Column6';
 export default {
-  components: { Column1, Column2, Column3, Column4, Column5 }
+  components: { Column1, Column2, Column3, Column4, Column5, Column6 }
 };
 
 

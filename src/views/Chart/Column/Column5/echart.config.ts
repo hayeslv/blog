@@ -70,6 +70,7 @@ export function getOption(dataList: Array<ChartDataList>) {
         align: 'right',
         lineHeight: 46,
       },
+			splitNumber : 3, // y轴分隔数
       splitLine: {
         show: true,
         lineStyle: {
