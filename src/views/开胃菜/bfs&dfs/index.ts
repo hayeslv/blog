@@ -65,5 +65,3 @@ console.log('dfs----------');
 for(const node of dfs(body)) {
   console.log(node.tagName);
 }
-
-// 第6节：23.46
