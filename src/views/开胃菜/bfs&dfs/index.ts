@@ -4,7 +4,7 @@
  * @Description: 请实现两个函数，遍历所有的DOM节点
  */
 
-import jsdom from 'jsdom';
+const jsdom = require('jsdom');
 const dom = new jsdom.JSDOM(`<!DOCTYPE html>
 <body>
   <div>
@@ -12,7 +12,7 @@ const dom = new jsdom.JSDOM(`<!DOCTYPE html>
       <span></span>
       <span></span>
     </div>
-    <a />
+    <a></a>
     <div>
       <span></span>
       <span></span>
@@ -22,12 +22,37 @@ const dom = new jsdom.JSDOM(`<!DOCTYPE html>
 
 const body = dom.window.document.body;
 
-function *bfs(node: HTMLElement): Generator<HTMLElement> {
+function *bfs(node: Element): Generator<Element> {
+  // const queue = []
+  // 数组的 unshift 是一个 O(n)的操作，这里不建议使用
+  // queue.unshift() // O(n)
+  // queue.pop() // O(1)
 
+  // 队列中放入用j指针，取出用i指针。当i等于j时，代表队列为空
+  const queue = new Array<Element>(1000);
+  let i=0, j=0;
+  queue[j++] = node;
+
+  while(i !== j) {
+    const node = queue[i++]
+    yield node
+    if(node.children) {
+      for(let k=0; k<node.children.length; k++) {
+        const child = node.children[k]
+        queue[j++] = child
+      }
+    }
+  }
 }
 
-function *dfs(node: HTMLElement): Generator<HTMLElement> {
-
+function *dfs(node: Element): Generator<Element> {
+  yield node
+  if(node.children) {
+    for(let i=0; i<node.children.length; i++) {
+      const child = node.children[i]
+      yield * dfs(child)
+    }
+  }
 }
 
 

@@ -112,6 +112,7 @@ export function getOption(dataList: Array<ChartDataList>) {
         interval: 0, // x轴间距
         textStyle: {
           color: 'rgba(255,255,255,0.8)',
+          fontSize: 12,
         },
       },
     }],
@@ -126,6 +127,10 @@ export function getOption(dataList: Array<ChartDataList>) {
       splitNumber : 3, // y轴分隔数
       axisLabel: {
         formatter: '{value}',
+        textStyle: {
+          color: 'rgba(255,255,255,0.8)',
+          fontSize: 12,
+        },
       },
       axisTick: {
         show: false,
