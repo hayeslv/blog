@@ -25,6 +25,7 @@
 
 <script>
 export default {
+  name: 'PanelBac',
   props: {
     title: {
       type: [String],

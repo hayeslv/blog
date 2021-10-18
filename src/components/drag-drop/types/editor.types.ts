@@ -31,34 +31,34 @@ export enum Actions {
   EvtDrag,
   EvtDrop,
   EvtDragEnd,
-  StartAddComponent
+  StartAddComponent,
 }
+
 
 export type DragData = {
-  dragging : boolean,
-  startX : number,
-  startY : number,
-  x : number,
-  y : number,
-  diffX : number,
-  diffY : number
+	dragging : boolean,
+	startX : number,
+	startY : number,
+	x : number,
+	y : number,
+	diffX : number,
+	diffY : number
 }
-
 export type RawDragEvents = {
-  onDragstart ? : (e : DragNode) => void,
-  onDragend ? : (e : DragNode) => void,
-  onDrag ? : (e : DragNode) => void
+	onDragstart ? : (e  : DragEvent) => void,
+	onDragend ? : (e : DragEvent) => void,
+	onDrag? : (e : DragEvent) => void,
 }
 
 export type DragEvents = {
-  onDragstart ? : (e : DragNode) => void,
-  onDragend ? : (e : DragNode) => void,
-  onDrag ? : (e : DragNode) => void
+	onDragStart ? : (e  : DragNode) => void,
+	onDragEnd ? : (e : DragNode) => void,
+	onDrag? : (e : DragNode) => void,
 }
-
 export type DraggableProps = {
-  initialPosition : [number, number]
+	initialPosition : [number, number]
 } & DragEvents
+
 
 export type Meta = {
   type : string,

@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import Column1 from './Column1';
-import Column2 from './Column2';
-import Column3 from './Column3';
-import Column4 from './Column4';
-import Column5 from './Column5';
-import Column6 from './Column6';
+import Column1 from './components/Column1';
+import Column2 from './components/Column2';
+import Column3 from './components/Column3';
+import Column4 from './components/Column4';
+import Column5 from './components/Column5';
+import Column6 from './components/Column6';
 export default {
-  components: { Column1, Column2, Column3, Column4, Column5, Column6 }
+  components: { Column1, Column2, Column3, Column4, Column5, Column6 },
 };
 
 

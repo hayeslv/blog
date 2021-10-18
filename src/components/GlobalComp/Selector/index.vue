@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: 'Selector',
   props: {
     list: {
       type: Array,
