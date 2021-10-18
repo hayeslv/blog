@@ -16,8 +16,8 @@ export type DragPageState = {
 }
 
 export enum States {
-  State,
-  DragState,
+  Start,
+  DragStart,
   Moving,
   Stoped,
   Selected,
