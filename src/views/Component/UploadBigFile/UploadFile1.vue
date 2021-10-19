@@ -54,7 +54,6 @@ const handlerSubmit = async () => {
       uploadProgress.value = Number(((progress.loaded / progress.total) * 100).toFixed(2))
     }
   })
-  console.log(res);
   if(res.code === 200) {
     ElMessage.success('上传成功')
   } else {

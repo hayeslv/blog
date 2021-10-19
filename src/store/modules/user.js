@@ -17,8 +17,8 @@ const getters = {
 };
 
 // js中使用
-// console.log(store.commit('m_token', 1));
-// console.log(store.state.token);
+// store.commit('m_token', 1)
+// store.state.token
 
 // import { mapGetters, mapMutations } from "vuex";
 // 在method中

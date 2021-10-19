@@ -30,11 +30,11 @@ function *bfs(node: Element): Generator<Element> {
 
   // 队列中放入用j指针，取出用i指针。当i等于j时，代表队列为空
   const queue = new Array<Element>(1000);
-  let i=0, j=0;
+  let i=0, j=0; // j入队，i出队
   queue[j++] = node;
 
   while(i !== j) {
-    const node = queue[i++]
+    const node = queue[i++] // 从队列中取出一个元素
     yield node
     if(node.children) {
       for(let k=0; k<node.children.length; k++) {

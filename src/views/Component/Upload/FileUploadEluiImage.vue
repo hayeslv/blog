@@ -51,7 +51,6 @@ export default {
     // dialog预览
     handlePictureCardPreview(file) {
       file = toRaw(file)
-      console.log(file);
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
@@ -70,8 +69,6 @@ export default {
         this.$refs.upload.handleRemove(file); // 清除上传失败的文件
         return;
       }
-      console.log(res);
-      console.log(file);
       // 传回的对象是Proxy，可以通过vue中的toRaw（）方法获取原始对象
       console.log(toRaw(fileList));
       console.log(JSON.parse(JSON.stringify(fileList))); // 或者通过json序列化的方式

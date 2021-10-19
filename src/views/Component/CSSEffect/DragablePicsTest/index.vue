@@ -29,7 +29,6 @@ export default {
   methods: {
     initEffect() {
       var imgL = $('.pic img').length;
-      console.log(imgL);
       var deg = 360 / imgL;
       var roY = 0, roX = -10;
       var xN = 0, yN = 0;
@@ -45,7 +44,6 @@ export default {
         var x_ = ev.clientX;
         var y_ = ev.clientY;
         clearInterval(play);
-        console.log('我按下了');
         $(this).bind('mousemove', function(ev) {
           /*获取当前鼠标的坐标*/
           var x = ev.clientX;
@@ -56,7 +54,6 @@ export default {
 
           roY += xN * 0.2;
           roX -= yN * 0.1;
-          console.log('移动');
           //$('body').append('<div style="width:5px;height:5px;position:absolute;top:'+y+'px;left:'+x+'px;background-color:red"></div>');
 
           $('.pic').css({

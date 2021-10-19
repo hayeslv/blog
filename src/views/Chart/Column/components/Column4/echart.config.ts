@@ -74,7 +74,6 @@ export function getOption(dataList: Array<ChartDataList>) {
       trigger: "axis",
       fontSize: 14,
       formatter: function(val: any) {
-        console.log(dataList[val[0]['dataIndex']]);
         return `<span style="color:#23C3FF;margin-right:5px;">●</span>${val[0].axisValue}<br/>主体数量 : <span style="color:#23C3FF">${dataList[val[0]['dataIndex']].value1}</span><br/>注册资金 : <span style="color:#23C3FF">${dataList[val[0]['dataIndex']].value2}亿</span>`
       }
     },

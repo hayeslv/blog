@@ -21,8 +21,6 @@ const getScale = () => {
 
   if (rate > 0.99 && rate < 1.01) rate = 1;
   if (rate > 0.49 && rate < 0.51) rate = 0.5;
-  console.log(rate);
-  console.log(window.innerHeight);
   return { rate, width, height };
 };
 

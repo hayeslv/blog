@@ -11,7 +11,6 @@
 // const userAction = inject(USER_ACTION);
 
 // userAction('login', loginForm).then(() => {
-//   console.log(user);
 //   loading.value = false
 //   router.push({ path: redirect || '/', query: otherQuery })
 // }).catch(() => {
