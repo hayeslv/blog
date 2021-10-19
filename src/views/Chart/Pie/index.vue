@@ -11,6 +11,7 @@
     <Pie4 class="echart-panel"></Pie4>
     <Pie5 class="echart-panel"></Pie5>
     <Pie6 class="echart-panel"></Pie6>
+    <Pie7 class="echart-panel"></Pie7>
   </div>
 </template>
 
@@ -21,8 +22,9 @@ import Pie3 from './Pie3';
 import Pie4 from './Pie4';
 import Pie5 from './Pie5';
 import Pie6 from './Pie6';
+import Pie7 from './Pie7';
 export default {
-  components: { Pie1, Pie2, Pie3, Pie4, Pie5, Pie6 }
+  components: { Pie1, Pie2, Pie3, Pie4, Pie5, Pie6, Pie7 }
 };
 </script>
 

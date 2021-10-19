@@ -9,6 +9,7 @@
     <Other2 class="echart-panel"></Other2>
     <Other3 class="echart-panel"></Other3>
     <Other4 class="echart-panel"></Other4>
+    <Other5 class="echart-panel"></Other5>
   </div>
 </template>
 
@@ -17,8 +18,9 @@ import Other1 from './Other1';
 import Other2 from './Other2';
 import Other3 from './Other3';
 import Other4 from './Other4';
+import Other5 from './Other5';
 export default {
-  components: { Other1, Other2, Other3, Other4 }
+  components: { Other1, Other2, Other3, Other4, Other5 }
 };
 </script>
 
