@@ -14,6 +14,9 @@
         </div>
       </div>
       <div class="content">
+        <div v-show="loading" class="loading-wrapper">
+          <div class="loading" />
+        </div>
         <slot></slot>
       </div>
       <div class="footer">
@@ -30,6 +33,10 @@ export default {
     title: {
       type: [String],
       default: ''
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
     height: {
       type: [String, Number],
@@ -67,7 +74,7 @@ export default {
   position: absolute;
   left: 1px;
   bottom: 0;
-  width: calc(100% - 5px);
+  width: calc(100% - 8px);
   height: 10px;
   border-radius: 0 0 20px 0;
   padding-bottom: 1px;
@@ -110,6 +117,30 @@ export default {
     .title{
       margin-left: 56px;
       font-family: titleFont;
+    }
+  }
+}
+.content{
+  position: relative;
+  .loading-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 34, 92, 1);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loading {
+      width: 150px;
+      height: 75px;
+      background-image: url('~@/assets/image/common/loading.gif');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
     }
   }
 }

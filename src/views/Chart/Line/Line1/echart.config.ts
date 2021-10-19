@@ -44,10 +44,6 @@ const areaStyle = (index: number) => {
   };
 };
 
-// const xAxisDataList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-// const yAxisData1 = [100, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180, 233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234];
-// const yAxisData2 = [50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60, 300, 138, 350, 173, 180, 150, 178, 100, 138, 350, 173, 180];
-// const yAxisData3 = [233, 201, 182, 198, 234, 210, 230, 233, 201, 182, 198, 234, 50, 60, 90, 80, 60, 50, 70, 50, 60, 90, 80, 60];
 const getDataList = (dataList: Array<ChartDataList>) => {
   let xAxisDataList: Array<number> = [], yAxisData1: Array<number> = [], yAxisData2: Array<number> = [], yAxisData3: Array<number> = [];
   xAxisDataList = dataList.map(item => item.name);
