@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="highchart词云图" :height="210">
+    <PanelBac title="highchart词云图">
       <div id="highCharts" class="canvas" />
     </PanelBac>
   </div>

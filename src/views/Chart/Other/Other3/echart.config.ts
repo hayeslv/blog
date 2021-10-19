@@ -68,7 +68,7 @@ export const getOption = (dataList: Array<ChartDataList>) => {
       drawOutOfBound: true, // 超出范围也显示
       textStyle: {
         normal: {
-          // backgroundColor: '#fff',
+          // backgroundColor: 'transparent',
           // color: function() {
           //   return 'rgb(' + [
           //     Math.round(Math.random() * 255),
