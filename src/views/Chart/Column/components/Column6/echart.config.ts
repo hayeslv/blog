@@ -32,7 +32,7 @@ const getDataList = (dataList: Array<ChartDataList>) => {
 export function getOption(dataList: Array<ChartDataList>) {
   const { yAxisDataList, valueList1, valueList2, valueList3, valueList4 } = getDataList(dataList);
   return {
-    backgroundColor: '#00265f',
+    backgroundColor: 'transparent',
     tooltip: {
       trigger: 'axis',
       axisPointer: {

@@ -28,16 +28,16 @@ export function getOption(dataList: Array<ChartDataList>) {
   return {
     backgroundColor: "transparent",
     grid: {
-      top: '8%',
+      top: '10%',
       right: '5%',
-      left: '60',
-      bottom: '32%' //图表尺寸大小
+      left: '15%',
+      bottom: '25%' //图表尺寸大小
     },
     legend: {
       data: nameList,
       itemGap: 10,
       icon: 'none',
-      bottom: '0%',
+      bottom: '-2%',
       left: 'center',
       itemHeight: 10,
       itemWidth: 20,

@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="柱状图 1" :height="210">
+    <PanelBac title="柱状图 1">
       <template v-slot:selector>
         <Selector :list="['本月', '本年']" @change="selectorChange"></Selector>
       </template>

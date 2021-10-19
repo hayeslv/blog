@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="折线图 1" :height="210">
+    <PanelBac title="折线图 1" :loading="loading" :isEmpty="isEmpty">
       <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
@@ -31,10 +31,16 @@ const demoList = [
   { name: 10, value1: 180, value2: 60, value3: 100 },
   { name: 11, value1: 233, value2: 70, value3: 200 },
 ]
+
+//! 是否打开loading调试
+const openLoading = false
+
 export default {
   setup() {
     let myChart = null
     let chartsRef = ref()
+    let loading = ref(false)
+    let isEmpty = ref(false)
     // let dataList = ref([])
     let dataList = ref(demoList)
 
@@ -49,7 +55,32 @@ export default {
       // } catch (error) {
       //   throw new Error(error);
       // }
-      echartRender();
+      
+      if(openLoading) {
+        //! 模拟接口调用
+        setTimeout(() => {
+          loading.value = true
+        }, 0);
+
+        setTimeout(() => {
+
+          if(Math.random() > 0.5) {
+            loading.value = false
+            isEmpty.value = true
+          } else {
+            loading.value = false
+            isEmpty.value = false
+
+            echartRender(); // 渲染
+          }
+          
+        }, 2000)
+      } else {
+        echartRender(); // 渲染
+      }
+      
+
+      
     }
     const echartRender = () => {
       if (myChart) clearEchart();
@@ -76,7 +107,7 @@ export default {
       myChart && myChart.dispose();
     })
 
-    return { chartsRef, selectorChange }
+    return { chartsRef, selectorChange, loading, isEmpty }
   },
 };
 </script>

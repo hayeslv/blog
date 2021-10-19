@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="column">
-    <PanelBac title="柱状图 3" :height="210">
+    <PanelBac title="柱状图 3">
       <div ref="charts" class="canvas"></div>
     </PanelBac>
   </div>

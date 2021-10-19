@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="柱状图 5">
+    <PanelBac title="柱状图 7">
       <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
@@ -18,17 +18,13 @@ import { ref, toRaw, watch, onMounted, onUnmounted } from 'vue'
 // import { ColumnApi } from '@api';
 
 const demoList = [
-  { number: 484, totalNum: 513, name: '市辖区' },
-  { number: 497, totalNum: 593, name: '荷塘区' },
-  { number: 499, totalNum: 637, name: '芦淞区' },
-  { number: 484, totalNum: 563, name: '石峰区' },
-  { number: 481, totalNum: 556, name: '天元区' },
-  { number: 488, totalNum: 512, name: '渌口区' },
-  { number: 494, totalNum: 520, name: '攸县' },
-  { number: 490, totalNum: 647, name: '茶陵县' },
-  { number: 493, totalNum: 560, name: '炎陵县' },
-  { number: 498, totalNum: 632, name: '云龙示范区' },
-  { number: 481, totalNum: 595, name: '醴陵市' }
+  { name: '星期一', value: 80 },
+  { name: '星期二', value: 80 },
+  { name: '星期三', value: 97 },
+  { name: '星期四', value: 53 },
+  { name: '星期五', value: 95 },
+  { name: '星期六', value: 26 },
+  { name: '星期天', value: 72 },
 ]
 export default {
   setup() {

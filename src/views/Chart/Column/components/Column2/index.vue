@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="column">
-    <PanelBac title="柱状图 2" :height="210">
+    <PanelBac title="柱状图 2">
       <template v-slot:selector>
         <el-select class="selector" v-model="selectVal" placeholder="请选择">
           <el-option v-for="item in optionList" :key="item.value" :label="item.label" :value="item.value"></el-option>

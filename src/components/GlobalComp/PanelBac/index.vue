@@ -14,8 +14,14 @@
         </div>
       </div>
       <div class="content">
+        <!-- 加载中 -->
         <div v-show="loading" class="loading-wrapper">
           <div class="loading" />
+        </div>
+        <!-- 加载完成，并且没有数据 -->
+        <div v-show="!loading && isEmpty" class="no-data">
+          <div class="empty" />
+          <span>暂无数据</span>
         </div>
         <slot></slot>
       </div>
@@ -35,6 +41,10 @@ export default {
       default: ''
     },
     loading: {
+      type: Boolean,
+      default: false,
+    },
+    isEmpty: {
       type: Boolean,
       default: false,
     },
@@ -123,6 +133,7 @@ export default {
 .content{
   position: relative;
   .loading-wrapper {
+    height: calc(100% - 20px);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -133,7 +144,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-
     .loading {
       width: 150px;
       height: 75px;
@@ -142,6 +152,34 @@ export default {
       background-repeat: no-repeat;
       background-size: contain;
     }
+  }
+}
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .empty {
+    height: 48px;
+    width: 72px;
+    background-image: url('~@/assets/image/common/empty.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 16px;
+    opacity: 0.4;
+  }
+
+  & > * {
+    line-height: 18px;
+    font-size: 16px;
+    color: #999;
   }
 }
 </style>
