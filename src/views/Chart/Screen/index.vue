@@ -7,14 +7,16 @@
   <div class="view-content">
     <Screen1 class="echart-panel"></Screen1>
     <Screen2 class="echart-panel"></Screen2>
+    <Screen3 class="echart-panel"></Screen3>
   </div>
 </template>
 
 <script>
 import Screen1 from './Screen1';
 import Screen2 from './Screen2';
+import Screen3 from './Screen3';
 export default {
-  components: { Screen1, Screen2}
+  components: { Screen1, Screen2, Screen3 }
 };
 </script>
 
