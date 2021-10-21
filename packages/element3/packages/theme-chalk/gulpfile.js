@@ -1,9 +1,5 @@
-/*
- * @Author: Lvhz
- * @Date: 2021-09-23 17:15:23
- * @Description: Description
- */
 'use strict'
+
 const { series, src, dest } = require('gulp')
 const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
@@ -27,4 +23,3 @@ function copyfont() {
 }
 
 exports.build = series(compile, copyfont)
-

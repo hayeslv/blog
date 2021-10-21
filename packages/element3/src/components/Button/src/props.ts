@@ -1,10 +1,6 @@
-/*
- * @Author: Lvhz
- * @Date: 2021-09-23 16:27:35
- * @Description: Description
- */
 import { ButtonType, ButtonSize, ButtonNativeType } from './types'
 import { PropType } from 'vue'
+
 export const props = {
   size: {
     type: String as PropType<ButtonSize>,
@@ -15,7 +11,14 @@ export const props = {
   type: {
     type: String as PropType<ButtonType>,
     validator(val: string): boolean {
-      return ['primary', 'success', 'warning', 'danger', 'info', 'text'].includes(val)
+      return [
+        'primary',
+        'success',
+        'warning',
+        'danger',
+        'info',
+        'text'
+      ].includes(val)
     }
   },
   nativeType: {

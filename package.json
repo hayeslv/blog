@@ -5,6 +5,7 @@
   ],
   "scripts": {
     "dev#website": "yarn workspace website dev",
+    "dev#website1": "yarn workspace website1 dev",
     "dev#element3": "yarn workspace dy-element3 dev",
     "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",

@@ -13,7 +13,7 @@ module.exports = {
   chainWebpack: (config) => {
     // 入口文件
     config
-      .entry("app")
+      .entry("App")
       .clear()
       .add(path.resolve(__dirname, './src/main.js'))
       .end();

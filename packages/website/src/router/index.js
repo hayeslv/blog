@@ -1,5 +1,18 @@
+/*
+ * @Author: Lvhz
+ * @Date: 2021-09-23 15:30:15
+ * @Description: Description
+ */
+// import { defineComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+
+// const btnConfig = {
+//   path: "/button",
+//   title: "Button 按钮",
+// };
+
+// const loadDocs = (path) => defineComponent(() => import(`../docs${path}.md`));
 
 const routes = [
   {
@@ -16,7 +29,27 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
+  {
+    path: "/button",
+    name: "Button",
+    component: () => import("../docs/button.md"),
+  },
 ];
+// function addDocRoute(page) {
+//   const component = loadDocs(page.path);
+//   console.log(page);
+//   console.log(component);
+//   routes.push({
+//     path: page.path.slice(0),
+//     meta: {
+//       title: page.title || page.name,
+//       description: page.description,
+//     },
+//     name: "component " + (page.title || page.name),
+//     component: component.default || component,
+//   });
+// }
+// addDocRoute(btnConfig);
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

@@ -44,12 +44,6 @@ const componentsRouter = {
       name: 'Screen',
       meta: { title: '大屏组件' }
     },
-    {
-      path: 'css-effect',
-      component: () => import('@/views/Component/CSSEffect'),
-      name: 'UploadBigFile1',
-      meta: { title: 'css样式' }
-    },
   ]
 }
 
