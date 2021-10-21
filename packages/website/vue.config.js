@@ -5,27 +5,20 @@
  * @Description: Description
  */
 
-const path = require("path");
 module.exports = {
   devServer: {
     port: 9888,
   },
   chainWebpack: (config) => {
-    // 入口文件
-    config
-      .entry("App")
-      .clear()
-      .add(path.resolve(__dirname, './src/main.js'))
-      .end();
     // 添加解析md的loader
     config.module
-      .rule('md2vue')
+      .rule('md')
       .test(/\.md$/)
-      .use('vue-loader')
-      .loader('vue-loader')
+      .use('html-loader')
+      .loader('html-loader')
       .end()
-      .use('md-loader')
-      .loader(path.resolve(__dirname, '../md-loader/src/index.js'))
+      .use('markdown-loader')
+      .loader('markdown-loader')
       .end()
   },
 };

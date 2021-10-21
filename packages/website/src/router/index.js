@@ -29,11 +29,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
-  {
-    path: "/button",
-    name: "Button",
-    component: () => import("../docs/button.md"),
-  },
 ];
 // function addDocRoute(page) {
 //   const component = loadDocs(page.path);
