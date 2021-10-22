@@ -92,7 +92,7 @@ funnelData.sort((a,b)=> b.value - a.value).forEach((item,index)=>{
 		y: y,
 		symbol:'circle',
 		symbolSize:[0,1],
-		symbolOffset:[35,0],
+		symbolOffset:[5,0],
 		label: {
 			normal:{
 				color:'#fff',
@@ -109,7 +109,7 @@ funnelData.sort((a,b)=> b.value - a.value).forEach((item,index)=>{
 		y: y,
 		symbol:'circle',
 		symbolSize:[0,1],
-		symbolOffset:[-15,0],
+		symbolOffset:[-5,0],
 		label:{
 			normal:{
 				color:'#fff',

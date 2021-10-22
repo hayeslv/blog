@@ -19,13 +19,7 @@ const componentsRouter = {
       component: () => import('@/views/Core/Promise'),
       name: 'Promise',
       meta: { title: 'Promise' }
-    },
-    {
-      path: 'css-effect',
-      component: () => import('@/views/Component/CSSEffect'),
-      name: 'UploadBigFile1',
-      meta: { title: 'css样式' }
-    },
+    }
   ]
 }
 

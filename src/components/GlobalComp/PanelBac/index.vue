@@ -4,7 +4,7 @@
  * @Description: 背景面板
 -->
 <template>
-  <div class="panel-bac" :style="{height: useHeight ? useHeight : 'auto'}">
+  <div class="panel-bac" :style="{height: useHeight ? useHeight : 'auto', width: width ? width : ''}">
     <div class="inner">
       <div class="top">
         <img :src="panelTitleImgSrc" alt="">
@@ -49,6 +49,10 @@ export default {
       default: false,
     },
     height: {
+      type: [String, Number],
+      default: null
+    },
+    width: {
       type: [String, Number],
       default: null
     }
