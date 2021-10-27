@@ -5,14 +5,18 @@
 -->
 <template>
   <div class="app" :class="{ 'is-component': isComponent }">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <main-header></main-header>
+    <div class="main-cnt">
+      <router-view />
+    </div>
   </div>
-  <router-view />
 </template>
+
 <script>
+import MainHeader from "./components/main-header.vue";
 export default {
   name: "app",
+  components: { MainHeader },
   computed: {
     isComponent() {
       return /^component-/.test(this.$route.name || "");

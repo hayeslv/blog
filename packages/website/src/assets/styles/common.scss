@@ -27,7 +27,7 @@ body {
       min-height: auto;
     }
 
-    .headerWrapper {
+    .header-wrapper {
       position: fixed;
       width: 100%;
       left: 0;
@@ -171,7 +171,7 @@ textarea {
     padding: 0 20px;
   }
 
-  #app.is-component .headerWrapper .container {
+  #app.is-component .header-wrapper .container {
     padding: 0 12px;
   }
 }
