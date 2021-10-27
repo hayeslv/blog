@@ -5,30 +5,65 @@
  */
 import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import navConfig from "./nav.config";
 
 const load = (path) =>
   defineAsyncComponent(() => import(`../pages/${path}.vue`));
 
+const loadDocs = (path) =>
+  defineAsyncComponent(() => import(`../docs${path}.md`));
+
 // 注册路由
-function registerRoute() {
+function registerRoute(navConfig) {
+  const route = [];
+
+  // 组件页第一个页面
+  route.push({
+    path: `/component`,
+    redirect: `/component/quickstart`,
+    component: load("component"),
+    children: [],
+  });
+
+  navConfig.forEach((nav) => {
+    if (nav.href) return;
+    if (nav.groups) {
+      nav.groups.forEach((group) => {
+        group.list.forEach((nav) => {
+          addRoute(nav);
+        });
+      });
+    } else if (nav.children) {
+      nav.children.forEach((nav) => {
+        addRoute(nav);
+      });
+    } else {
+      addRoute(nav);
+    }
+  });
+
+  function addRoute(page) {
+    const component = loadDocs(page.path);
+    const child = {
+      path: page.path.slice(1),
+      meta: {
+        title: page.title || page.name,
+        description: page.description,
+      },
+      name: "component" + (page.title || page.name),
+      component: component.default || component,
+    };
+
+    route[0].children.push(child);
+  }
+
   return [];
 }
 
-let routes = registerRoute();
+let routes = registerRoute(navConfig);
 
 // 静态路由
 const staticRoutes = [
-  {
-    path: "/home",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue"),
-  },
   {
     path: "/", // 首页
     name: "home",

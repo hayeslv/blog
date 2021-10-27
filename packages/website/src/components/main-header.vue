@@ -25,7 +25,13 @@
           </router-link>
         </h1>
         <!-- 导航 -->
-        <ul class="nav"></ul>
+        <ul class="nav">
+          <li class="nav-item">
+            <router-link active-class="active" :to="`/component`">
+              {{ langConfig.components }}
+            </router-link>
+          </li>
+        </ul>
       </div>
     </header>
   </div>
