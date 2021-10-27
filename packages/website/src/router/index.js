@@ -3,48 +3,40 @@
  * @Date: 2021-09-23 15:30:15
  * @Description: Description
  */
-// import { defineComponent } from "vue";
+import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 
-// const btnConfig = {
-//   path: "/button",
-//   title: "Button 按钮",
-// };
+const load = (path) =>
+  defineAsyncComponent(() => import(`../pages/${path}.vue`));
 
-// const loadDocs = (path) => defineComponent(() => import(`../docs${path}.md`));
+// 注册路由
+function registerRoute() {
+  return [];
+}
 
-const routes = [
+let routes = registerRoute();
+
+// 静态路由
+const staticRoutes = [
   {
-    path: "/",
+    path: "/home",
     name: "Home",
     component: Home,
   },
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    component: () => import("../views/About.vue"),
+  },
+  {
+    path: "/", // 首页
+    name: "home",
+    component: load("index"),
   },
 ];
-// function addDocRoute(page) {
-//   const component = loadDocs(page.path);
-//   console.log(page);
-//   console.log(component);
-//   routes.push({
-//     path: page.path.slice(0),
-//     meta: {
-//       title: page.title || page.name,
-//       description: page.description,
-//     },
-//     name: "component " + (page.title || page.name),
-//     component: component.default || component,
-//   });
-// }
-// addDocRoute(btnConfig);
+
+routes = routes.concat(staticRoutes);
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
