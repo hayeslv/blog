@@ -24,10 +24,20 @@ function registerRoute(navConfig) {
     component: load("component"),
     children: [],
   });
+
   route.push({
-    path: `/about`,
-    component: () => import("../views/About"),
+    path: `/comp`,
+    redirect: `/comp/about`,
+    component: () => import("../pages/comp.vue"),
+    children: [
+      {
+        path: `/comp/about`,
+        component: () => import("../views/About"),
+      },
+    ],
   });
+
+  // route[0].children.push(child);
   navConfig.forEach((nav) => {
     if (nav.href) return;
     if (nav.groups) {

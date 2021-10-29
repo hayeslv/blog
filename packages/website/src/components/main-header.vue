@@ -31,6 +31,11 @@
               {{ langConfig.components }}
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link active-class="active" :to="`/comp`">
+              关于我们
+            </router-link>
+          </li>
         </ul>
       </div>
     </header>
@@ -157,8 +162,6 @@ export default {
     &.lang-item,
     &:last-child {
       cursor: default;
-      margin-left: 34px;
-
       span {
         opacity: 0.8;
       }
