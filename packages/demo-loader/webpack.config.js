@@ -14,16 +14,26 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
+  resolveLoader: {
+    // 会依次在node_modules、loaders文件夹中查找是否存在对应loader
+    modules: [
+      path.resolve(__dirname, './node_modules'), 
+      path.resolve(__dirname, './loaders')
+    ]
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
-        use: {
-          loader: path.resolve(__dirname, './loaders/replaceLoader.js'),
-          options: {
-            name: 'dylan'
+        use: [
+          { loader: 'replaceLoader.js' },
+          {
+            loader: 'replaceLoaderAsync.js',
+            options: {
+              name: 'dylan'
+            }
           }
-        }
+        ]
       }
     ]
   }
