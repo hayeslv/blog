@@ -22,6 +22,8 @@ module.exports = function (source) {
   let commentStart = content.indexOf(startTag)
   console.log('\n===============================');
   console.log(commentStart);
+  if(commentStart !== -1) console.log(content);
+  
   let commentEnd = content.indexOf(endTag, commentStart + startTagLen)
   while (commentStart !== -1 && commentEnd !== -1) {
     output.push(content.slice(start, commentStart))

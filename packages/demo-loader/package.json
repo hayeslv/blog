@@ -1,0 +1,17 @@
+{
+  "name": "demo-loader",
+  "version": "1.0.0",
+  "description": "使用`webpack`往往离不开loader的安装配置，手写一个`loader`其实非常简单，类似手写一个功能函数，下面我们来实现一个替换字符串的`loader`",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "loader-utils": "^3.0.0",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1"
+  }
+}

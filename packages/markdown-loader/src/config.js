@@ -1,3 +1,8 @@
+/*
+ * @Author: Lvhz
+ * @Date: 2021-10-28 18:09:54
+ * @Description: Description
+ */
 const Config = require('markdown-it-chain')
 // const anchorPlugin = require('markdown-it-anchor')
 // const slugify = require('transliteration').slugify
@@ -39,8 +44,9 @@ config.options
 //   }
 // ])
 // .end()
-
 const md = config.toMd()
+console.log('???????????????');
+console.log(md);
 overWriteFenceRule(md)
 
 module.exports = md
