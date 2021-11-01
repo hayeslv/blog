@@ -52,7 +52,8 @@ module.exports = {
         title: '数据结构',
         collapsable: false,
         children: [
-          '/algorithm/base-栈'
+          '/algorithm/base-栈',
+          '/algorithm/button'
         ]
       },
       {

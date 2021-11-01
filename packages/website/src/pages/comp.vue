@@ -6,7 +6,7 @@
 <template>
   <div class="page-container page-component">
     <div class="page-component__content">
-      <router-view class="content"></router-view>
+      <router-view class="content markdown-body"></router-view>
     </div>
   </div>
 </template>

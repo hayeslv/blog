@@ -3,7 +3,7 @@
  * @Date: 2021-10-31 19:58:25
  * @Description: Description
  */
-const { Observable } = require('rxjs');
+import { Observable } from ('rxjs');
 
 (() => {
   const observable = new Observable((observer) => {
