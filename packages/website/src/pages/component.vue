@@ -132,28 +132,28 @@
 }
 </style>
 <template>
-  <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
-    <div class="page-container page-component">
-      <el-scrollbar class="page-component__nav">
+  <!-- <el-scrollbar class="page-component__scroll" ref="componentScrollBar"> -->
+  <div class="page-container page-component">
+    <!-- <el-scrollbar class="page-component__nav">
         <side-nav :data="navsData" :base="`/component`"></side-nav>
-      </el-scrollbar>
-      <div class="page-component__content">
-        <router-view class="content"></router-view>
-        <footer-nav></footer-nav>
-      </div>
-      <el-backtop
+      </el-scrollbar> -->
+    <div class="page-component__content">
+      <router-view class="content markdown-body"></router-view>
+      <!-- <footer-nav></footer-nav> -->
+    </div>
+    <!-- <el-backtop
         v-if="showBackToTop"
         target=".page-component__scroll .el-scrollbar__wrap"
         :right="100"
         :bottom="150"
-      ></el-backtop>
-    </div>
-  </el-scrollbar>
+      ></el-backtop> -->
+  </div>
+  <!-- </el-scrollbar> -->
 </template>
 <script>
 import bus from "../bus";
 import navsData from "../router/nav.config.json";
-import { throttle } from "throttle-debounce";
+// import { throttle } from "throttle-debounce";
 
 export default {
   data() {
@@ -166,13 +166,13 @@ export default {
     };
   },
   watch: {
-    "$route.path"() {
-      // 触发伪滚动条更新
-      this.componentScrollBox.scrollTop = 0;
-      this.$nextTick(() => {
-        this.componentScrollBar.update();
-      });
-    },
+    // "$route.path"() {
+    //   // 触发伪滚动条更新
+    //   this.componentScrollBox.scrollTop = 0;
+    //   this.$nextTick(() => {
+    //     this.componentScrollBar.update();
+    //   });
+    // },
   },
   methods: {
     renderAnchorHref() {
@@ -214,51 +214,51 @@ export default {
     },
   },
   computed: {
-    showBackToTop() {
-      return !this.$route.path.match(/backtop/);
-    },
+    // showBackToTop() {
+    //   return !this.$route.path.match(/backtop/);
+    // },
   },
   created() {
-    bus.$on("navFade", (val) => {
-      this.navFaded = val;
-    });
+    // bus.$on("navFade", (val) => {
+    //   this.navFaded = val;
+    // });
   },
-  mounted() {
-    this.componentScrollBar = this.$refs.componentScrollBar;
-    this.componentScrollBox = this.componentScrollBar.$el.querySelector(
-      ".el-scrollbar__wrap"
-    );
-    this.throttledScrollHandler = throttle(300, this.handleScroll);
-    this.componentScrollBox.addEventListener(
-      "scroll",
-      this.throttledScrollHandler
-    );
-    this.renderAnchorHref();
-    this.goAnchor();
-    document.body.classList.add("is-component");
-  },
-  unmounted() {
-    document.body.classList.remove("is-component");
-  },
-  beforeUnmount() {
-    this.componentScrollBox.removeEventListener(
-      "scroll",
-      this.throttledScrollHandler
-    );
-  },
-  beforeRouteUpdate(to, from, next) {
-    next();
-    setTimeout(() => {
-      const toPath = to.path;
-      const fromPath = from.path;
-      if (toPath === fromPath && to.hash) {
-        this.goAnchor();
-      }
-      if (toPath !== fromPath) {
-        document.documentElement.scrollTop = document.body.scrollTop = 0;
-        this.renderAnchorHref();
-      }
-    }, 100);
-  },
+  // mounted() {
+  //   this.componentScrollBar = this.$refs.componentScrollBar;
+  //   this.componentScrollBox = this.componentScrollBar.$el.querySelector(
+  //     ".el-scrollbar__wrap"
+  //   );
+  //   this.throttledScrollHandler = throttle(300, this.handleScroll);
+  //   this.componentScrollBox.addEventListener(
+  //     "scroll",
+  //     this.throttledScrollHandler
+  //   );
+  //   this.renderAnchorHref();
+  //   this.goAnchor();
+  //   document.body.classList.add("is-component");
+  // },
+  // unmounted() {
+  //   document.body.classList.remove("is-component");
+  // },
+  // beforeUnmount() {
+  //   this.componentScrollBox.removeEventListener(
+  //     "scroll",
+  //     this.throttledScrollHandler
+  //   );
+  // },
+  // beforeRouteUpdate(to, from, next) {
+  //   next();
+  //   setTimeout(() => {
+  //     const toPath = to.path;
+  //     const fromPath = from.path;
+  //     if (toPath === fromPath && to.hash) {
+  //       this.goAnchor();
+  //     }
+  //     if (toPath !== fromPath) {
+  //       document.documentElement.scrollTop = document.body.scrollTop = 0;
+  //       this.renderAnchorHref();
+  //     }
+  //   }, 100);
+  // },
 };
 </script>

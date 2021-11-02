@@ -21,14 +21,16 @@ function registerRoute() {
   route.push({
     path: `/component`,
     redirect: `/component/quickstart`,
-    component: load("component"),
-    children: [],
+    // component: load("component"),
+    component: load("comp"),
   });
 
   route.push({
     path: `/comp`,
     redirect: `/comp/about`,
-    component: () => import("../pages/comp.vue"),
+    // component: () => import("../pages/comp.vue"),
+    component: load("component"),
+    // component: load("comp"),
     children: [
       {
         path: `/comp/about`,
