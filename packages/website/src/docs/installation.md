@@ -1,3 +1,4 @@
+
 ## 安装
 
 ### npm 安装
@@ -22,9 +23,8 @@ npm i element3 -S
 <script src="https://unpkg.com/element3"></script>
 ```
 
-:::tip
 我们建议使用 CDN 引入 Element3 的用户在链接地址上锁定版本，以免将来 Element3 升级时受到非兼容性更新的影响。锁定版本的方法请查看 [unpkg.com](https://unpkg.com)。
-:::
+
 
 ### Hello world
 

@@ -69,7 +69,7 @@ export default {};
   }
 
   .content {
-    padding-top: 50px;
+    // padding-top: 50px;
 
     > {
       h3 {

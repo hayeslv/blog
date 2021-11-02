@@ -10,8 +10,8 @@ import navConfig from "./nav.config";
 const load = (path) =>
   defineAsyncComponent(() => import(`../pages/${path}.vue`));
 
-// const loadDocs = (path) =>
-//   defineAsyncComponent(() => import(`../docs${path}.md`));
+const loadDocs = (path) =>
+  defineAsyncComponent(() => import(`../docs${path}.md`));
 
 // 注册路由
 function registerRoute() {
@@ -22,6 +22,7 @@ function registerRoute() {
     path: `/component`,
     redirect: `/component/quickstart`,
     component: load("component"),
+    children: [],
   });
 
   route.push({
@@ -37,38 +38,40 @@ function registerRoute() {
     ],
   });
 
-  // route[0].children.push(child);
-  // navConfig.forEach((nav) => {
-  //   if (nav.href) return;
-  //   if (nav.groups) {
-  //     nav.groups.forEach((group) => {
-  //       group.list.forEach((nav) => {
-  //         addRoute(nav);
-  //       });
-  //     });
-  //   } else if (nav.children) {
-  //     nav.children.forEach((nav) => {
-  //       addRoute(nav);
-  //     });
-  //   } else {
-  //     addRoute(nav);
-  //   }
-  // });
+  navConfig.forEach((nav) => {
+    if (nav.href) return;
+    if (nav.groups) {
+      nav.groups.forEach((group) => {
+        group.list.forEach((nav) => {
+          addRoute(nav);
+        });
+      });
+    } else if (nav.children) {
+      nav.children.forEach((nav) => {
+        addRoute(nav);
+      });
+    } else {
+      addRoute(nav);
+    }
+  });
 
-  // function addRoute(page) {
-  //   const component = loadDocs(page.path);
-  //   const child = {
-  //     path: page.path.slice(1),
-  //     meta: {
-  //       title: page.title || page.name,
-  //       description: page.description,
-  //     },
-  //     name: "component" + (page.title || page.name),
-  //     component: component.default || component,
-  //   };
+  function addRoute(page) {
+    // const component = loadDocs(page.path);
+    const component = defineAsyncComponent(() =>
+      import(`../pages/markdownComp`)
+    );
+    const child = {
+      path: page.path.slice(1),
+      meta: {
+        title: page.title || page.name,
+        description: page.description,
+      },
+      name: "component" + (page.title || page.name),
+      component: component.default || component,
+    };
 
-  //   route[0].children.push(child);
-  // }
+    route[0].children.push(child);
+  }
 
   return route;
 }
