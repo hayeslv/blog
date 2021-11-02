@@ -18,25 +18,12 @@ function registerRoute() {
   const route = [];
 
   // 组件页第一个页面
-  // route.push({
-  //   path: `/component`,
-  //   redirect: `/component/quickstart`,
-  //   // component: load("component"),
-  //   component: load("comp"),
-  // });
-
   route.push({
-    path: `/comp`,
-    redirect: `/comp/about`,
-    // component: load("component"),
-    component: load("comp"),
-    children: [
-      {
-        path: `/comp/about`,
-        component: () => import("../views/About"),
-      },
-    ],
+    path: `/component`,
+    redirect: `/component/quickstart`,
+    component: load("component"),
   });
+
   route.push({
     path: `/component`,
     redirect: `/component/about`,
@@ -45,7 +32,7 @@ function registerRoute() {
       {
         name: "component-about",
         path: `/component/about`,
-        component: () => import("../views/About1"),
+        component: () => import("../views/About"),
       },
     ],
   });
