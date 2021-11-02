@@ -3,7 +3,23 @@
   height: calc(100vh - 80px);
   margin-top: 80px;
   > .el-scrollbar__wrap {
+    overflow: scroll;
+    height: 100%;
     overflow-x: auto;
+    .el-scrollbar__view {
+      height: 100%;
+      overflow: scroll;
+      &::-webkit-scrollbar-track-piece {
+        background: #fff;
+      }
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(144, 147, 153, 0.3);
+        border-radius: 20px;
+      }
+    }
   }
 }
 
