@@ -1,7 +1,6 @@
 <style lang="scss">
 .page-component__scroll {
   height: calc(100vh - 80px);
-  overflow: scroll;
   margin-top: 80px;
   > .el-scrollbar__wrap {
     overflow-x: auto;
@@ -132,23 +131,23 @@
 }
 </style>
 <template>
-  <!-- <el-scrollbar class="page-component__scroll" ref="componentScrollBar"> -->
-  <div class="page-container page-component">
-    <!-- <el-scrollbar class="page-component__nav">
+  <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
+    <div class="page-container page-component">
+      <el-scrollbar class="page-component__nav">
         <side-nav :data="navsData" :base="`/component`"></side-nav>
-      </el-scrollbar> -->
-    <div class="page-component__content">
-      <router-view class="content markdown-body"></router-view>
-      <!-- <footer-nav></footer-nav> -->
-    </div>
-    <!-- <el-backtop
+      </el-scrollbar>
+      <div class="page-component__content">
+        <router-view class="content markdown-body"></router-view>
+        <!-- <footer-nav></footer-nav> -->
+      </div>
+      <!-- <el-backtop
         v-if="showBackToTop"
         target=".page-component__scroll .el-scrollbar__wrap"
         :right="100"
         :bottom="150"
       ></el-backtop> -->
-  </div>
-  <!-- </el-scrollbar> -->
+    </div>
+  </el-scrollbar>
 </template>
 <script>
 import bus from "../bus";
@@ -223,23 +222,23 @@ export default {
     //   this.navFaded = val;
     // });
   },
-  // mounted() {
-  //   this.componentScrollBar = this.$refs.componentScrollBar;
-  //   this.componentScrollBox = this.componentScrollBar.$el.querySelector(
-  //     ".el-scrollbar__wrap"
-  //   );
-  //   this.throttledScrollHandler = throttle(300, this.handleScroll);
-  //   this.componentScrollBox.addEventListener(
-  //     "scroll",
-  //     this.throttledScrollHandler
-  //   );
-  //   this.renderAnchorHref();
-  //   this.goAnchor();
-  //   document.body.classList.add("is-component");
-  // },
-  // unmounted() {
-  //   document.body.classList.remove("is-component");
-  // },
+  mounted() {
+    //   this.componentScrollBar = this.$refs.componentScrollBar;
+    //   this.componentScrollBox = this.componentScrollBar.$el.querySelector(
+    //     ".el-scrollbar__wrap"
+    //   );
+    //   this.throttledScrollHandler = throttle(300, this.handleScroll);
+    //   this.componentScrollBox.addEventListener(
+    //     "scroll",
+    //     this.throttledScrollHandler
+    //   );
+    //   this.renderAnchorHref();
+    //   this.goAnchor();
+    document.body.classList.add("is-component");
+  },
+  unmounted() {
+    document.body.classList.remove("is-component");
+  },
   // beforeUnmount() {
   //   this.componentScrollBox.removeEventListener(
   //     "scroll",

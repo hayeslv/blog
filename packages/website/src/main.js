@@ -6,7 +6,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import * as ElementUI from "element-plus";
+import ElementUI from "element3";
 
 import "./assets/styles/common.scss";
 import "./assets/styles/juejin-markdown-theme/channing-cyan.scss";

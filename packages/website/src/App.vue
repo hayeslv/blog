@@ -4,7 +4,7 @@
  * @Description: Description
 -->
 <template>
-  <div class="app" :class="{ 'is-component': isComponent }">
+  <div class="app">
     <main-header></main-header>
     <div class="main-cnt">
       <router-view />
@@ -17,10 +17,5 @@ import MainHeader from "./components/main-header.vue";
 export default {
   name: "app",
   components: { MainHeader },
-  computed: {
-    isComponent() {
-      return /^component-/.test(this.$route.name || "");
-    },
-  },
 };
 </script>

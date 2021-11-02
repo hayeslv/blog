@@ -18,23 +18,34 @@ function registerRoute() {
   const route = [];
 
   // 组件页第一个页面
-  route.push({
-    path: `/component`,
-    redirect: `/component/quickstart`,
-    // component: load("component"),
-    component: load("comp"),
-  });
+  // route.push({
+  //   path: `/component`,
+  //   redirect: `/component/quickstart`,
+  //   // component: load("component"),
+  //   component: load("comp"),
+  // });
 
   route.push({
     path: `/comp`,
     redirect: `/comp/about`,
-    // component: () => import("../pages/comp.vue"),
-    component: load("component"),
-    // component: load("comp"),
+    // component: load("component"),
+    component: load("comp"),
     children: [
       {
         path: `/comp/about`,
         component: () => import("../views/About"),
+      },
+    ],
+  });
+  route.push({
+    path: `/component`,
+    redirect: `/component/about`,
+    component: load("component"),
+    children: [
+      {
+        name: "component-about",
+        path: `/component/about`,
+        component: () => import("../views/About1"),
       },
     ],
   });
