@@ -169,8 +169,10 @@
 import bus from "../bus";
 import navsData from "../router/nav.config.json";
 // import { throttle } from "throttle-debounce";
+import SideNav from "@/components/side-nav.vue";
 
 export default {
+  components: { SideNav },
   data() {
     return {
       navsData,
