@@ -6,18 +6,34 @@
 import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import navConfig from "./nav.config";
+// import articleConfig from "./nav.config.json";
 
 const load = (path) =>
   defineAsyncComponent(() => import(`../pages/${path}.vue`));
 
-const loadDocs = (path) =>
-  defineAsyncComponent(() => import(`../docs${path}.md`));
+// const loadDocs = (path) =>
+//   defineAsyncComponent(() => import(`../docs${path}.md`));
+
+function addRoute(route, page) {
+  const component = defineAsyncComponent(() => import(`../pages/markdownComp`));
+  const child = {
+    path: page.path.slice(1),
+    meta: {
+      title: page.title || page.name,
+      description: page.description,
+      filePath: page.filePath || "docs",
+    },
+    name: "component" + (page.title || page.name),
+    component: component.default || component,
+  };
+
+  route.children.push(child);
+}
 
 // 注册路由
-function registerRoute() {
+function registerRoute(routeConfig) {
   const route = [];
 
-  // 组件页第一个页面
   route.push({
     path: `/component`,
     redirect: `/component/quickstart`,
@@ -25,58 +41,57 @@ function registerRoute() {
     children: [],
   });
 
-  route.push({
-    path: `/component`,
-    redirect: `/component/about`,
-    component: load("component"),
-    children: [
-      {
-        name: "component-about",
-        path: `/component/about`,
-        component: () => import("../views/About"),
-      },
-    ],
-  });
-
-  navConfig.forEach((nav) => {
+  routeConfig.forEach((nav) => {
     if (nav.href) return;
     if (nav.groups) {
       nav.groups.forEach((group) => {
         group.list.forEach((nav) => {
-          addRoute(nav);
+          addRoute(route[0], nav);
         });
       });
     } else if (nav.children) {
       nav.children.forEach((nav) => {
-        addRoute(nav);
+        addRoute(route[0], nav);
       });
     } else {
-      addRoute(nav);
+      addRoute(route[0], nav);
     }
   });
-
-  function addRoute(page) {
-    // const component = loadDocs(page.path);
-    const component = defineAsyncComponent(() =>
-      import(`../pages/markdownComp`)
-    );
-    const child = {
-      path: page.path.slice(1),
-      meta: {
-        title: page.title || page.name,
-        description: page.description,
-      },
-      name: "component" + (page.title || page.name),
-      component: component.default || component,
-    };
-
-    route[0].children.push(child);
-  }
 
   return route;
 }
 
+// 文章路由
+// function retisterArticleRoute(routeConfig) {
+//   const route = [];
+//   route.push({
+//     path: `/article`,
+//     redirect: `/article/marked`,
+//     component: load("component"),
+//     children: [],
+//   });
+//   routeConfig.forEach((nav) => {
+//     if (nav.href) return;
+//     if (nav.groups) {
+//       nav.groups.forEach((group) => {
+//         group.list.forEach((nav) => {
+//           addRoute(route[0], nav);
+//         });
+//       });
+//     } else if (nav.children) {
+//       nav.children.forEach((nav) => {
+//         addRoute(route[0], nav);
+//       });
+//     } else {
+//       addRoute(route[0], nav);
+//     }
+//   });
+//   return route;
+// }
+
 let routes = registerRoute(navConfig);
+// .concat( retisterArticleRoute(articleConfig) );
+console.log(routes);
 
 // 静态路由
 const staticRoutes = [

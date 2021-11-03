@@ -74,7 +74,7 @@
     &::before,
     &::after {
       display: table;
-      content: '';
+      content: "";
     }
     &::after {
       clear: both;
@@ -298,7 +298,7 @@
       <div
         class="jumbotron-red"
         :style="{
-          height: mainImgOffset + 'px'
+          height: mainImgOffset + 'px',
         }"
       >
         <img src="../assets/images/theme-index-red.png" alt="" />
@@ -307,35 +307,35 @@
   </div>
 </template>
 <script>
-import { throttle } from 'throttle-debounce'
+import { throttle } from "throttle-debounce";
 
 export default {
   created() {
     this.throttledHandleScroll = throttle(10, true, () => {
-      this.handleScroll()
-    })
+      this.handleScroll();
+    });
   },
   methods: {
     handleScroll() {
-      const ele = this.$refs.indexMainImg
-      const rect = ele.getBoundingClientRect()
-      const eleHeight = ele.clientHeight + 55
-      let calHeight = (180 - rect.top) * 2
-      if (calHeight < 0) calHeight = 0
-      if (calHeight > eleHeight) calHeight = eleHeight
-      this.mainImgOffset = calHeight
-    }
+      const ele = this.$refs.indexMainImg;
+      const rect = ele.getBoundingClientRect();
+      const eleHeight = ele.clientHeight + 55;
+      let calHeight = (180 - rect.top) * 2;
+      if (calHeight < 0) calHeight = 0;
+      if (calHeight > eleHeight) calHeight = eleHeight;
+      this.mainImgOffset = calHeight;
+    },
   },
   data() {
     return {
-      mainImgOffset: 0
-    }
+      mainImgOffset: 0,
+    };
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.throttledHandleScroll)
+    window.removeEventListener("scroll", this.throttledHandleScroll);
   },
   mounted() {
-    window.addEventListener('scroll', this.throttledHandleScroll)
-  }
-}
+    window.addEventListener("scroll", this.throttledHandleScroll);
+  },
+};
 </script>

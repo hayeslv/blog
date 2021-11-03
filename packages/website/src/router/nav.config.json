@@ -1,14 +1,26 @@
 [
   {
+    "name": "插件使用",
+    "children": [
+      {
+        "path": "/marked",
+        "name": "marked",
+        "filePath": "docs/plugin-use"
+      }
+    ]
+  },
+  {
     "name": "开发指南",
     "children": [
       {
         "path": "/installation",
-        "name": "安装"
+        "name": "安装",
+        "filePath": "docs"
       },
       {
         "path": "/quickstart",
-        "name": "快速上手"
+        "name": "快速上手",
+        "filePath": "docs"
       },
       {
         "path": "/transition",

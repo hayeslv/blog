@@ -13,9 +13,12 @@ export default {
     const route = useRoute();
     const navs = toRaw(route).path.value;
     const length = navs.split("/").length;
+    // 获取文件名（路由名）
     const nav = navs.split("/")[length - 1];
-    console.log(nav);
-    const markdown = require(`@/docs/${nav}.md`);
+
+    // 获取文件路径
+    const filePath = toRaw(route).meta.value.filePath;
+    const markdown = require(`@/${filePath}/${nav}.md`);
     const code = ref(marked(markdown));
     return { code };
   },

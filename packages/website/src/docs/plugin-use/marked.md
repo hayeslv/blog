@@ -1,4 +1,4 @@
-## Vue中使用markdown和加载 .md 文件
+# Vue中使用marked加载 .md 文件
 
 
 
@@ -32,7 +32,7 @@ export default {
 
 如下图：
 
-![marked1](.\assets\marked1.png)
+<img src=".\assets\marked1.png" alt="marked1" />
 
 
 
@@ -100,8 +100,7 @@ export default {
 
 如下图：
 
-![marked2](.\assets\marked2.png)
-
+<img src=".\assets\marked2.png" alt="marked2" />
 
 
 
