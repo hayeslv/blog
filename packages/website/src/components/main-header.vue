@@ -32,7 +32,12 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link active-class="active" :to="`/comp`">
+            <router-link active-class="active" :to="`/article`">
+              {{ langConfig.article }}
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link active-class="active" :to="`/`">
               关于我们
             </router-link>
           </li>

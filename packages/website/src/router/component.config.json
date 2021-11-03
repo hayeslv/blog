@@ -1,15 +1,5 @@
 [
   {
-    "name": "插件使用",
-    "children": [
-      {
-        "path": "/marked",
-        "name": "marked",
-        "filePath": "docs/plugin-use"
-      }
-    ]
-  },
-  {
     "name": "开发指南",
     "children": [
       {

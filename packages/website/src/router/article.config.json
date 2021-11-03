@@ -4,7 +4,7 @@
     "children": [
       {
         "path": "/marked",
-        "name": "marked",
+        "name": "article-marked",
         "filePath": "docs/plugin-use"
       }
     ]

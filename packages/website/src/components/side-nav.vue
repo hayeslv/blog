@@ -123,7 +123,7 @@
     :style="navStyle"
   >
     <ul>
-      <li class="nav-item" v-for="(item, key) in data" :key="key">
+      <li class="nav-item" v-for="item in navList" :key="item.name">
         <a v-if="!item.path && !item.href" @click="expandMenu">{{
           item.name
         }}</a>
@@ -133,7 +133,7 @@
         <router-link
           v-if="item.path"
           active-class="active"
-          :to="base + item.path"
+          :to="baseURL + item.path"
           exact
           v-text="item.title || item.name"
         >
@@ -147,7 +147,7 @@
             <router-link
               class=""
               active-class="active"
-              :to="base + navItem.path"
+              :to="baseURL + navItem.path"
               exact
               v-text="navItem.title || navItem.name"
             >
@@ -168,7 +168,7 @@
               >
                 <router-link
                   active-class="active"
-                  :to="base + navItem.path"
+                  :to="baseURL + navItem.path"
                   exact
                   v-text="navItem.title"
                 ></router-link>
@@ -183,6 +183,8 @@
 <script>
 import bus from "../bus";
 import compoLang from "../i18n/component.json";
+import componentData from "../router/component.config.json";
+import articleData from "../router/article.config.json";
 
 export default {
   props: {
@@ -194,6 +196,8 @@ export default {
   },
   data() {
     return {
+      navList: [],
+      baseURL: "",
       highlights: [],
       navState: [],
       isSmallScreen: false,
@@ -201,11 +205,14 @@ export default {
     };
   },
   watch: {
-    "$route.path"() {
+    "$route.path"(val) {
+      this.selectNav(val);
       this.handlePathChange();
     },
+    navList(val) {
+      console.log(val);
+    },
     isFade(val) {
-      // eslint-disable-next-line vue/custom-event-name-casing
       bus.$emit("navFade", val);
     },
   },
@@ -223,6 +230,20 @@ export default {
     },
   },
   methods: {
+    selectNav(routePath) {
+      const reg = /\/(\S*)\//;
+      const [, path] = routePath.match(reg);
+      switch (path) {
+        case "component":
+          this.navList = componentData;
+          this.baseURL = "/component";
+          break;
+        case "article":
+          this.navList = articleData;
+          this.baseURL = "/article";
+          break;
+      }
+    },
     handleResize() {
       this.isSmallScreen = document.documentElement.clientWidth < 768;
       this.handlePathChange();
@@ -265,6 +286,8 @@ export default {
     },
   },
   created() {
+    this.selectNav(this.$route.path);
+
     bus.$on("fadeNav", () => {
       this.isFade = true;
     });

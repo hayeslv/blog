@@ -150,7 +150,7 @@
   <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
     <div class="page-container page-component">
       <el-scrollbar class="page-component__nav">
-        <side-nav :data="navsData" :base="`/component`"></side-nav>
+        <side-nav></side-nav>
       </el-scrollbar>
       <div class="page-component__content">
         <router-view class="content markdown-body"></router-view>
@@ -167,7 +167,7 @@
 </template>
 <script>
 import bus from "../bus";
-import navsData from "../router/nav.config.json";
+
 // import { throttle } from "throttle-debounce";
 import SideNav from "@/components/side-nav.vue";
 
@@ -175,7 +175,6 @@ export default {
   components: { SideNav },
   data() {
     return {
-      navsData,
       scrollTop: 0,
       showHeader: true,
       componentScrollBar: null,
@@ -183,13 +182,13 @@ export default {
     };
   },
   watch: {
-    // "$route.path"() {
-    //   // 触发伪滚动条更新
-    //   this.componentScrollBox.scrollTop = 0;
-    //   this.$nextTick(() => {
-    //     this.componentScrollBar.update();
-    //   });
-    // },
+    "$route.path"() {
+      // 触发伪滚动条更新
+      // this.componentScrollBox.scrollTop = 0;
+      // this.$nextTick(() => {
+      //   this.componentScrollBar.update();
+      // });
+    },
   },
   methods: {
     renderAnchorHref() {
