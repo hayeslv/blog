@@ -4,12 +4,16 @@
  * @Date: 2021-10-14 11:14:46
  * @Description: Description
  */
-// const path = require('path')
+
+const path = require('path')
+const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
   devServer: {
     port: 7777,
   },
   chainWebpack: (config) => {
+    config.resolve.alias
+      .set('@image', resolve('src/assets/images'))
 
     // config.module
       // .rule('md')
