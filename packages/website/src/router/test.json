@@ -19,16 +19,6 @@
     ]
   },
   {
-    "name": "echart组件",
-    "children": [
-      {
-        "name": "柱状图",
-        "path": "/column",
-        "filePath": "views/chart"
-      }
-    ]
-  },
-  {
     "name": "组件",
     "groups": [
       {

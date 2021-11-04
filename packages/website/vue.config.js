@@ -11,7 +11,7 @@ module.exports = {
   },
   chainWebpack: (config) => {
 
-    config.module
+    // config.module
       // .rule('md')
       // .test(/\.md$/)
       // .use('html-loader')
@@ -52,5 +52,25 @@ module.exports = {
     //   .use('md-loader')
     //   .loader(path.resolve(__dirname, '../md-loader/src/index.js'))
     //   .end()
+
+    config
+      .resolve.extensions.add('.ts').add('.tsx')
+      .end().end()
+      .module
+      .rule('typescript')
+      .test(/\.tsx?$/)
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('ts-loader')
+      .loader('ts-loader')
+      .options({
+        transpileOnly: true,
+        appendTsSuffixTo: [
+          '\\.vue$',
+        ],
+        happyPackMode: false,
+      })
+      .end();
   },
 };

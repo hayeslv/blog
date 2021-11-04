@@ -14,8 +14,27 @@ const load = (path) =>
 // const loadDocs = (path) =>
 //   defineAsyncComponent(() => import(`../docs${path}.md`));
 
+// 添加md路由
 function addDocRoute(route, page) {
-  const component = defineAsyncComponent(() => import(`../pages/markdownComp`));
+  const component = defineAsyncComponent(() => import(`../pages/markdownTemp`));
+  const child = {
+    path: page.path.slice(1),
+    meta: {
+      title: page.title || page.name,
+      description: page.description,
+      filePath: page.filePath || "docs",
+    },
+    name: "component" + (page.title || page.name),
+    component: component.default || component,
+  };
+
+  route.children.push(child);
+}
+// 添加组件路由
+function addComponentRoute(route, page) {
+  const component = defineAsyncComponent(() =>
+    import(`../pages/componentTemp`)
+  );
   const child = {
     path: page.path.slice(1),
     meta: {
@@ -30,13 +49,13 @@ function addDocRoute(route, page) {
   route.children.push(child);
 }
 
-// 注册路由
-function registerRoute(routeConfig) {
+// 注册组件路由
+function registerCompoentRoute(routeConfig) {
   const route = [];
 
   route.push({
     path: `/component`,
-    redirect: `/component/quickstart`,
+    redirect: `/component/column`,
     component: load("component"),
     children: [],
   });
@@ -46,15 +65,15 @@ function registerRoute(routeConfig) {
     if (nav.groups) {
       nav.groups.forEach((group) => {
         group.list.forEach((nav) => {
-          addDocRoute(route[0], nav);
+          addComponentRoute(route[0], nav);
         });
       });
     } else if (nav.children) {
       nav.children.forEach((nav) => {
-        addDocRoute(route[0], nav);
+        addComponentRoute(route[0], nav);
       });
     } else {
-      addDocRoute(route[0], nav);
+      addComponentRoute(route[0], nav);
     }
   });
 
@@ -89,7 +108,7 @@ function retisterArticleRoute(routeConfig) {
   return route;
 }
 
-let routes = registerRoute(componentConfig).concat(
+let routes = registerCompoentRoute(componentConfig).concat(
   retisterArticleRoute(articleConfig)
 );
 
