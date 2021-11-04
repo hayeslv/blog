@@ -5,6 +5,7 @@
  */
 
 export const getComponent = function () {
+  // require.contexts第一个参数必须是直接字符串，变量无效
   const fileList = require.context("./components", true, /index.vue$/);
   const list = [];
   fileList.keys().forEach((item) => {

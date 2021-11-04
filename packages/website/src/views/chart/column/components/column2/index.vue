@@ -6,16 +6,6 @@
 <template>
   <div class="column">
     <PanelBac title="柱状图 2">
-      <template v-slot:selector>
-        <el-select class="selector" v-model="selectVal" placeholder="请选择">
-          <el-option
-            v-for="item in optionList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </template>
       <div ref="charts" class="canvas"></div>
     </PanelBac>
   </div>
@@ -90,61 +80,5 @@ export default {
 .canvas {
   width: 100%;
   height: 150px;
-}
-.selector {
-  width: 120px;
-}
-</style>
-<style>
-.selector .el-input__inner {
-  height: 30px;
-  font-size: 12px;
-  background: rgba(0, 23, 65, 0.3) !important;
-  border: 1px solid rgba(251, 139, 21, 0.3);
-  border-radius: 25px;
-  box-shadow: 0px 0px 8px 0px rgba(251, 139, 21, 0.5) inset;
-  color: #fdad43 !important;
-}
-.selector .el-input__suffix {
-  display: flex;
-  align-items: center;
-}
-
-.selector .el-popper[x-placement^="bottom"] .popper__arrow::after {
-  border-bottom-color: rgba(0, 23, 65, 0.3) !important;
-}
-
-.selector .el-select-dropdown {
-  background-color: rgba(0, 23, 65, 0.3);
-  color: #fff !important;
-}
-
-.el-select-dropdown__item {
-  color: #fff !important;
-  background-color: rgba(0, 23, 65, 0.3) !important;
-}
-
-.el-select-dropdown__item:hover {
-  color: #fdad43 !important;
-}
-
-.el-select-dropdown__item.selected {
-  color: rgb(216, 184, 141) !important;
-}
-
-.el-select-dropdown__list {
-  background: linear-gradient(
-    180deg,
-    rgba(0, 77, 179, 0.7) 1%,
-    rgba(0, 35, 139, 0.7)
-  ) !important;
-}
-
-.el-select-dropdown {
-  border: 0 !important;
-}
-
-.el-select-dropdown__item {
-  text-align: center;
 }
 </style>

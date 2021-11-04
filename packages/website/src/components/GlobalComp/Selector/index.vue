@@ -17,9 +17,14 @@
         <span @click="changeActive(1)">本年</span>
       </div>
     </div> -->
-    <div v-for="(item, index) in list" :key="index" class="global-select" :class="{active: activeIndex === index}">
+    <div
+      v-for="(item, index) in list"
+      :key="index"
+      class="global-select"
+      :class="{ active: activeIndex === index }"
+    >
       <div class="inner">
-        <img v-show="activeIndex === index" :src="lightImgSrc" alt="">
+        <img v-show="activeIndex === index" :src="lightImgSrc" alt="" />
         <span @click="changeActive(index)">{{ item }}</span>
       </div>
     </div>
@@ -28,53 +33,53 @@
 
 <script>
 export default {
-  name: 'Selector',
+  name: "Selector",
   props: {
     list: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
-      lightImgSrc: require('@image/common/select-light.png'),
-      activeIndex: 0
+      lightImgSrc: require("@image/common/select-light.png"),
+      activeIndex: 0,
     };
   },
   methods: {
     changeActive(index) {
       if (this.activeIndex === index) return;
       this.activeIndex = index;
-      this.$emit('change', index);
-    }
-  }
+      this.$emit("change", index);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.global-selector{
+.global-selector {
   display: flex;
   align-items: center;
   height: 28px;
-  :first-of-type{
+  :first-of-type {
     border-radius: 6 0 0 6;
   }
-  :last-of-type{
+  :last-of-type {
     border-radius: 0 6 6 0;
   }
 }
-.global-select{
+.global-select {
   padding: 1px;
   background-color: #00385a;
-  .inner{
+  .inner {
     position: relative;
     height: 28px;
     line-height: 28px;
-    background-color: rgba(0,23,65,0.8);
+    background-color: rgba(0, 23, 65, 0.8);
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    img{
+    img {
       position: absolute;
       left: 0;
       top: 0;
@@ -83,30 +88,35 @@ export default {
       pointer-events: none;
       transition-duration: 0.3s;
     }
-    span{
+    span {
       font-size: 12px;
       width: 100%;
       height: 100%;
       box-sizing: border-box;
       height: 28px;
       line-height: 28px;
-      padding: 0 18px;;
-      background: rgba(0,23,65,0.8);
-      color: rgba(255,255,255,0.8);
+      padding: 0 18px;
+      background: rgba(0, 23, 65, 0.8);
+      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       transition-duration: 0.3s;
     }
-    span:hover{
-      box-shadow: 0, 0, 8, 0, rgba(251,139,21,0.5) inset;
+    span:hover {
+      box-shadow: 0, 0, 8, 0, rgba(251, 139, 21, 0.5) inset;
     }
   }
 }
-.active{
-  background-image: -webkit-linear-gradient(0deg, rgba(251, 139, 21, 0.6) , #FFE95B 50% , rgba(251, 139, 21, 0.6));
-  .inner{
-    span{
-      color: #FDAD43;
-      box-shadow: 0, 0, 8, 0, rgba(251,139,21,0.6) inset;
+.active {
+  background-image: -webkit-linear-gradient(
+    0deg,
+    rgba(251, 139, 21, 0.6),
+    #ffe95b 50%,
+    rgba(251, 139, 21, 0.6)
+  );
+  .inner {
+    span {
+      color: #fdad43;
+      box-shadow: 0, 0, 8, 0, rgba(251, 139, 21, 0.6) inset;
     }
   }
 }
