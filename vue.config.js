@@ -64,10 +64,6 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'http://localhost:7001'
-      },
-      // 楚伟的机器
-      '/pre': {
-        target: 'http://139.159.156.184:9001'
       }
     }
   },

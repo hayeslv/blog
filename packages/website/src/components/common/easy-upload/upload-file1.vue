@@ -20,13 +20,11 @@
       @change="handlerFileChange"
     />
     <a-progress
-      style="margin-top: 20px; width: 500px; display: block"
+      style="margin-top: 20px; width: 500px; display: block;"
       :strokeWidth="20"
       :percent="uploadProgress"
     />
-    <a-button type="primary" style="margin-top: 20px" @click="handlerSubmit"
-      >点击上传</a-button
-    >
+    <a-button type="primary" style="margin-top: 20px" @click="handlerSubmit">点击上传</a-button>
   </div>
 </template>
 
@@ -62,6 +60,7 @@ export default {
       };
       const res = await CommonApi.uploadfile(params, {
         onUploadProgress: (progress) => {
+          console.log(((progress.loaded / progress.total) * 100).toFixed(2));
           uploadProgress.value = Number(
             ((progress.loaded / progress.total) * 100).toFixed(2)
           );
@@ -70,6 +69,7 @@ export default {
       if (res.code === 200) {
         message.success("上传成功");
       } else {
+        uploadProgress.value = 0;
         message.error(res.message || "上传失败");
       }
     };

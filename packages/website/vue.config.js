@@ -10,6 +10,11 @@ const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
   devServer: {
     port: 7777,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:7001'
+      }
+    }
   },
   chainWebpack: (config) => {
     config.resolve.alias
