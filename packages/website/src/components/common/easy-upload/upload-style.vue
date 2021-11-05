@@ -70,6 +70,7 @@ export default {
 .easy-upload__image-wrap {
   width: 100%;
   height: 100%;
+  cursor: pointer;
   .easy-upload__show-image {
     width: 100%;
     height: 100%;
