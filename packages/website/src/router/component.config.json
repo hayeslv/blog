@@ -6,6 +6,11 @@
         "name": "柱状图",
         "path": "/column",
         "filePath": "views/chart"
+      },
+      {
+        "name": "折线图",
+        "path": "/line",
+        "filePath": "views/chart"
       }
     ]
   }
