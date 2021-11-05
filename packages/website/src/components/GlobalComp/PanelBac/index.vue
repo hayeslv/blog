@@ -82,7 +82,7 @@ export default {
 .panel-bac {
   position: relative;
   display: inline-block;
-  width: 450px;
+  width: 400px;
   border-radius: 20px 0 20px 0;
   padding: 1px;
   padding-bottom: 0;

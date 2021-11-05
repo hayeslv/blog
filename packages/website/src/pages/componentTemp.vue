@@ -28,9 +28,22 @@ export default {
   },
   render() {
     // 渲染全部子组件
-    return this.components.map((comp) => h(comp));
+    // return this.components.map((comp) => h(comp));
+    return <div class="comp">{this.components.map((comp) => h(comp))}</div>;
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.comp {
+  display: flex;
+  flex-wrap: wrap;
+  .echart-wrap {
+    color: #fff;
+    margin-bottom: 40px;
+  }
+  .echart-wrap:nth-of-type(2n-1) {
+    margin-right: 40px;
+  }
+}
+</style>

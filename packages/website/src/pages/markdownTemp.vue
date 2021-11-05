@@ -23,7 +23,7 @@ export default {
     return { code };
   },
   render() {
-    return <div innerHTML={this.code}></div>;
+    return <div class="markdown-body" innerHTML={this.code}></div>;
   },
 };
 </script>

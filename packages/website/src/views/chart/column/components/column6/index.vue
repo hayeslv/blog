@@ -5,10 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="柱状图 1">
-      <template v-slot:selector>
-        <Selector :list="['本月', '本年']" @change="selectorChange"></Selector>
-      </template>
+    <PanelBac title="柱状图 6">
       <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
@@ -21,14 +18,51 @@ import { ref, toRaw, watch, onMounted, onUnmounted } from "vue";
 // import { ColumnApi } from '@api';
 
 const demoList = [
-  { name: "天元区", value: 5000 },
-  { name: "芦淞区", value: 2200 },
-  { name: "荷塘区", value: 1000 },
-  { name: "石峰区", value: 500 },
-  { name: "云龙区", value: 1200 },
+  // 日期、厨余垃圾、有害垃圾、可回收垃圾、其他垃圾
+  {
+    name: "2015",
+    value1: 167.97,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
+  {
+    name: "2016",
+    value1: 103.14,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
+  {
+    name: "2017",
+    value1: 196.25,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
+  {
+    name: "2018",
+    value1: 119.31,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
+  {
+    name: "2019",
+    value1: 146.53,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
+  {
+    name: "2020",
+    value1: 196.91,
+    value2: 132.43,
+    value3: 108.65,
+    value4: 140.16,
+  },
 ];
 export default {
-  name: "column1",
   setup() {
     let myChart = null;
     let chartsRef = ref();
@@ -58,10 +92,6 @@ export default {
       myChart && myChart.dispose();
       myChart = null;
     };
-    const selectorChange = (index) => {
-      getEchartData(index);
-    };
-
     watch(dataList, () => {
       echartRender();
     });
@@ -73,12 +103,15 @@ export default {
       myChart && myChart.dispose();
     });
 
-    return { chartsRef, selectorChange };
+    return { chartsRef };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.echart-wrap {
+  color: #fff;
+}
 .canvas {
   width: 100%;
   height: 150px;

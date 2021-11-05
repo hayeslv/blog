@@ -1,11 +1,11 @@
 <!--
  * @Author: Lvhz
  * @Date: 2021-04-14 09:47:57
- * @Description: Description
+ * @Description: 解决柱状图渐变时，legend也会变成渐变的问题
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="柱状图 2">
+    <PanelBac title="柱状图 3">
       <div ref="charts" class="canvas"></div>
     </PanelBac>
   </div>
@@ -13,20 +13,13 @@
 
 <script>
 import * as echarts from "echarts";
-import { getOption } from "./echart.config";
+import { getOption } from "./echart.config.js";
 // import { ColumnApi } from '@api';
 export default {
   data() {
     return {
       myChart: null,
       dataList: [],
-      optionList: [
-        { value: 1, label: "株洲大桥" },
-        { value: 2, label: "石峰大桥" },
-        { value: 3, label: "路口大桥" },
-        { value: 4, label: "建宁大桥" },
-      ],
-      selectVal: "",
     };
   },
   watch: {
@@ -48,7 +41,7 @@ export default {
     // 获取echart数据
     async getEchartData() {
       // try {
-      //   const res = await ColumnApi.getColumn_2_data();
+      //   const res = await ColumnApi.getColumn_3_data();
       //   this.dataList = res.data || [];
       // } catch (error) {
       //   throw new Error(error);
@@ -65,9 +58,6 @@ export default {
     clearColumnEchart() {
       this.myChart && this.myChart.dispose();
       this.myChart = null;
-    },
-    selectorChange(val) {
-      console.log(val);
     },
   },
 };
