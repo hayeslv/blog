@@ -5,13 +5,13 @@
 -->
 <template>
   <div>
-    <DyUploadStyle
+    <UploadStyle
       :src="imgSrc"
       @click="handlerClick"
       @dragover="handlerDragover"
       @dragleave="handlerDragleave"
       @drop="handlerDrop"
-    ></DyUploadStyle>
+    ></UploadStyle>
     <input
       ref="fileInput"
       style="display: none"
@@ -19,27 +19,25 @@
       name="file"
       @change="handlerFileChange"
     />
-    <el-progress
-      style="margin-top: 20px; width: 500px"
-      :stroke-width="20"
-      :text-inside="true"
-      :percentage="uploadProgress"
+    <a-progress
+      style="margin-top: 20px; width: 500px; display: block;"
+      :strokeWidth="20"
+      :percent="uploadProgress"
     />
-    <el-button type="primary" style="margin-top: 20px" @click="handlerSubmit">点击上传</el-button>
+    <a-button type="primary" style="margin-top: 20px" @click="handlerSubmit">点击上传</a-button>
   </div>
 </template>
 
 <script setup>
-import DyUploadStyle from "./upload-style.vue";
+import UploadStyle from "./upload-style.vue";
 import { file2Base64 } from "@/utils/file";
 import { CommonApi } from "@api";
-import { ElMessage } from "element-plus";
 import { ref } from "vue";
 
 const fileInput = ref(null);
 const fileRef = ref(null);
 const imgSrc = ref(null);
-const uploadProgress = ref(0);
+const uploadProgress = ref(20);
 
 const handlerClick = () => {
   fileInput.value.click();
@@ -68,9 +66,9 @@ const handlerSubmit = async () => {
     },
   });
   if (res.code === 200) {
-    ElMessage.success("上传成功");
+    // ElMessage.success("上传成功");
   } else {
-    ElMessage.error(res.message || "上传失败");
+    // ElMessage.error(res.message || "上传失败");
   }
 };
 
