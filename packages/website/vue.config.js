@@ -14,6 +14,7 @@ module.exports = {
   chainWebpack: (config) => {
     config.resolve.alias
       .set('@image', resolve('src/assets/images'))
+      .set('@api', resolve('src/server/request/api.js'))
 
     // 添加解析md的loader
     config.module

@@ -6,12 +6,12 @@
 <template>
   <div class="easy-upload">
     <!-- 拖拽层 -->
-    <div class="easy-upload-dragger" v-if="!props.src">
+    <div class="easy-upload-dragger" v-if="!src">
       <i class="easy-icon-upload iconfont icon-upload-cloud" alt=""></i>
       <div class="easy-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </div>
     <div class="easy-upload__image-wrap" v-else>
-      <img class="easy-upload__show-image" :src="props.src" alt="" />
+      <img class="easy-upload__show-image" :src="src" alt="" />
     </div>
   </div>
 </template>
@@ -47,12 +47,12 @@ export default {
   position: relative;
   overflow: hidden;
   &:hover {
-    border-color: $easy-color-primary;
+    border-color: #409eff;
   }
   .easy-icon-upload {
     pointer-events: none;
     font-size: 50px;
-    color: $easy-text-color-placeholder;
+    color: #c0c4cc;
     margin: 40px 0 16px;
     line-height: 50px;
   }
@@ -60,10 +60,10 @@ export default {
     pointer-events: none;
     font-size: 14px;
     text-align: center;
-    color: $easy-text-color-regular;
+    color: #606266;
     em {
       font-style: normal;
-      color: $easy-color-primary;
+      color: #409eff;
     }
   }
 }

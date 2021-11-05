@@ -45,6 +45,8 @@ export default {
       curIndex: 0,
       everWidth: 0, // 每个nav的宽度 170
       xPoint: 0,
+      isRunning: false, // 动画是否正在持续
+      time: 300, // 动画持续时间
       navs: [
         { label: "综合概览", name: "comprehensive-overview" },
         { label: "数字城管专题", name: "digital-urban" },
@@ -60,7 +62,6 @@ export default {
   mounted() {
     const navList = document.getElementsByClassName("scroll-bottom-nav");
     this.everWidth = navList[0].clientWidth; // 动态获取每个nav的宽度
-    console.log(this.everWidth);
 
     this.maxLenth = this.navs.length || 0;
     this.navs = this.navs.concat(this.navs).concat(this.navs);
@@ -78,9 +79,18 @@ export default {
   },
   methods: {
     routeTo(val, index) {
+      if (this.isRunning) return;
       this.cssTransform(index);
     },
+    // 动画持续期间，无法进行点击操作
+    banClickHandler() {
+      this.isRunning = true;
+      setTimeout(() => {
+        this.isRunning = false;
+      }, this.time);
+    },
     cssTransform(index) {
+      this.banClickHandler();
       //! 前后各备份一份 [] [实际所在区域] []，设为abc
       //! 到达a和c时，需要回到b
 
@@ -98,7 +108,7 @@ export default {
           setTimeout(() => {
             this.isOpenTransform = true;
           }, 50);
-        }, 300);
+        }, this.time);
       }
       // 到达c时
       if (index > this.maxLenth * 2 - 1) {
@@ -110,7 +120,7 @@ export default {
           setTimeout(() => {
             this.isOpenTransform = true;
           }, 50);
-        }, 300);
+        }, this.time);
       }
     },
   },
