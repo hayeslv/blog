@@ -41,6 +41,7 @@ export default {
   .echart-wrap {
     color: #fff;
     margin-bottom: 40px;
+    max-width: 100%;
   }
   .echart-wrap:nth-of-type(2n-1) {
     margin-right: 40px;

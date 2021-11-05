@@ -23,5 +23,15 @@
         "filePath": "views/chart"
       }
     ]
+  },
+  {
+    "name": "大屏组件",
+    "children": [
+      {
+        "name": "大屏组件",
+        "path": "/comp",
+        "filePath": "views/screen"
+      }
+    ]
   }
 ]
