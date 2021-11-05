@@ -16,6 +16,11 @@
         "name": "饼图",
         "path": "/pie",
         "filePath": "views/chart"
+      },
+      {
+        "name": "混合图",
+        "path": "/other",
+        "filePath": "views/chart"
       }
     ]
   }
