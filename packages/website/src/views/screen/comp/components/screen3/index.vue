@@ -63,6 +63,7 @@ export default {
   padding: 10px 20px;
 }
 .wrap {
+  // 滚动条样式
   .table-content {
     height: 100px;
     overflow: scroll;
