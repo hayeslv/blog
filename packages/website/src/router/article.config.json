@@ -8,5 +8,15 @@
         "filePath": "docs/plugin-use"
       }
     ]
+  },
+  {
+    "name": "设计模式",
+    "children": [
+      {
+        "path": "/0-简介",
+        "name": "简介",
+        "filePath": "docs/design-pattern"
+      }
+    ]
   }
 ]
