@@ -4,7 +4,7 @@
     "children": [
       {
         "path": "/marked",
-        "name": "article-marked",
+        "name": "marked",
         "filePath": "docs/plugin-use"
       }
     ]
@@ -13,8 +13,13 @@
     "name": "设计模式",
     "children": [
       {
-        "path": "/0-简介",
+        "path": "/00-brief",
         "name": "简介",
+        "filePath": "docs/design-pattern"
+      },
+      {
+        "path": "/01-singleton",
+        "name": "单例",
         "filePath": "docs/design-pattern"
       }
     ]
