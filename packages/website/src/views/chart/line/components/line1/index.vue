@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import * as echarts from 'echarts';
-import { getOption } from './echart.config';
-import { ref, toRaw, watch, onMounted, onUnmounted } from 'vue'
+import * as echarts from "echarts";
+import { getOption } from "./echart.config";
+import { ref, toRaw, watch, onMounted, onUnmounted } from "vue";
 // import { ColumnApi } from '@api';
 
 const demoList = [
@@ -30,23 +30,24 @@ const demoList = [
   { name: 9, value1: 350, value2: 60, value3: 60 },
   { name: 10, value1: 180, value2: 60, value3: 100 },
   { name: 11, value1: 233, value2: 70, value3: 200 },
-]
+];
 
 //! 是否打开loading调试
-const openLoading = false
+const openLoading = false;
 
 export default {
   setup() {
-    let myChart = null
-    let chartsRef = ref()
-    let loading = ref(false)
-    let isEmpty = ref(false)
+    let myChart = null;
+    let chartsRef = ref();
+    let code = ref("");
+    let loading = ref(false);
+    let isEmpty = ref(false);
     // let dataList = ref([])
-    let dataList = ref(demoList)
+    let dataList = ref(demoList);
 
     const initData = () => {
-      getEchartData()
-    }
+      getEchartData();
+    };
     const getEchartData = async () => {
       // 接口调用
       // try {
@@ -55,68 +56,63 @@ export default {
       // } catch (error) {
       //   throw new Error(error);
       // }
-      
-      if(openLoading) {
+
+      if (openLoading) {
         //! 模拟接口调用
         setTimeout(() => {
-          loading.value = true
+          loading.value = true;
         }, 0);
 
         setTimeout(() => {
-
-          if(Math.random() > 0.5) {
-            loading.value = false
-            isEmpty.value = true
+          if (Math.random() > 0.5) {
+            loading.value = false;
+            isEmpty.value = true;
           } else {
-            loading.value = false
-            isEmpty.value = false
+            loading.value = false;
+            isEmpty.value = false;
 
             echartRender(); // 渲染
           }
-          
-        }, 2000)
+        }, 2000);
       } else {
         echartRender(); // 渲染
       }
-      
-
-      
-    }
+    };
     const echartRender = () => {
       if (myChart) clearEchart();
       myChart = echarts.init(chartsRef.value);
       const option = getOption(toRaw(dataList.value));
       myChart.setOption(option);
-    }
+    };
     const clearEchart = () => {
       myChart && myChart.dispose();
       myChart = null;
-    }
+    };
     const selectorChange = (index) => {
-      getEchartData(index)
-    }
+      getEchartData(index);
+    };
 
     watch(dataList, () => {
-      echartRender()
-    })
+      echartRender();
+    });
 
     onMounted(() => {
       initData();
-    })
+    });
     onUnmounted(() => {
       myChart && myChart.dispose();
-    })
+    });
 
-    return { chartsRef, selectorChange, loading, isEmpty }
+    return { code, chartsRef, selectorChange, loading, isEmpty };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.echart-wrap{
+.echart-wrap {
   color: #fff;
 }
-.canvas{
+.canvas {
   width: 100%;
   height: 150px;
 }

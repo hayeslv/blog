@@ -6,10 +6,12 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { toRaw, h } from "vue";
+import { toRaw, h, ref } from "vue";
+import marked from "marked";
 
 export default {
   setup() {
+    const visible = ref(false);
     const getAllComp = () => {
       const route = useRoute();
       const navs = toRaw(route).path.value;
@@ -23,13 +25,38 @@ export default {
       return getComponent();
     };
 
+    const showDrawer = () => {
+      visible.value = true;
+    };
+    const onClose = () => {
+      visible.value = false;
+    };
+
     // 获取全部子组件
-    return { components: getAllComp() };
+    return { visible, showDrawer, onClose, components: getAllComp() };
   },
   render() {
+    const code = ref("");
+    fetch("http://localhost:7001/public/echart.config.ts")
+      .then((response) => response.text())
+      .then((text) => (code.value = marked("```js\n" + text + "\n```")));
     // 渲染全部子组件
     // return this.components.map((comp) => h(comp));
-    return <div class="comp">{this.components.map((comp) => h(comp))}</div>;
+    return [
+      <div class="comp">
+        {this.components.map((comp) => h(comp, { onClick: this.showDrawer }))}
+      </div>,
+      <a-drawer
+        width="800px"
+        title="Basic Drawer"
+        placement="right"
+        closable={false}
+        visible={this.visible}
+        onClose={this.onClose}
+      >
+        <div class="markdown-body" innerHTML={code.value}></div>
+      </a-drawer>,
+    ];
   },
 };
 </script>
