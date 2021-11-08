@@ -25,7 +25,8 @@ export default {
       return getComponent();
     };
 
-    const showDrawer = () => {
+    const showDrawer = (comp) => {
+      console.log(comp);
       visible.value = true;
     };
     const onClose = () => {
@@ -44,11 +45,15 @@ export default {
     // return this.components.map((comp) => h(comp));
     return [
       <div class="comp">
-        {this.components.map((comp) => h(comp, { onClick: this.showDrawer }))}
+        {this.components.map((comp) =>
+          h(comp, {
+            onClick: (e) => this.showDrawer(comp, e),
+          })
+        )}
       </div>,
       <a-drawer
         width="800px"
-        title="Basic Drawer"
+        title="config文件"
         placement="right"
         closable={false}
         visible={this.visible}

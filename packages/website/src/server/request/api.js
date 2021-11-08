@@ -13,6 +13,10 @@ const CommonApi = {
     const httpClient = new HttpClient();
     return httpClient.formData("/base/v1/file/normalUpload", params);
   },
+  // 初始化数据库
+  initDB: (params) => {
+    return http.get("/dbdata/initdb", params);
+  },
   // 重置数据
   resetDB: (params) => {
     return http.get("/dbdata/mockdata", params);

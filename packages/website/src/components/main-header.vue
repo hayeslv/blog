@@ -41,6 +41,9 @@
               关于我们
             </router-link>
           </li>
+          <li class="nav-item">
+            <a active-class="active" @click="initDB">初始化数据库</a>
+          </li>
         </ul>
       </div>
     </header>
@@ -49,11 +52,17 @@
 
 <script>
 import componentConfig from "../i18n/component.json";
+import { CommonApi } from "@api";
 
 export default {
   computed: {
     langConfig() {
       return componentConfig["header"];
+    },
+  },
+  methods: {
+    initDB() {
+      CommonApi.initDB();
     },
   },
 };

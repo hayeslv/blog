@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="echart-wrap">
-    <PanelBac title="折线图 1" :loading="loading" :isEmpty="isEmpty">
+    <PanelBac title="" :loading="loading" :isEmpty="isEmpty">
       <div ref="chartsRef" class="canvas"></div>
     </PanelBac>
   </div>
