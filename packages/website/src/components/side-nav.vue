@@ -232,6 +232,7 @@ export default {
   methods: {
     selectNav(routePath) {
       const reg = /\/(\S*)\//;
+      if (!routePath.match(reg)) return;
       const [, path] = routePath.match(reg);
       switch (path) {
         case "component":

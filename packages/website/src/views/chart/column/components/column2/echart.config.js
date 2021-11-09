@@ -4,24 +4,24 @@
  * @Description: Description
  */
 
-const colorList = ['#FACC14', '#31DA64', '#3196FA'];
-
+const colorList = ["#FACC14", "#31DA64", "#3196FA"];
 
 const dataList = [
-  { name: '今日结案', value: 3456 },
-  { name: '今日立案', value: 3456 },
-  { name: '今日上报', value: 8456 }
+  { name: "今日结案", value: 3456 },
+  { name: "今日立案", value: 3456 },
+  { name: "今日上报", value: 8456 },
 ];
 // const yAxisDataList = [];
 // dataList.forEach(value => {
 //   yAxisDataList.push(value.value);
 // });
 
-const getDataList = dataList => {
+const getDataList = (dataList) => {
   let yAxisDataList = [];
   let valueList = [];
-  if (!dataList || !Array.isArray(dataList)) return { yAxisDataList, valueList };
-  yAxisDataList = dataList.map(item => item.value);
+  if (!dataList || !Array.isArray(dataList))
+    return { yAxisDataList, valueList };
+  yAxisDataList = dataList.map((item) => item.value);
   valueList = dataList;
   return { yAxisDataList, valueList };
 };
@@ -30,70 +30,73 @@ export function getOption(dataList1) {
   console.log(dataList1);
   const { yAxisDataList, valueList } = getDataList(dataList);
   return {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     xAxis: {
       splitLine: {
-        show: false
+        show: false,
       },
       axisLine: {
-        show: false
+        show: false,
       },
       axisLabel: {
-        show: false
+        show: false,
       },
       axisTick: {
-        show: false
-      }
+        show: false,
+      },
     },
     grid: {
-      left: '20%',
+      left: "20%",
       top: 0, // 设置条形图的边距
-      right: '5%',
-      bottom: 0
+      right: "5%",
+      bottom: 0,
     },
-    yAxis: [{
-      type: 'category',
-      inverse: false,
-      data: yAxisDataList,
-      axisLine: {
-        show: false
+    yAxis: [
+      {
+        type: "category",
+        inverse: false,
+        data: yAxisDataList,
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
       },
-      axisTick: {
-        show: false
+      {
+        type: "category",
+        inverse: false,
+        data: yAxisDataList,
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          show: true,
+          inside: false,
+          textStyle: {
+            color: "#fff",
+            fontSize: 12,
+            padding: [0, 0, 0, -50],
+          },
+        },
       },
-      axisLabel: {
-        show: false
-      }
-    }, {
-      type: 'category',
-      inverse: false,
-      data: yAxisDataList,
-      axisLine: {
-        show: false
-      },
-      axisTick: {
-        show: false
-      },
-      axisLabel: {
-        show: true,
-        inside: false,
-        textStyle: {
-          color: '#fff',
-          fontSize: 12,
-          padding: [0, 0, 0, -50]
-        }
-      }
-    }],
+    ],
     series: [
       {
         // 内
-        type: 'bar',
+        type: "bar",
         barWidth: 18,
         legendHoverLink: false,
         silent: true,
         itemStyle: {
           normal: {
-            color: function(params) {
+            color: function (params) {
               var color;
               if (params.dataIndex === 0) {
                 color = colorList[0];
@@ -103,43 +106,43 @@ export function getOption(dataList1) {
                 color = colorList[2];
               }
               return color;
-            }
-          }
+            },
+          },
         },
         label: {
           normal: {
             show: true,
-            position: 'left',
-            formatter: '{b}',
+            position: "left",
+            formatter: "{b}",
             textStyle: {
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: 12
-            }
-          }
+              color: "rgba(255,255,255,0.8)",
+              fontSize: 12,
+            },
+          },
         },
         data: valueList,
         z: 1,
-        animationEasing: 'elasticOut'
+        animationEasing: "elasticOut",
       },
       {
         // 分隔
-        type: 'pictorialBar',
+        type: "pictorialBar",
         itemStyle: {
           normal: {
-            color: 'rgba(0,34,92,1)'
-          }
+            color: "rgba(0,34,92,1)",
+          },
         },
-        symbolRepeat: 'fixed',
+        symbolRepeat: "fixed",
         symbolMargin: 5,
-        symbol: 'rect',
+        symbol: "rect",
         symbolClip: true,
         symbolSize: [4, 22],
-        symbolPosition: 'start',
+        symbolPosition: "start",
         symbolOffset: [-4, 0],
         data: valueList,
         z: 2,
-        animationEasing: 'elasticOut'
-      }
-    ]
+        animationEasing: "elasticOut",
+      },
+    ],
   };
 }

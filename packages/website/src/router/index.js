@@ -117,11 +117,11 @@ const staticRoutes = [
   {
     path: "/", // 首页
     name: "home",
-    component: load("index"),
+    component: () => import("@/pages/index.vue"),
   },
 ];
 
-routes = routes.concat(staticRoutes);
+routes = staticRoutes.concat(routes);
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
