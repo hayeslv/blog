@@ -37,8 +37,8 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link active-class="active" :to="`/`">
-              关于我们
+            <router-link active-class="active" :to="`/contribution`">
+              贡献
             </router-link>
           </li>
           <li class="nav-item">

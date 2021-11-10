@@ -119,6 +119,11 @@ const staticRoutes = [
     name: "home",
     component: () => import("@/pages/index.vue"),
   },
+  {
+    path: "/contribution", // 贡献
+    name: "Contribution",
+    component: () => import("@/pages/contribution"),
+  },
 ];
 
 routes = staticRoutes.concat(routes);
