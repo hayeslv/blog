@@ -42,6 +42,7 @@
 import { CommonApi } from "@api";
 import { reactive, ref, toRaw } from "vue";
 import { message } from "ant-design-vue";
+import { calculateFileHash} from '@/utils/file'
 
 export default {
   setup() {
@@ -65,19 +66,26 @@ export default {
       fileList.value = [...fileList.value, file];
       return false;
     };
+    
     const handleUpload = async () => {
       const file = toRaw(fileList.value)[0]
-      console.log(file);
-      // const params = {
-      //   name: "file",
-      //   file: file,
-      // };
-      // const res = await CommonApi.uploadfile(params);
-      // if (res.code === 200) {
-      //   message.success("上传成功");
-      // } else {
-      //   message.error(res.message || "上传失败");
-      // }
+      const fileHash = await calculateFileHash(file)
+      const ext = file.name.split('.')[file.name.split('.').length - 1]
+      const fileName = `${fileHash}.${ext}`
+      // 新建File
+      const renameFile = new File([file], fileName, { type: file.type })
+
+      const params = {
+        name: "file",
+        file: renameFile,
+      };
+      const res = await CommonApi.uploadfile(params);
+      if (res.code === 200) {
+        message.success("上传成功");
+        fileList.value = []
+      } else {
+        message.error(res.message || "上传失败");
+      }
     };
     return {
       labelCol: { style: { width: "70px" } },

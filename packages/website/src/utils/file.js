@@ -172,6 +172,25 @@ export const calculateHashIdle = (chunks, cb = () => {}) => {
   });
 };
 
+// 计算单文件hash
+export const calculateFileHash = file => {
+  const sparkMD5 = require("spark-md5");
+  return new Promise((resolve, reject) => {
+    if (!(file instanceof File)) {
+      console.error("error form calculateHashSample：参数错误（不是文件格式）");
+      reject("error form calculateHashSample：参数错误（不是文件格式）");
+    }
+    const spark = new sparkMD5.ArrayBuffer();
+    const reader = new FileReader();
+
+    reader.readAsArrayBuffer(new Blob([file]));
+    reader.onload = (e) => {
+      spark.append(e.target.result);
+      resolve(spark.end());
+    };
+  })
+}
+
 // 抽样hash
 export const calculateHashSample = (file) => {
   const sparkMD5 = require("spark-md5");
