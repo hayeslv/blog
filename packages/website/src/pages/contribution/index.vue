@@ -25,71 +25,59 @@
           <a-radio value="other">其他图</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-upload
-        :file-list="fileList"
-        :remove="handleRemove"
-        :before-upload="beforeUpload"
-      >
+      <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
         <a-button>
           <upload-outlined></upload-outlined>
           Select File
         </a-button>
       </a-upload>
-      <a-button
-        type="primary"
-        :disabled="fileList.length === 0"
-        :loading="uploading"
-        style="margin-top: 16px"
-        @click="handleUpload"
-      >
+      <a-button type="primary" :disabled="fileList.length === 0" :loading="uploading" style="margin-top: 16px" @click="handleUpload">
         {{ uploading ? "Uploading" : "Start Upload" }}
       </a-button>
     </a-form>
   </div>
 </template>
-<script lang="ts">
-import { reactive, ref } from "vue";
-import type { UnwrapRef } from "vue";
 
-interface FormState {
-  name: string;
-  sourceType: string;
-  chartType: string;
-}
-// interface FileItem {
-//   uid: string;
-//   name?: string;
-//   status?: string;
-//   response?: string;
-//   url?: string;
-//   preview?: string;
-//   originFileObj?: any;
-//   file: string | Blob;
-// }
+<script>
+import { CommonApi } from "@api";
+import { reactive, ref, toRaw } from "vue";
+import { message } from "ant-design-vue";
+
 export default {
   setup() {
-    const formState: UnwrapRef<FormState> = reactive({
+    const formState = reactive({
       name: "",
       sourceType: "1",
       chartType: "column",
     });
     // 文件上传
     const fileList = ref([]);
-    const uploading = ref<boolean>(false);
-    const handleRemove = (file: any) => {
+    const uploading = ref(false);
+    const handleRemove = (file) => {
       // @ts-ignore
       const index = fileList.value.indexOf(file);
       const newFileList = fileList.value.slice();
       newFileList.splice(index, 1);
       fileList.value = newFileList;
     };
-    const beforeUpload = (file: any) => {
+    const beforeUpload = (file) => {
       // @ts-ignore
       fileList.value = [...fileList.value, file];
       return false;
     };
-    const handleUpload = () => {
-      console.log(123);
+    const handleUpload = async () => {
+      const file = toRaw(fileList.value)[0]
+      console.log(file);
+      // const params = {
+      //   name: "file",
+      //   file: file,
+      // };
+      // const res = await CommonApi.uploadfile(params);
+      // if (res.code === 200) {
+      //   message.success("上传成功");
+      // } else {
+      //   message.error(res.message || "上传失败");
+      // }
     };
     return {
       labelCol: { style: { width: "70px" } },
