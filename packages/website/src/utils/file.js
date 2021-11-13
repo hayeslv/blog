@@ -298,3 +298,10 @@ export const calculateHashDouble = async (chunks) => {
     });
   }
 };
+
+
+// 获取文件扩展名
+export const getExt = (fileName) => {
+  const prts = fileName.split(".")
+  return prts.length > 1 ? prts.pop : ""
+}
