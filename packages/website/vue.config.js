@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 /*
  * @Author: Lvhz
  * @Date: 2021-10-14 11:14:46
@@ -18,6 +18,7 @@ module.exports = {
   },
   chainWebpack: (config) => {
     config.resolve.alias
+      .set('@', resolve('src'))
       .set('@image', resolve('src/assets/images'))
       .set('@api', resolve('src/server/request/api.js'))
 
