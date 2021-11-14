@@ -51,7 +51,6 @@ export default {
       sourceType: 1, // 1-echart，2-文章
       chartType: 1, // 1柱状图、2折线图、3饼图，9其他类型图
     });
-    // 文件上传
     const fileList = ref([]);
     const uploading = ref(false);
     const handleRemove = (file) => {
@@ -92,20 +91,35 @@ export default {
         name: "file",
         dir: `${sourceTypeName}/${chartTypeName}`, // 文件夹
         file: renameFile,
+        sourceType: formState.sourceType,
+        chartType: formState.chartType,
+        hash: fileHash
       };
       const res = await CommonApi.uploadfile(params);
       if (res.code === 200) {
         message.success("上传成功");
         fileList.value = []
+        return res.data || null;
       } else {
         message.error(res.message || "上传失败");
       }
-      return res;
+    }
+
+    const saveDB = async (file) => {
+      const res = await CommonApi.saveFileUrl({
+        chartType: file.chartType,
+        sourceType: file.sourceType,
+        url: file.url,
+        hash: file.hash
+      });
+      console.log(res);
     }
     
     const handleUpload = async () => {
       const file = await fileUpload() // 文件上传
-      console.log(file);
+      if(!file) return;
+      // 保存至数据库
+      await saveDB(file)
     };
     return {
       labelCol: { style: { width: "70px" } },

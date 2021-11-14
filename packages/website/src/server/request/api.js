@@ -37,6 +37,10 @@ const CommonApi = {
   checkfile: (params) => {
     return http.post("/checkfile", params);
   },
+  // 存储文件路径
+  saveFileUrl: (params) => {
+    return http.post("/saveFileUrl", params);
+  },
 };
 
 // 用户API
