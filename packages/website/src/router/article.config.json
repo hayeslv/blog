@@ -3,9 +3,9 @@
     "name": "插件使用",
     "children": [
       {
-        "path": "/marked",
+        "path": "/plugin-marked",
         "name": "marked",
-        "filePath": "docs/plugin-use"
+        "filePath": "docs/plugin-use/marked.md"
       }
     ]
   },
@@ -13,14 +13,34 @@
     "name": "设计模式",
     "children": [
       {
-        "path": "/00-brief",
+        "path": "/design-brief",
         "name": "简介",
-        "filePath": "docs/design-pattern"
+        "filePath": "docs/design-pattern/00-brief.md"
       },
       {
-        "path": "/01-singleton",
+        "path": "/design-singleton",
         "name": "单例",
-        "filePath": "docs/design-pattern"
+        "filePath": "docs/design-pattern/01-singleton.md"
+      }
+    ]
+  },
+  {
+    "name": "服务器",
+    "groups": [
+      {
+        "groupName": "docker",
+        "list": [
+          {
+            "path": "/docker-brief",
+            "title": "docker介绍",
+            "filePath": "docs/server/docker/brief.md"
+          },
+          {
+            "path": "/docker-mongo-backups",
+            "title": "mongos数据库备份",
+            "filePath": "docs/server/docker/docker中mongo数据库备份.md"
+          }
+        ]
       }
     ]
   }
