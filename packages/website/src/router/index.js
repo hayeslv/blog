@@ -85,7 +85,7 @@ function retisterArticleRoute(routeConfig) {
   const route = [];
   route.push({
     path: `/article`,
-    redirect: `/article/marked`,
+    redirect: `/article/plugin-marked`,
     component: load("component"),
     children: [],
   });

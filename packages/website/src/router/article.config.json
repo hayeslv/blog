@@ -28,6 +28,21 @@
     "name": "服务器",
     "groups": [
       {
+        "groupName": "前端工程化",
+        "list": [
+          {
+            "path": "/front-project-auto-deploy",
+            "title": "自动化部署",
+            "filePath": "docs/server/front-project/前端自动化部署(Ubuntu).md"
+          },
+          {
+            "path": "/front-project-pm2-brief",
+            "title": "pm2简介",
+            "filePath": "docs/server/front-project/pm2简介.md"
+          }
+        ]
+      },
+      {
         "groupName": "docker",
         "list": [
           {
@@ -39,6 +54,21 @@
             "path": "/docker-mongo-backups",
             "title": "mongos数据库备份",
             "filePath": "docs/server/docker/docker中mongo数据库备份.md"
+          }
+        ]
+      },
+      {
+        "groupName": "nginx",
+        "list": [
+          {
+            "path": "/nginx-loading-balance-theory",
+            "title": "nginx负载均衡理论",
+            "filePath": "docs/server/nginx/nginx负载均衡理论.md"
+          },
+          {
+            "path": "/nginx-loading-balance-practice",
+            "title": "nginx负载均衡实践",
+            "filePath": "docs/server/nginx/nginx负载均衡实践.md"
           }
         ]
       }
