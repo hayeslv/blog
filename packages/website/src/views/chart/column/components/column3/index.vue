@@ -16,6 +16,7 @@ import * as echarts from "echarts";
 import { getOption } from "./echart.config.js";
 // import { ColumnApi } from '@api';
 export default {
+  name: "6f08c9793dbf72a44548e6c145609538",
   data() {
     return {
       myChart: null,

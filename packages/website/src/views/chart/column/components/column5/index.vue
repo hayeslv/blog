@@ -31,6 +31,7 @@ const demoList = [
   { number: 481, totalNum: 595, name: "醴陵市" },
 ];
 export default {
+  name: "31822fa47e05e5208e35ba6d55e44aea",
   setup() {
     let myChart = null;
     let chartsRef = ref();

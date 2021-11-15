@@ -24,6 +24,7 @@ const demoList = [
   { name: '渗滤液转运车123', value: 4543 },
 ]
 export default {
+  name: "f4738bb30301e8e60a37f360b27de2ed",
   setup() {
     let myChart = null
     let chartsRef = ref()

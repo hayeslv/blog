@@ -23,6 +23,7 @@ const demoList = [
   { name: '未上线', value: 40 }, 
 ]
 export default {
+  name: "34a786cf7078c3c0649fce19c24f1ba5",
   setup() {
     let myChart = null
     let chartsRef = ref()

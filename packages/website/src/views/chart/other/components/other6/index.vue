@@ -27,6 +27,7 @@ const demoList = [
   { name: '老榆树', value: 31},
 ]
 export default {
+  name: "ee2ea01a9b4ced3bd7e25b8567298bef",
   setup() {
     let myChart = null
     let chartsRef = ref()

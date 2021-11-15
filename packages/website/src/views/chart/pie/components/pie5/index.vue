@@ -25,6 +25,7 @@ const demoList = [
   { name: '其他', value: 25 },
 ]
 export default {
+  name: "e37eaffece53b322cac3e1262685de7a",
   setup() {
     let myChart = null
     let chartsRef = ref()

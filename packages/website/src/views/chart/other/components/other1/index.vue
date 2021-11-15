@@ -44,6 +44,7 @@ const demoList = [
   { id: 24, temp: 25, date: '23时', standardNum: 352, noStandardNum: 3 }
 ]
 export default {
+  name: "cfa5b808bdbabdc21510535cc5611f03",
   setup() {
     let myChart = null
     let chartsRef = ref()

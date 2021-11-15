@@ -36,6 +36,7 @@ const demoList = [
 const openLoading = false;
 
 export default {
+  name: "f10d18b31c645ef4338702d70b03ed58",
   setup() {
     let myChart = null;
     let chartsRef = ref();

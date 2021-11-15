@@ -29,6 +29,7 @@ export default {
     };
 
     const showDrawer = async (comp) => {
+      if(!comp.name) return
       const res = await ComponentApi.getFileByCompName({ name: comp.name })
       const { data } = res;
       if(!data.url) return;

@@ -23,6 +23,7 @@ const demoList = [
   { name: '最多字段数4', value: 4543 }
 ]
 export default {
+  name: "25a0434803098e4e0487bb158ce8a7e7",
   setup() {
     let myChart = null
     let chartsRef = ref()

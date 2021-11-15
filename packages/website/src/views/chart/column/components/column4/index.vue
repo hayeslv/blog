@@ -23,6 +23,7 @@ const demoList = [
   { name: "第三产业", sub: 30000, fund: 30000 },
 ];
 export default {
+  name: "1b0d86e4d6c703e83327c337292bb750",
   setup() {
     let myChart = null;
     let chartsRef = ref();

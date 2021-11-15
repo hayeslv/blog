@@ -27,6 +27,7 @@ const demoList = [
   { name: '垃圾满溢', value: 222 }
 ]
 export default {
+  name: "96e03af30d9863a5bd12896a83763d9a",
   setup() {
     let myChart = null
     let chartsRef = ref()

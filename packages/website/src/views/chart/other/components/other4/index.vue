@@ -28,6 +28,7 @@ const demoList = [
   { name: '全年目标值', value1: 4.2, value2: 5 },
 ]
 export default {
+  name: "a801ed2e9006060978ec57e18436fc0a",
   setup() {
     let myChart = null
     let chartsRef = ref()

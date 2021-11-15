@@ -63,6 +63,7 @@ const demoList = [
   },
 ];
 export default {
+  name: "665c5b82704937e3fab631691f969444",
   setup() {
     let myChart = null;
     let chartsRef = ref();

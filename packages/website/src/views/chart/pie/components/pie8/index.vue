@@ -20,6 +20,7 @@ import { ref, toRaw, watch, onMounted, onUnmounted } from 'vue'
 const data = 30
 
 export default {
+  name: "7c09ae024773bafe8cb5a87d31d88c72",
   setup() {
     let myChart = null
     let chartsRef = ref()

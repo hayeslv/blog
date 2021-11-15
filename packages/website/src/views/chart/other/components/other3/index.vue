@@ -28,6 +28,7 @@ const demoList = [
   { name: '机动停放', value: 2851 }
 ]
 export default {
+  name: "17cfc53d67805bbd1d3cdbc77813a140",
   setup() {
     let myChart = null
     let chartsRef = ref()

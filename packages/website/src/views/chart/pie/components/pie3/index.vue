@@ -25,6 +25,7 @@ const demoList = [
   { name: '最多字段数4', value: 4543, rate: '20%' }
 ]
 export default {
+  name: "540229b20314498cf8b084212f6c9978",
   setup() {
     let myChart = null
     let chartsRef = ref()

@@ -27,6 +27,7 @@ const demoList = [
   { name: "星期天", value: 72 },
 ];
 export default {
+  name: "b4bd03cdc3a0480007240e217d43e856",
   setup() {
     let myChart = null;
     let chartsRef = ref();
