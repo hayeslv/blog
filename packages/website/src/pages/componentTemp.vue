@@ -8,10 +8,13 @@
 import { useRoute } from "vue-router";
 import { toRaw, h, ref } from "vue";
 import marked from "marked";
+import { ComponentApi } from '@api';
 
 export default {
   setup() {
     const visible = ref(false);
+    const code = ref("");
+
     const getAllComp = () => {
       const route = useRoute();
       const navs = toRaw(route).path.value;
@@ -25,22 +28,28 @@ export default {
       return getComponent();
     };
 
-    const showDrawer = (comp) => {
-      console.log(comp);
-      visible.value = true;
+    const showDrawer = async (comp) => {
+      const res = await ComponentApi.getFileByCompName({ name: comp.name })
+      const { data } = res;
+      if(!data.url) return;
+
+      // 获取文件
+      fetch(`${process.env.VUE_APP_FILE_ADDRESS}${data.url}`)
+        .then((response) => response.text())
+        .then((text) => {
+          visible.value = true;
+          code.value = marked("```js\n" + text + "\n```")
+        });
     };
     const onClose = () => {
       visible.value = false;
     };
 
     // 获取全部子组件
-    return { visible, showDrawer, onClose, components: getAllComp() };
+    return { code, visible, showDrawer, onClose, components: getAllComp() };
   },
   render() {
-    const code = ref("");
-    fetch("http://localhost:7001/public/echart.config.ts")
-      .then((response) => response.text())
-      .then((text) => (code.value = marked("```js\n" + text + "\n```")));
+    
     // 渲染全部子组件
     // return this.components.map((comp) => h(comp));
     return [
@@ -59,7 +68,7 @@ export default {
         visible={this.visible}
         onClose={this.onClose}
       >
-        <div class="markdown-body" innerHTML={code.value}></div>
+        <div class="markdown-body" innerHTML={this.code}></div>
       </a-drawer>,
     ];
   },

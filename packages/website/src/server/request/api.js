@@ -43,6 +43,13 @@ const CommonApi = {
   },
 };
 
+// 组件相关API
+const ComponentApi = {
+  getFileByCompName: (params) => {
+    return http.get("/component/echart", params);
+  },
+}
+
 // 用户API
 const UserApi = {
   // 登录
@@ -51,4 +58,4 @@ const UserApi = {
   },
 };
 
-export { UserApi, CommonApi };
+export { UserApi, CommonApi, ComponentApi };

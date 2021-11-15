@@ -28,7 +28,7 @@ const demoList = [
   { name: "云龙区", value: 1200 },
 ];
 export default {
-  name: "column1",
+  name: "5e82d45aa8276cea55befc257583d1f8",
   setup() {
     let myChart = null;
     let chartsRef = ref();
