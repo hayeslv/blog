@@ -73,5 +73,20 @@
         ]
       }
     ]
+  },
+  {
+    "name": "搭建平台",
+    "groups": [
+      {
+        "groupName": "lowcode",
+        "list": [
+          {
+            "path": "/lowcode-brief",
+            "title": "低代码-简介",
+            "filePath": "docs/platform-build/LowCode-brief.md"
+          }
+        ]
+      }
+    ]
   }
 ]

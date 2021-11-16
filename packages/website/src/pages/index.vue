@@ -304,10 +304,12 @@
         <img src="../assets/images/theme-index-red.png" alt="" />
       </div>
     </div>
+    <div v-html="htmlContent"></div>
   </div>
 </template>
 <script>
 import { throttle } from "throttle-debounce";
+import Prism from "prismjs";
 
 export default {
   created() {
@@ -329,12 +331,18 @@ export default {
   data() {
     return {
       mainImgOffset: 0,
+      htmlContent: `
+      <pre>
+        <code class="language-js">const a = 1;</code>
+      </pre>
+      `
     };
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.throttledHandleScroll);
   },
   mounted() {
+    Prism.highlightAll()
     window.addEventListener("scroll", this.throttledHandleScroll);
   },
 };

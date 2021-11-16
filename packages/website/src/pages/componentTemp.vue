@@ -8,6 +8,7 @@
 import { useRoute } from "vue-router";
 import { toRaw, h, ref } from "vue";
 import marked from "marked";
+import Prism from 'prismjs'
 import { ComponentApi } from '@api';
 
 export default {
@@ -39,7 +40,8 @@ export default {
         .then((response) => response.text())
         .then((text) => {
           visible.value = true;
-          code.value = marked("```js\n" + text + "\n```")
+          code.value = marked("```javascript\n" + text + "\n```")
+          Prism.highlightAll()
         });
     };
     const onClose = () => {
