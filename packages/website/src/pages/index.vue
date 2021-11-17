@@ -304,7 +304,7 @@
         <img src="../assets/images/theme-index-red.png" alt="" />
       </div>
     </div>
-    <div v-html="htmlContent"></div>
+    <div v-html="htmlContent" draggable="true"></div>
   </div>
 </template>
 <script>
