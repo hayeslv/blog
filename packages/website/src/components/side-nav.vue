@@ -185,6 +185,7 @@ import bus from "../bus";
 import compoLang from "../i18n/component.json";
 import componentData from "../router/component.config.json";
 import articleData from "../router/article.config.json";
+import algorithmData from "../router/algorithm.config.json";
 
 export default {
   props: {
@@ -243,6 +244,9 @@ export default {
           this.navList = articleData;
           this.baseURL = "/article";
           break;
+        case "algorithm":
+          this.navList = algorithmData;
+          this.baseURL = "/algorithm"
       }
     },
     handleResize() {

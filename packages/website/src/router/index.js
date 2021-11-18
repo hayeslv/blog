@@ -7,6 +7,7 @@ import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import componentConfig from "./component.config";
 import articleConfig from "./article.config.json";
+import algorithmConfig from "./algorithm.config.json";
 
 const load = (path) =>
   defineAsyncComponent(() => import(`../pages/${path}.vue`));
@@ -108,9 +109,37 @@ function retisterArticleRoute(routeConfig) {
   return route;
 }
 
+// 算法路由
+function registerAlgorithmRoute(routeConfig) {
+  const route = [];
+  route.push({
+    path: `/algorithm`,
+    redirect: `/algorithm/leetcode-53`,
+    component: load("component"),
+    children: [],
+  });
+  routeConfig.forEach((nav) => {
+    if (nav.href) return;
+    if (nav.groups) {
+      nav.groups.forEach((group) => {
+        group.list.forEach((nav) => {
+          addDocRoute(route[0], nav);
+        });
+      });
+    } else if (nav.children) {
+      nav.children.forEach((nav) => {
+        addDocRoute(route[0], nav);
+      });
+    } else {
+      addDocRoute(route[0], nav);
+    }
+  });
+  return route;
+}
+
 let routes = registerCompoentRoute(componentConfig).concat(
   retisterArticleRoute(articleConfig)
-);
+).concat(registerAlgorithmRoute(algorithmConfig));
 
 // 静态路由
 const staticRoutes = [
