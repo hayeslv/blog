@@ -75,4 +75,44 @@ export const elementIsVisibleInViewport = (el : HTMLElement, partiallyVisible = 
     top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth; 
 }; 
 
+/** 获取一个元素内的所有图像
+ * @param el 元素
+ * @param isRemoveRepeat 是否去除
+ * @returns 
+ * 使用方式：getImages(document);
+ */
+export const getImages = (el : HTMLElement, isRemoveRepeat = true) => {     
+  const images = [...el.getElementsByTagName("img")].map(img => img.getAttribute("src"));     
+  return isRemoveRepeat ? [...new Set(images)] : images; 
+}; 
 
+/** 分辨设备是移动设备还是桌面设备
+ * @returns "Mobile" or "Desktop"
+ */
+export const detectDeviceType = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? "Mobile" : "Desktop"; 
+
+/** 获取当前URL
+ * @returns 
+ */
+export const currentURL = () => window.location.href;
+
+/** 将一个字符串复制到剪贴板
+ * @param str 
+ * 使用方法：copyToClipboard('hello world！！！');
+ */
+export const copyToClipboard = (str : string) => {
+  const el = document.createElement('textarea');     
+  el.value = str;     
+  el.setAttribute('readonly', '');     
+  el.style.position = 'absolute';     
+  el.style.left = '-9999px';     
+  document.body.appendChild(el);     
+  const selected = document.getSelection()!.rangeCount > 0 ? document.getSelection()!.getRangeAt(0) : false;     
+  el.select();     
+  document.execCommand('copy');     
+  document.body.removeChild(el);     
+  if (selected) {         
+    document.getSelection()!.removeAllRanges();         
+    document.getSelection()!.addRange(selected);     
+  } 
+}
