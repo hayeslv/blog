@@ -4,11 +4,11 @@
     "packages/*"
   ],
   "scripts": {
-    "dev#website": "yarn workspace website dev",
-    "dev#element3": "yarn workspace dy-element3 dev",
     "dev": "vue-cli-service serve",
+    "dev#website": "yarn workspace website dev",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build#website": "yarn workspace website build",
     "build#element": "yarn workspace element3 build",
     "test": "",
     "test:unit": "vue-cli-service test:unit",
