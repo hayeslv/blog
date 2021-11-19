@@ -15,7 +15,8 @@ module.exports = {
     port: 7010,
     proxy: {
       '/api': {
-        target: 'http://localhost:7001'
+        // target: 'http://localhost:7001'
+        target: 'http://39.98.132.28:7001'
       }
     }
   },
@@ -31,6 +32,9 @@ module.exports = {
       .test(/\.md$/)
       .use('html-loader')
       .loader('html-loader')
+      .options({
+        minimize: false
+      })
       .end()
 
     // ts、tsx支持 

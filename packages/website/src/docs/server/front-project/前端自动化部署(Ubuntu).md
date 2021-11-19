@@ -4,9 +4,9 @@
 
 
 
-## 安装服务(我这里是Ubuntu系统)
+### 安装服务(我这里是Ubuntu系统)
 
-### 安装Node环境
+安装Node环境
 
 ```shell
 # 在 /root 下新建nodejs文件夹（这里可以按照自己配置的路径）
@@ -46,7 +46,7 @@ ln -s /root/tool/nodejs/node-v12.10.0-linux-x64/bin/cnpm /usr/local/bin/cnpm
 
 
 
-### 服务器安装vue-cli
+#### 服务器安装vue-cli
 
 安装cnpm：`sudo npm install -g cnpm --registry=https://registry.npm.taobao.org`
 
@@ -68,7 +68,7 @@ ln -s /root/tool/nodejs/node-v12.10.0-linux-x64/bin/vue /usr/local/bin/
 
 
 
-### 安装docker-compose
+#### 安装docker-compose
 
 ```shell
 apt install docker-compose
@@ -95,13 +95,13 @@ docker-compose up
 
 
 
-## 代码配置
+### 代码配置
 
 > 首先，需要去github上配置githook：git工程 => settings => Webhooks
 
 
 
-### 配置VSCode（上传代码使用）
+#### 配置VSCode（上传代码使用）
 
 ```json
 // .vscode/sftp.json
@@ -137,7 +137,7 @@ npm i github-webhook-handler pm2 -g
 
 
 
-### **编写webhook服务**
+#### **编写webhook服务**
 
 ```js
 //  autobuild/webhook.js
@@ -173,7 +173,7 @@ handler.on('push', function (event) {
 
 
 
-### **编写shell脚本**
+#### **编写shell脚本**
 
 autobuild/webhook.sh
 
@@ -198,7 +198,7 @@ echo "docker-compose 重启完毕"
 
 
 
-### **启动pm2服务**
+#### **启动pm2服务**
 
 ```shell
 # 在此文件夹下：autobuild/ 
