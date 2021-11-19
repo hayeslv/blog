@@ -8,8 +8,11 @@
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
+  publicPath: '/',
+  // outputDir: 'dist',
+  // assetsDir: 'assets',
   devServer: {
-    port: 7777,
+    port: 7010,
     proxy: {
       '/api': {
         target: 'http://localhost:7001'
@@ -29,9 +32,6 @@ module.exports = {
       .use('html-loader')
       .loader('html-loader')
       .end()
-      // .use('markdown-loader')
-      // .loader('markdown-loader')
-      // .end()
 
     // ts、tsx支持 
     config

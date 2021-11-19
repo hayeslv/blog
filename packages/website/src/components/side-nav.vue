@@ -46,7 +46,7 @@
     }
 
     .nav-item {
-      a {
+      >a {
         display: block;
         height: 40px;
         color: #444;
@@ -98,9 +98,11 @@
 
   .nav-group__title {
     font-size: 12px;
+    font-weight: bold;
     color: #999;
     line-height: 26px;
-    margin-top: 15px;
+    margin-left: 3px;
+    // margin-top: 15px;
   }
 
   #code-sponsor-widget {
