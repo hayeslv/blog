@@ -11,16 +11,12 @@
           <router-link to="/">
             <!-- logo -->
             <slot>
-              <img
-                src="../assets/images/element-logo.svg"
-                alt="element-logo"
-                class="nav-logo"
-              />
-              <img
-                src="../assets/images/element-logo-small.svg"
-                alt="element-logo"
-                class="nav-logo-small"
-              />
+              <div id="logo">
+                <!-- <img src="../assets/images/element-logo.svg"  alt="logo" class="nav-logo"/> -->
+                <img src="../assets/images/element-logo-small.svg" alt="small-logo" class="nav-logo" />
+                <img src="../assets/images/element-logo-small.svg" alt="small-logo" class="nav-logo-small" />
+                <span>组件库</span>
+              </div>
             </slot>
           </router-link>
         </h1>
@@ -77,7 +73,14 @@ export default {
 .header-wrapper {
   height: 80px;
 }
-
+#logo{
+  span{
+    width: auto;
+    font-size: 18px;
+    color: #1989fa;
+    transform: translateY(-3px);
+  }
+}
 .header {
   height: 80px;
   background-color: #fff;
