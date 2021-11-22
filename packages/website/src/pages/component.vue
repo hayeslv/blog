@@ -168,7 +168,7 @@
 <script>
 import bus from "../bus";
 
-// import { throttle } from "throttle-debounce";
+import { throttle } from "throttle-debounce";
 import SideNav from "@/components/side-nav.vue";
 
 export default {
@@ -184,10 +184,14 @@ export default {
   watch: {
     "$route.path"() {
       // 触发伪滚动条更新
-      // this.componentScrollBox.scrollTop = 0;
-      // this.$nextTick(() => {
-      //   this.componentScrollBar.update();
-      // });
+      this.componentScrollBox.scrollTop = 0;
+      this.$nextTick(() => {
+        this.componentScrollBar.update();
+      });
+
+      // TODO 待优化（上面的代码，直接控制滚动组件，没有效果，带查询原因）
+      const scroll = document.getElementsByClassName('el-scrollbar__view')
+      scroll[0] && (scroll[0].scrollTop = 0)
     },
   },
   methods: {
@@ -240,17 +244,17 @@ export default {
     // });
   },
   mounted() {
-    //   this.componentScrollBar = this.$refs.componentScrollBar;
-    //   this.componentScrollBox = this.componentScrollBar.$el.querySelector(
-    //     ".el-scrollbar__wrap"
-    //   );
-    //   this.throttledScrollHandler = throttle(300, this.handleScroll);
-    //   this.componentScrollBox.addEventListener(
-    //     "scroll",
-    //     this.throttledScrollHandler
-    //   );
-    //   this.renderAnchorHref();
-    //   this.goAnchor();
+    this.componentScrollBar = this.$refs.componentScrollBar;
+    this.componentScrollBox = this.componentScrollBar.$el.querySelector(
+      ".el-scrollbar__wrap"
+    );
+    this.throttledScrollHandler = throttle(300, this.handleScroll);
+    this.componentScrollBox.addEventListener(
+      "scroll",
+      this.throttledScrollHandler
+    );
+    // this.renderAnchorHref();
+    // this.goAnchor();
     document.body.classList.add("is-component");
   },
   unmounted() {

@@ -20,7 +20,6 @@ export default {
     const filePath = toRaw(route).meta.value.filePath;
     // const markdown = require(`@/${filePath}/${nav}.md`);
     const markdown = require(`@/${filePath}`);
-    console.log(markdown.toString());
     const code = ref(marked(markdown));
     return { code };
   },
