@@ -10,6 +10,7 @@ import { toRaw, h, ref } from "vue";
 import marked from "marked";
 import Prism from 'prismjs'
 import { ComponentApi } from '@api';
+import { nextTick } from 'process';
 
 export default {
   setup() {
@@ -41,7 +42,9 @@ export default {
         .then((text) => {
           visible.value = true;
           code.value = marked("```javascript\n" + text + "\n```")
-          Prism.highlightAll()
+          nextTick(() => {
+            Prism.highlightAll()
+          })
         });
     };
     const onClose = () => {

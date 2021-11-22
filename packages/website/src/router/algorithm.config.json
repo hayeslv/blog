@@ -33,5 +33,15 @@
         "filePath": "algorithm/linklist/leetcode202-快乐数.md"
       }
     ]
+  },
+  {
+    "name": "编码",
+    "children": [
+      {
+        "path": "/code-promise-concurrency",
+        "name": "Promise并发控制",
+        "filePath": "algorithm/code/Promise并发控制.md"
+      }
+    ]
   }
 ]
