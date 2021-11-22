@@ -212,8 +212,8 @@ export default {
       this.selectNav(val);
       this.handlePathChange();
     },
-    navList(val) {
-      console.log(val);
+    navList() {
+      // console.log(val);
     },
     isFade(val) {
       bus.$emit("navFade", val);

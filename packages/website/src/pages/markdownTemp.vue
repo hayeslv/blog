@@ -6,21 +6,25 @@
 
 <script>
 import { useRoute } from "vue-router";
-import { toRaw, ref } from "vue";
+import { toRaw, ref, watch } from "vue";
 import marked from "marked";
+import Prism from "prismjs";
+import { nextTick } from 'process';
+
 export default {
   setup() {
     const route = useRoute();
-    // const navs = toRaw(route).path.value;
-    // const length = navs.split("/").length;
-    // 获取文件名（路由名）
-    // const nav = navs.split("/")[length - 1];
 
     // 获取文件路径
     const filePath = toRaw(route).meta.value.filePath;
-    // const markdown = require(`@/${filePath}/${nav}.md`);
     const markdown = require(`@/${filePath}`);
     const code = ref(marked(markdown));
+    
+    watch(route, () => {
+      nextTick(() => {
+        Prism.highlightAll()
+      })
+    })
     return { code };
   },
   render() {

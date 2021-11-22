@@ -25,7 +25,7 @@ const signleton = () => {
 
 典型的单例：
 
-```tsx
+```js
 class IDGen {
   private constructor(){}
   static instance = new IDGen()

@@ -1,11 +1,21 @@
 [
   {
-    "name": "leetcode刷题",
+    "name": "数组",
     "children": [
       {
         "path": "/leetcode-53",
         "name": "leetcode-53",
-        "filePath": "algorithm/leetcode/53-最大子序和.md"
+        "filePath": "algorithm/array/leetcode53-最大子序和.md"
+      }
+    ]
+  },
+  {
+    "name": "链表",
+    "children": [
+      {
+        "path": "/linklist-base-use",
+        "name": "创建链表",
+        "filePath": "algorithm/linklist/base-use.md"
       }
     ]
   }

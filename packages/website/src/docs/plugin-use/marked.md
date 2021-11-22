@@ -12,7 +12,7 @@ npm i marked -S
 
 ### 组件中引入 marked
 
-```vue
+```html
 <template>
   <div v-html="mdText"></div>
 </template>
@@ -79,7 +79,7 @@ module.exports = {
 
 最后就能正常在组件中导入`helloMarked.md`文件
 
-```vue
+```html
 <template>
   <div v-html="mdText"></div>
 </template>
@@ -101,7 +101,6 @@ export default {
 如下图：
 
 <img src=".\assets\marked2.png" alt="marked2" />
-
 
 
 
