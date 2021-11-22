@@ -99,7 +99,7 @@
   .nav-group__title {
     font-size: 12px;
     font-weight: bold;
-    color: #999;
+    color: #ddd;
     line-height: 26px;
     margin-left: 3px;
     // margin-top: 15px;

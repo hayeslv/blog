@@ -16,7 +16,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://localhost:7001'
-        target: 'http://39.98.132.28:7001'
+        target: 'http://www.dylanlv.com:7011'
       }
     }
   },

@@ -36,6 +36,16 @@
             "filePath": "views/screen"
           }
         ]
+      },
+      {
+        "groupName": "form",
+        "list": [
+          {
+            "title": "大文件上传",
+            "path": "/upload-file",
+            "filePath": "views/form"
+          }
+        ]
       }
     ]
   }

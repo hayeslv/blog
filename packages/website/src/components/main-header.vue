@@ -37,14 +37,14 @@
               算法
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/contribution`">
               贡献
             </router-link>
           </li>
           <li class="nav-item">
             <a active-class="active" @click="initDB">初始化数据库</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </header>
