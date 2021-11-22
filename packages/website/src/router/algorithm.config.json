@@ -4,7 +4,7 @@
     "children": [
       {
         "path": "/leetcode-53",
-        "name": "leetcode-53",
+        "name": "最大子序和",
         "filePath": "algorithm/array/leetcode53-最大子序和.md"
       }
     ]
@@ -16,6 +16,21 @@
         "path": "/linklist-base-use",
         "name": "创建链表",
         "filePath": "algorithm/linklist/base-use.md"
+      },
+      {
+        "path": "/leetcode-141",
+        "name": "环形链表",
+        "filePath": "algorithm/linklist/leetcode141-环形链表.md"
+      },
+      {
+        "path": "/leetcode-142",
+        "name": "环形链表Ⅱ",
+        "filePath": "algorithm/linklist/leetcode142-环形链表Ⅱ.md"
+      },
+      {
+        "path": "/leetcode-202",
+        "name": "快乐数",
+        "filePath": "algorithm/linklist/leetcode202-快乐数.md"
       }
     ]
   }
