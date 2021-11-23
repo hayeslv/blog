@@ -2,7 +2,7 @@
 
 ## 一、TS基本类型
 
-### 1、boolean类型
+### 1.1、boolean类型
 
 ```js
 let flag : boolean = false
@@ -11,7 +11,7 @@ flag = true
 
 
 
-### 2、number类型
+### 1.2、number类型
 
 ```js
 let flag : number = 1
@@ -20,7 +20,7 @@ flag = 2
 
 
 
-### 3、string类型
+### 1.3、string类型
 
 ```js
 let flag : string = 'a'
@@ -29,7 +29,7 @@ flag = 'b'
 
 
 
-### 4、array类型
+### 1.4、array类型
 
 ```js
 const list1 : number[] = [1, 2, 3]
@@ -63,7 +63,7 @@ const myArray : ReadonlyArray<string> = ["red", "green", "blue"]
 
 
 
-### 5、枚举类型
+### 1.5、枚举类型
 
 TypeScript 支持基于数字和基于字符串的枚举。
 
@@ -120,7 +120,7 @@ var dir = 0 /* NORTH */;
 
 
 
-### 6、any类型
+### 1.6、any类型
 
 `any`类型：任何类型都能归为`any`类型。
 
@@ -129,7 +129,7 @@ var dir = 0 /* NORTH */;
 
 
 
-### 7、unknown类型
+### 1.7、unknown类型
 
 - 我们可以给`unknown`类型赋任何值。
 - 但并不能把`unknown`的值赋给**非unknown、any的类型**。
@@ -150,7 +150,7 @@ value.trim(); // Error
 
 
 
-### 8、tuple元组类型
+### 1.8、tuple元组类型
 
 #### (1) 元组类型
 
@@ -182,7 +182,7 @@ function doSomething(pair : readonly [string, number]) {
 
 
 
-### 9、never类型
+### 1.9、never类型
 
 `never`类型：永不存在的值。常用于`分支收窄`中（if、switch）。
 
@@ -205,7 +205,7 @@ function padLeft(padding : number | string, input : string) {
 
 
 
-### 10、void类型
+### 1.10、void类型
 
 `void`：没有任何类型。例如没有返回值的函数。
 
@@ -217,13 +217,13 @@ function pop() : void{
 
 
 
-### 11、null 和 undefined
+### 1.11、null 和 undefined
 
 TypeScript 里，`undefined` 和 `null` 两者有各自的类型分别为 `undefined` 和 `null`。
 
 
 
-### 12、object、Object 和 {} 类型
+### 1.12、object、Object 和 {} 类型
 
 #### (1) object
 
@@ -244,11 +244,113 @@ obj.prop = "age" // Error
 
 
 
+## 二、TS断言
+
+### 2.1、类型断言
+
+我们开发者比TS更了解某个实体的类型，此时使用**类型断言**给该实体指定类型，此时不会进行类型扩展
+
+#### (1) 尖括号语法
+
+```js
+const someValue : any = "this is a string"
+const strLength : number = (<string>someValue).length
+```
+
+#### (2) as 语法
+
+```js
+const someValue : any = "this is a string"
+const strLength : number = (someValue as string).length
+```
+
+#### (3) 类型扩展
+
+**类型扩展**：某个变量的类型被扩展为通用类型，例如`string`、`number`等
+
+1、const声明，将不会进行类型扩展
+
+```js
+const constantString = "hello world"
+constantString; // 类型："hello world"
+```
+
+2、let/var 声明，会进行类型扩展
+
+```js
+let changingString = "hello world"
+changingString; // 类型：string
+```
+
+3、引用特定的字符串和数字作为类型，不会进行类型扩展
+
+```js
+function printText(s : string, alignment : "left" | "right" | "center") {
+  // ...
+}
+printText("hello,world", "left")
+printText("good, good", "top") // 类型“"top"”的参数不能赋给类型“"left" | "right" | "center"”的参数。
+```
+
+**应用**
+
+```js
+const req = { url : "http://example.com", method : "GET" }
+handlerRequest(req.url, req.method); // Argument of type 'string' is not assignable to parameter of type '"GET" | "POST"'
+```
+
+原因：method被推理为string，此时handleRequest接受的第二个参数采用文字类型`GET`和`POST`，不匹配。
+
+解决方案：const 断言。对象内属性不会进行类型扩展。
+
+```js
+const req = { url: "https://example.com", method: "GET" } as const;
+handleRequest(req.url, req.method);
+```
 
 
 
+### 2.2、非空断言
+
+非空断言运算符`！`：从 x 值域中排除 null 和 undefined
+
+使用场景：
+
+#### (1) 忽略 undefined 和 null 类型
+
+```js
+function myFunc(maybeString : string | undefined | null) {
+  const onlyString : string = maybeString; // 不能将类型“string | null | undefined”分配给类型“string”。
+  const ignoreUndefinedAndNull : string = maybeString!; // OK
+}
+```
+
+#### (2) 调用函数时忽略 undefined 类型
+
+```js
+function myFunc(numGenerator : NumGenerator | undefined) {
+  const num1 = numGenerator(); // 不能调用可能是“未定义”的对象。
+  const num2 = numGenerator!(); // OK
+}
+```
 
 
+
+### 2.3、确定赋值断言
+
+在实例属性和变量声明后使用`!`，明确告诉 TS 某变量已被明确赋值。
+
+```js
+let x : number;
+initialize();
+
+// 如果第一行是（let x! : number），则OK，告诉ts某变量已被明确赋值
+console.log(2 * x); // Error
+
+function initialize() {
+  x = 10;
+}
+```
 
 
 
