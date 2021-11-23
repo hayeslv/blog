@@ -1,35 +1,28 @@
-const request = url => {
-  // 实际场景这里用axios等请求库发请求即可，这里使用定时器模拟延时
-  return new Promise(resolve => {
-    setTimeout(() => {
-      console.log('完成一个任务', url, new Date());
-      resolve({ url, date: new Date() })
-    }, 1000);
-  })
-}
+/*
+ * @Author: Lvhz
+ * @Date: 2021-11-04 14:35:41
+ * @Description: Description
+ */
 
-function limitQueue(urls, limit) {
-  // 已完成任务数
-  let i = 0;
-  // 填充执行队列
-  for(let excuteCount = 0; excuteCount < limit; excuteCount++) {
-    run();
-  }
-
-  // 执行一个任务
-  function run() {
-    // 构造待执行任务，当该任务完成后，如果还有待完成的任务，则继续执行下一个任务
-    new Promise((resolve) => {
-      const url = urls[i++];
-      resolve(request(url))
-    }).then(() => {
-      if(i < urls.length) run()
-    })
+const axios = require('axios')
+let count = 0
+let error = 0
+const request = async () => {
+  try{
+    const res = await axios.get("https://www.imqianduan.com/vue/router-key-refresh.html")
+    if(res.status === 200) {
+      count++
+      console.log('count: ', count);
+    } else {
+      error++
+      console.log('error: ', error);
+    }
+  } catch (err) {
+    error++
+    console.log('error: ', error);
   }
 }
 
-const urls = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
-
-(async () => {
-  await limitQueue(urls, 4);
-})()
+setInterval(() => {
+  request()
+}, 10);

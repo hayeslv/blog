@@ -354,6 +354,494 @@ function initialize() {
 
 
 
+## 三、类型守卫
+
+用于检测属性、方法和原型。
+
+### 3.1、in 关键字
+
+遍历
+
+```js
+type Keys = "name" | "sex"
+type OtherKeys = {
+  [key in Keys] : string // 类似 for ... in
+}
+
+const stu : OtherKeys = {
+  name: "wang",
+  sex: "man"
+}
+```
+
+类型窄化、判断某个对象里是否有某个属性
+
+```js
+type Fish = {
+  swim: () => void
+}
+type Bird = {
+  fly: () => void
+}
+function move(animal : Fish | Bird) {
+  if("swim" in animal) return animal.swim()
+  return animal.fly()
+}
+```
+
+
+
+### 3.2、typeof 关键字
+
+判断某个对象的类型，跟 JS 的`typeof`差不多。
+
+**注意：不能用在类型参数上（泛型）**
+
+
+
+### 3.3、instanceof 关键字
+
+判断某个对象是否为某个类的实例。
+
+
+
+### 3.4、自定义类型保护的类型谓词
+
+告诉 `TS` ，如果逻辑语句汇总返回的是`true`，则判断当前的`x`变量的类型为`number`类型。
+
+```js
+function isNumber(x : any) : x is number {
+  return typeof x === "number"
+}
+function isString(x : any) : x is string {
+  return typeof x === "string"
+}
+```
+
+
+
+## 四、联合类型、交集类型、类型别名
+
+### 4.1、联合类型
+
+xxx | xxx
+
+
+
+### 4.2、交集类型
+
+使用 `&` 运算符定义交集类型，对象属性叠加类型
+
+```js
+interface Colorful {
+  color : string;
+}
+interface Circle {
+  radius : number;
+}
+
+type ColorfulCircle = Colorful & Circle;
+
+function draw(circle : ColorfulCircle) {
+  console.log(`Color was ${circle.color}`);
+  console.log(`Radius was ${circle.radius}`);
+}
+```
+
+#### (1) 同名基础类型属性的合并
+
+此时成员`C`类型不一致，`C`的类型为`never`
+
+```js
+interface X {
+  c : string;
+  d : string;
+}
+interface Y {
+  c : number;
+  e : string;
+}
+
+type XY = X & Y
+```
+
+#### (2) 同名非基础类型属性的合并
+
+可以正常合并
+
+```js
+interface D { d : boolean }
+interface E { e : string }
+interface F { f : number }
+
+interface A { x : D }
+interface B { x : E }
+interface C { x : F }
+
+type ABC = A & B & C // { x: { d: boolean, e: string, f: number } }
+const abc : ABC = {
+  x: {
+    d: true,
+    e: "some",
+    f: 10
+  }
+}
+```
+
+#### (3) 类型别名
+
+给类型起一个新的名字。
+
+```js
+type Point = {
+  x : number;
+  y : number;
+}
+
+function printRect(pt : Point) {
+  ...
+}
+```
+
+
+
+## 五、对象类型
+
+### 5.1、对象属性修饰
+
+- 可选：？
+- 只读：readonly
+
+**可选**
+
+```js
+interface PaintOptions {
+  xPos : number;
+  yPos : number;
+  zPos?: number;
+}
+function paintShape(opts : PaintOptions) {
+  // ...
+}
+paintShape({ xPos: 1, yPos: 2 })
+paintShape({ xPos: 1, yPos: 2, zPos: 3 })
+```
+
+**readonly 只读**
+
+被修饰属性无法被写入（类似const，不是一定的不变，只是意味着属性本身不能被重写）
+
+```js
+interface Home {
+  readonly student : { name: string; age: number }
+}
+function visitForAge(home : Home) {
+  home.student.age++ // 可以更新，并且不会报错
+}
+function evict(home : Home) {
+  // 无法分配到 "student" ，因为它是只读属性。
+  home.student = {
+    name: 'dy',
+    age: 40
+  }
+}
+```
+
+
+
+### 5.2、解构赋值重命名
+
+**改名前：改名后**
+
+接受属性shape，被重新定义名字为Shape，xPos被重新定义为number。
+
+```js
+function draw({ shape : Shape, xPos : number = 100 }) {
+  console.log(shape); // 找不到名称“shape”。你是否指的是“Shape”?
+  console.log(xPos); // 找不到名称“xPos”。
+}
+```
+
+
+
+### 5.3、索引签名 Index Signatures
+
+有时候我们不知道对象类型属性的所有名称，但是我们知道它的key类型对应的可能值类型。这时候可以使用索引签名来描述可能值的类型。
+
+```js
+//这是一个带有索引签名的接口，当索引为number类型时，值类型为string
+interface StringArray {
+  [index: number] : string;
+}
+```
+
+**注意：索引签名属性类型必须为字符串/数字**
+
+
+
+### 5.4、keyof 类型运算符
+
+获取对象的key值的类型，为联合类型。
+
+
+
+### 5.5、索引访问类型
+
+ 1.使用索引访问特定属性
+
+```js
+type Person = {
+  age : number;
+  name : string;
+}
+type Age = Person["age"] // ype Age = number
+```
+
+2.索引类型本身就是一种类型，所以我们可以使用 keyof 以及其他类型（例如联合类型）
+
+```js
+type Person = {
+  age : number;
+  name : string;
+  alive : boolean;
+}
+type I1 = Person["age" | "name"]; // type I1 = string | number
+type I2 = Person[keyof Person]; // type I2 = string | number | boolean
+type AliveOrName = "alive" | "name"; // 只能等于alive或者name这两个字符串
+type I3 = Person[AliveOrName]; // type I3 = string | boolean
+```
+
+3.若使用索引不存在的属性，Error
+
+4.使用`number`索引，可以获取数组元素的类型
+
+```js
+const MyArray = [
+  { name: "Alice", age: 15 },
+  { name: "Bob", age: 23 },
+  { name: "Eve", age: 42 },
+]
+type Person = typeof MyArray[number]; // type Person = { name: string; age: number; }
+type Age = typeof MyArray[number]["age"]; // type Age = number
+type Age2 = Person["age"]; // type Age2 = number
+```
+
+
+
+## 六、TS函数
+
+### 6.1、参数类型和返回类型
+
+```js
+function createUserId(name : string, id : number) : string {
+  return name + id;
+}
+```
+
+
+
+### 6.2、函数类型
+
+```js
+let IdGenerator : (chars : string, nums : number) => string;
+
+function createUserId(name : string, id : number) : string {
+  return name + id;
+}
+
+IdGenerator = createUserId;
+```
+
+
+
+### 6.3、可选参数和默认参数
+
+```js
+// 可选参数
+function createUserId(name : string, id : number, age?: number) : string {
+  return name + id;
+}
+// 默认参数
+function createUserId2(
+  name : string = "dylan",
+  id : number,
+  age?: number
+) : string {
+  return name + id;
+}
+```
+
+**回调函数中的可选参数**
+
+为回调函数编写函数类型时，`切勿编写可选参数`，除非你打算在不传递该参数的情况下调用该函数。
+
+
+
+### 6.4、函数重载
+
+同一函数名，接受的参数个数/类型不一致，称为函数重载。
+
+格式：n（n>=2）个函数类型定义，紧跟实现函数体。
+
+```js
+// 函数类型定义
+function makeDate(timeStamp : number) : Date
+function makeDate(m : number, d : number, y : number) : Date
+
+// 实现函数体
+function makeDate(mOrTimeStamp : number, d?: number, y?: number) : Date {
+  if(d !== undefined && y !== undefined) {
+    return new Date(y, mOrTimeStamp, d)
+  } else {
+    return new Date(mOrTimeStamp)
+  }
+}
+```
+
+
+
+## 七、TS 接口
+
+`接口：`命名对象的形状（Shape）
+
+```js
+interface Point {
+  x : number;
+  y : number;
+}
+function printCoord(pt : Point) {
+  console.log(pt.x, pt.y);
+}
+```
+
+**类型别名和接口的异同点**
+
+- 相同：可以定义对象的形状
+- 不同：接口可进行声明合并，类型别名不行。
+
+
+
+## 八、TS 类
+
+### 8.1、类的属性和方法
+
+成员属性与静态属性，成员方法与静态方法
+
+```js
+class Greeter {
+  // 静态属性
+  static cname : string = "Dylan";
+  // 成员属性
+  greeting : string;
+  // 构造函数 - 执行初始化操作
+  constructor(message : string) {
+    this.greeting = message;
+  }
+  // 静态方法
+  static getClassName() {
+    return "class name is greeter"
+  }
+  // 成员方法
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+const greeter = new Greeter("world")
+```
+
+
+
+### 8.2、成员访问修饰符
+
+TypeScript可以使用三种访问修饰符，分别是 `public`、`private` 和 `protected`。
+
+- `public` 修饰的属性或方法是公有的，可以在任何地方被访问到，默认`public`
+- `private` 修饰的属性或方法是私有的，不能在声明它的类的外部访问
+- `protected` 修饰的属性或方法是受保护的，仅对自身和子类可见
+
+```js
+class MySafe {
+  private secretKey = 12345;
+}
+const s = new MySafe();
+// console.log(s.secretKey); // 属性“secretKey”为私有属性，只能在类“MySafe”中访问。
+console.log(s["secretKey"]); // OK
+```
+
+**跨层级protected访问**
+
+`protected`通过基类引用访问成员是否合法？在TS中不合法！
+
+**派生类无法修改基类的private可见性**
+
+```js
+class Base {
+  private x = 0
+}
+class Derived extends Base {
+  x = 1; // 属性“x”在类型“Base”中是私有属性，但在类型“Derived”中不是。
+}
+```
+
+**跨实例private访问**
+
+TS允许跨实例 private 访问
+
+```js
+class A {
+  private x = 10;
+  public sameAs(other : A) {
+    return other.x === this.x; // OK
+  }
+}
+```
+
+> 注意：private protected 只在类型检查过程中执行，这意味着，在JS运行时，还是可以访问到private或protected的成员。
+
+
+
+### 8.3、私有字段#
+
+使用私有字段`#`，在编译为 JS 后保持私有。
+
+```js
+class Dog {
+  #barkAmount = 0;
+  personality = "happy";
+
+  constructor () {}
+}
+
+let dog = new Dog()
+console.log(dog.barkAmount); // 输出undefined
+```
+
+- 私有字段上不能使用成员访问修饰符。
+- 私有字段不能在包含的类之外访问，甚至不能被检测到。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

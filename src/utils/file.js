@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /*
  * @Author: Lvhz
  * @Date: 2021-08-23 11:00:40
@@ -276,4 +277,32 @@ export const calculateHashDouble = async chunks => {
       }
     })
   }
+}
+
+// 文件上传
+const upload = () => {
+  const inputObj = document.createElement('input')
+  inputObj.setAttribute('id', 'file')
+  inputObj.setAttribute('type', 'file')
+  inputObj.setAttribute('name', 'file')
+  inputObj.setAttribute("style", 'visibility:hidden')
+  document.body.appendChild(inputObj)
+  inputObj.click()
+}
+const dataImport = async () => {
+  upload()
+  document.querySelector('#file').addEventListener('change', async e => {
+    console.log(e.target.files)
+    const file = e.target.files && e.target.files[0]
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append('file', file)
+    // const res = await importExcel(formData)
+    // if (res.code == 0) {
+    //   this.$message({ type: 'success', message: "上传成功" })
+    // } else {
+    //   this.$message({ type: 'error', message: "上传失败" })
+    // }
+  })
 }
