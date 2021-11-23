@@ -17,8 +17,25 @@ export default {
 
     // 获取文件路径
     const filePath = toRaw(route).meta.value.filePath;
+
+    // !test
+    let code = ref('');
+
+    // if(filePath === 'algorithm/array/leetcode53-最大子序和.md') {
+    //   fetch("https://dylan-static.oss-cn-beijing.aliyuncs.com/markdown/algorithm/linklist/leetcode142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%E2%85%A1.md")
+    //     .then(response => response.text())
+    //     .then(text => {
+    //       console.log(text);
+    //       code.value = marked(text)
+    //     })
+    // } else {
+    //   const markdown = require(`@/${filePath}`);
+    //   code.value = marked(markdown)
+    // }
+
     const markdown = require(`@/${filePath}`);
-    const code = ref(marked(markdown));
+    code.value = marked(markdown)
+    
     
     watch(route, () => {
       nextTick(() => {
