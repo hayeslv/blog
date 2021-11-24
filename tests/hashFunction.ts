@@ -3,13 +3,14 @@
  * @Date: 2021-11-23 09:08:18
  * @Description: Description
  */
-function log(target : Function, key : string, parameterIndex : number) {
-  const functionLogged = key || target.prototype.constructor.name;
-  console.log(`位于${functionLogged}第${parameterIndex}个参数`);
+interface CatInfo {
+  age : number
+  breed : string
 }
-class Gretter {
-  greeting : string;
-  constructor(@log name : string, @log type : string) {
-    this.greeting = name;
-  }
+type CatName = 'miffy' | 'boris' | 'mordred'
+const cats : Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: 'Persian' },
+  boris: { age: 5, breed: 'Maine Coon' },
+  mordred: { age: 16, breed: 'British Shorthair' },
 }
+cats.boris // (property) boris: CatInfo

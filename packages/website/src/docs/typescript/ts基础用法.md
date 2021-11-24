@@ -1225,11 +1225,162 @@ class Gretter {
 
 
 
+## 十一、条件类型
+
+### 11.1、条件类型的基本使用
+
+使用`extends?x:y;`，如果`T`的类型 是 `U`的类型的 **子集**，那么取结果`X`，否则取结果`Y`，类似于三元表达式。
+
+```js
+T extends U ? X : Y
+```
+
+**应用：**
+
+一个createLabel函数，接受为number/string，此时使用函数重载实现
+
+```js
+interface IDLabel {
+  id : number
+}
+interface NameLabel {
+  name : string
+}
+function createLabel(id : number) : IDLabel
+function createLabel(name : string) : NameLabel
+function createLabel(nameOrId : string | number) : NameLabel | IDLabel
+function createLabel(nameOrId : string | number) : NameLabel | IDLabel {
+  if(typeof nameOrId === 'string') return { name: nameOrId }
+  return { id: nameOrId }
+}
+```
+
+使用条件类型修改：
+
+```js
+type NameOrId<T extends number|string> = T extends number ? IDLabel : NameLabel;
+function createLabel<T extends number|string>(idOrName : T) : NameOrId<T> {
+  throw "unimplemented";
+}
+```
 
 
 
+### 11.2、infer类型推理
+
+条件类型使用 inter 进行类型推理
+
+inter：表示在 `extends` 条件语句中待推断的类型变量。
+
+inter 声明的这个变量只能在 true 分支中使用。
+
+```js
+type Params<T> = T extends (...args : infer P) => any ? P : T
+interface User {
+  name : string
+  age : number
+}
+type Func = (user : User) => void
+type MyParam = Params<Func> // type MyParam = [user: User]
+type AA = Params<string> // type AA = string
+```
 
 
+
+### 11.3、条件类型约束
+
+希望效果：获取message，如果没有message则类型为never
+
+```js
+type MessageOf<T> = T["message"]; // Error：类型“"message"”无法用于索引类型“T”。
+```
+
+原因：T不一定有message属性
+
+修改：约束T的范围，判断T是否有message，没有则never
+
+```js
+type MessageOf<T> = T extends { message: unknown } ? T["message"] : never;
+```
+
+
+
+## 十二、模板文字类型
+
+- Uppercase<StringType>：将字符串转大写
+- Lowercase<StringType>：将字符串转小写
+- Capitalize<StringType>：将字符串第一个字符转大写，其他不变
+- Uncapitalize<StringType>：将字符串第一个字符转小写，其他不变
+
+
+
+## 十三、模块
+
+TS 使用 `import type` 用于类型的导入。
+
+```js
+export type Cat = { bread : string }
+import type { Cat } from './type.ts'
+```
+
+导入时内联type表明引入的是类型
+
+```js
+import { createCatName, type Cat, type Dog } from './animal.ts';
+
+export type Animals = Cat | Dog;
+const name = createCatName();
+```
+
+
+
+## 十四、内置类型别名
+
+- `Partial<Type>`：将某个类型的属性全变为可选项。
+- `Required<Type>`：将某个类型的属性全变为必选项。
+- `Readonly<Type>`：将某个类型所有属性变为只读属性
+- `Record<Keys,Type>`：将 K 中所有的属性的值转化为 T 类型。
+
+```js
+type Record<K extends keyof any, T> = {
+  [P in K] : T
+}
+```
+
+例子：
+
+```js
+interface CatInfo {
+  age : number
+  breed : string
+}
+type CatName = 'miffy' | 'boris' | 'mordred'
+const cats : Record<CatName, CatInfo> = {
+  miffy: { age: 10, breed: 'Persian' },
+  boris: { age: 5, breed: 'Maine Coon' },
+  mordred: { age: 16, breed: 'British Shorthair' },
+}
+cats.boris // (property) boris: CatInfo
+```
+
+- `Pick <Type,Keys>`：从Type中取出一组属性Keys构造新的类型。
+- `Omit<Type,Keys>`：从Type中删除Keys属性，构造类型。
+- `Exclude<Type,ExcludedUnion>`：获取Type类排除ExcludedUnion后的联合成员。
+
+```js
+type T0 = Exclude<"a"|"b"|"c", "a">; // type T0 = "b" | "c"
+type T1 = Exclude<"a"|"b"|"c", "a"|"b">; // type T1 = "c"
+type T2 = Exclude<string|number|(()=>void), Function>; // type T2 = string | number
+```
+
+- `Extract<Type,Union>`：获取Type可分配给Union的联合成员，即求同。
+- `NonNullable<Type>`：排除Type中的null、undefined后，得到的类型。
+- `Parameters<T>`：获得函数的参数类型组成的元组类型。
+- `ConstructorParameters<Type>`：获取构造函数参数类型的元组类型。
+- `ReturnType<T>`：获取函数 Type 的返回类型。
+- `InstanceType<Type>`：获取构造函数类型的实例类型。
+- `ThisParameterType<Type>`：获取函数的this参数的类型
+- `ThisType<T>`：指定上下文对象类型
 
 
 
