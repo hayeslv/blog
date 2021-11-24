@@ -49,7 +49,7 @@ function doStuff(values : ReadonlyArray<string>) {
   // 我们可以读取values
   const copy = values.slice()
   // 但是我们不能修改vlaues（下面这行代码会报错）
-  values.push("hello!") // !类型“readonly string[]”上不存在属性“push”。
+  values.push("hello!") // Error：类型“readonly string[]”上不存在属性“push”。
 }
 ```
 
@@ -320,7 +320,7 @@ handleRequest(req.url, req.method);
 
 ```js
 function myFunc(maybeString : string | undefined | null) {
-  const onlyString : string = maybeString; // 不能将类型“string | null | undefined”分配给类型“string”。
+  const onlyString : string = maybeString; // Error：不能将类型“string | null | undefined”分配给类型“string”。
   const ignoreUndefinedAndNull : string = maybeString!; // OK
 }
 ```
@@ -329,7 +329,7 @@ function myFunc(maybeString : string | undefined | null) {
 
 ```js
 function myFunc(numGenerator : NumGenerator | undefined) {
-  const num1 = numGenerator(); // 不能调用可能是“未定义”的对象。
+  const num1 = numGenerator(); // Error：不能调用可能是“未定义”的对象。
   const num2 = numGenerator!(); // OK
 }
 ```
@@ -539,7 +539,7 @@ function visitForAge(home : Home) {
   home.student.age++ // 可以更新，并且不会报错
 }
 function evict(home : Home) {
-  // 无法分配到 "student" ，因为它是只读属性。
+  // Error：无法分配到 "student" ，因为它是只读属性。
   home.student = {
     name: 'dy',
     age: 40
@@ -557,8 +557,8 @@ function evict(home : Home) {
 
 ```js
 function draw({ shape : Shape, xPos : number = 100 }) {
-  console.log(shape); // 找不到名称“shape”。你是否指的是“Shape”?
-  console.log(xPos); // 找不到名称“xPos”。
+  console.log(shape); // Error：找不到名称“shape”。你是否指的是“Shape”?
+  console.log(xPos); // Error：找不到名称“xPos”。
 }
 ```
 
@@ -765,7 +765,7 @@ class MySafe {
   private secretKey = 12345;
 }
 const s = new MySafe();
-// console.log(s.secretKey); // 属性“secretKey”为私有属性，只能在类“MySafe”中访问。
+// console.log(s.secretKey); // Error：属性“secretKey”为私有属性，只能在类“MySafe”中访问。
 console.log(s["secretKey"]); // OK
 ```
 
@@ -780,7 +780,7 @@ class Base {
   private x = 0
 }
 class Derived extends Base {
-  x = 1; // 属性“x”在类型“Base”中是私有属性，但在类型“Derived”中不是。
+  x = 1; // Error：属性“x”在类型“Base”中是私有属性，但在类型“Derived”中不是。
 }
 ```
 
@@ -822,11 +822,228 @@ console.log(dog.barkAmount); // 输出undefined
 
 
 
+### 8.4、访问器
+
+通过`setter`和`getter`实现数据的封装和有效性校验。
+
+```js
+class Employee {
+  private _fullName : string = "123";
+  get fullName() : string {
+    return this._fullName;
+  }
+  set fullName(newName : string) {
+    this._fullName = newName;
+  }
+}
+
+const employee = new Employee();
+console.log(employee.fullName);
+employee.fullName = "dylan"
+console.log(employee.fullName);
+```
 
 
 
+### 8.5、类的继承 extends
+
+“子承父业”，类与类之间、接口与接口之间最常见的关系。
+
+**继承中的方法覆盖**
+
+子类需要遵循其基类的规则，例如父类的一个方法不接收参数，子类的同名方法不能强制required参数，可以使用可选。
+
+```js
+class Base {
+  greet() {
+    console.log('hello world!');
+  }
+}
+class Derived extends Base {
+  greet(name?: string) {
+    if(name === undefined) {
+      super.greet()
+    } else {
+      console.log(`HELLO, ${name.toUpperCase()}`);
+    }
+  }
+}
+const d = new Derived();
+d.greet(); // hello world!
+d.greet("reader"); // HELLO, READER
+// 通过基类引用派生类
+const b: Base = d;
+b.greet() // hello world!
+```
+
+假设，我们就是不遵守父类的规则，会发生什么？
+
+```js
+class Base {
+  greet() {
+    console.log('hello world!');
+  }
+}
+class Derived extends Base {
+  // Error：类型“Derived”中的属性“greet”不可分配给基类型“Base”中的同一属性。
+  // Error：不能将类型“(name: string) => void”分配给类型“() => void”。
+  greet(name: string) {
+    console.log(`HELLO, ${name.toUpperCase()}`);
+  }
+}
+```
 
 
+
+### 8.6、抽象类 abstract
+
+抽象类：提供抽象方法，不可实例化，一般作为基类存在。
+
+`abstract`用于修饰抽象类和抽象方法
+
+```js
+abstract class Base {
+  abstract getName() : string;
+  printName() {
+    console.log("Hello, " + this.getName());
+  }
+}
+const b = new Base(); // Error：无法创建抽象类的实例
+```
+
+正常使用：
+
+```js
+abstract class Base {
+  abstract getName() : string;
+  printName() {
+    console.log("Hello, " + this.getName());
+  }
+}
+class Print extends Base {
+  getName() {
+    return 'dylan'
+  }
+}
+const b = new Print();
+b.printName()
+```
+
+
+
+## 九、泛型
+
+泛型：让一个函数接受不同类型参数的一种模板。
+
+### 9.1、泛型接口
+
+```js
+interface GenericIdentityFn<Type> {
+  (arg : Type) : Type;
+}
+// Type为泛型，这里可以保证函数入参和返回值的类型一致
+function identity<Type>(arg : Type) : Type {
+  return arg;
+}
+const myIdentity : GenericIdentityFn<number> = identity
+```
+
+
+
+### 9.2、泛型类
+
+静态成员不能使用类型参数，因为静态成员是通过构造函数访问的。
+
+```js
+class GenericNumber<NumType> {
+  zeroValue!: NumType;
+  add!: (x : NumType, y : NumType) => NumType;
+}
+const myGenericNumber = new GenericNumber<number>()
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) {
+  return x + y;
+}
+```
+
+
+
+### 9.3、泛型约束
+
+#### (1) 类型参数约束
+
+```js
+function loggingIdentity<Type>(arg : Type) : Type {
+  console.log(arg.length); // Error：类型“Type”上不存在属性“length”。
+  return arg;
+}
+```
+
+要求：我们希望将这函数的类型参数限制为有length属性的。
+
+```js
+function loggingIdentity<Type extends { length : number }>(arg : Type) : Type {
+  console.log(arg.length);
+  return arg;
+}
+```
+
+**应用：使用泛型创建工厂模式**
+
+```js
+// 通用工厂：泛型 + call 签名
+function create<Type>(c : { new() : Type }) : Type {
+  return new c();
+}
+// 动物园工厂
+class BeeKeeper {
+  hasMask : boolean = true;
+}
+class ZooKeeper {
+  name : string = "dylan";
+}
+class Animal {
+  num : number = 4;
+}
+class Bee extends Animal {
+  keeper : BeeKeeper = new BeeKeeper();
+}
+class Zoo extends Animal {
+  keeper : ZooKeeper = new ZooKeeper();
+}
+function createAnimal<A extends Animal>(c : { new() : A }) : A {
+  return new c();
+}
+
+console.log(createAnimal(Bee).keeper.hasMask);
+```
+
+#### (2) 类型参数相互约束
+
+使用类型参数约束另外一个类型参数
+
+```js
+function getProperty<Type, Key extends keyof Type>(obj : Type, key : Key) {
+  return obj[key];
+}
+const x = { a: 'a', b: 'b' }
+getProperty(x, 'a')
+getProperty(x, "m") // Error：类型“"m"”的参数不能赋给类型“"a" | "b"”的参数。
+```
+
+
+
+### 9.4、泛型参数的默认类型
+
+```js
+function createArray<T = string>(length : number, value : T) : Array<T> {
+  const result : T[] = [];
+  for(let i=0; i<length; i++) {
+    result[i] = value
+  }
+  return result
+}
+```
 
 
 

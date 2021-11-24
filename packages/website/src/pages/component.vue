@@ -7,7 +7,7 @@
     height: 100%;
     overflow-x: auto;
     .el-scrollbar__view {
-      height: 100%;
+      height: 90%;
       overflow: scroll;
       &::-webkit-scrollbar-track-piece {
         background: #fff;
