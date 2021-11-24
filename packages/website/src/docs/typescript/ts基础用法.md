@@ -1047,7 +1047,181 @@ function createArray<T = string>(length : number, value : T) : Array<T> {
 
 
 
+## 十、TS装饰器
 
+### 10.1、装饰器简介
+
+**什么是装饰器？**
+
+- 它是一个表达式
+- 该表达式被执行后，返回一个函数
+- 函数的入参分别为 target、name 和 descriptor
+- 执行该函数后，可能返回 descriptor 对象，用于配置 target 对象
+
+**装饰器的分类**
+
+- 类装饰器（Class decorators）
+- 属性装饰器（Property decorators）
+- 方法装饰器（Method decorators）
+- 参数装饰器（Parameter decorators）
+
+需要注意的是，若要启用实验性的装饰器特性，你必须在命令行或 `tsconfig.json` 里启用 `experimentalDecorators` 编译器选项
+
+`tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+     "target": "ES5",
+     "experimentalDecorators": true
+   }
+}
+```
+
+
+
+### 10.2、类装饰器
+
+类装饰器：用于装饰类，接收一个参数（被装饰的类），返回一个函数。
+
+**类装饰器声明模板：**
+
+```js
+declare type ClassDecorator = <TFunction extends Function>(
+  target : TFunction
+) => TFunction | void
+```
+
+**例子：**
+
+```js
+// 装饰器 Greeter 接收一个参数，返回一个函数
+// 该函数的入参仅使用了 target
+// 在函数内给 target 的原型对象上增加属性或方法
+function Greeter(greeting : string) {
+  return function(target : Function) {
+    target.prototype.greet = function() : void {
+      console.log(greeting);
+    }
+  }
+}
+// 使用装饰器，并传参
+@Greeter("Hello typescript")
+class Greeting {
+  constructor() {
+    // 内部实现
+  }
+}
+const myGreeting = new Greeting();
+(myGreeting as any).greet(); // Hello typescript
+```
+
+
+
+### 10.3、属性装饰器
+
+属性装饰器：用于装饰类的属性，接受两个参数（目标对象、属性名）
+
+**属性装饰器声明模板：**
+
+```js
+declare type PropertyDecorator = (target: Object, propertyKey: string | symbol) => void;
+```
+
+**例子：**
+
+```js
+function defaultValue(value : string) {
+  return function(target : any, propertyName : string) {
+    target[propertyName] = value
+  }
+}
+class HelloWordClass {
+  constructor() {
+    console.log('构造函数');
+  }
+  @defaultValue("dylan")
+  private name : string | undefined
+}
+const p = new HelloWordClass()
+console.log(p["name"]); // dylan
+```
+
+
+
+### 10.4、方法装饰器
+
+方法装饰器：用于装饰类的方法，接受三个参数（被装饰类、方法名、描述符）。
+
+**方法装饰器声明模板：**
+
+```js
+declare type MethodDecorator = <T>(
+  target: Object, 
+  propertyKey: string | symbol, 
+  descriptor: TypedPropertyDescriptor<T>
+) => TypedPropertyDescriptor<T> | void;
+```
+
+**例子：**`log方法装饰器`，劫持方法
+
+```js
+function log(target : Object, propertyKey : string, descriptor : PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  descriptor.value = function(...args : any[]) {
+    console.log("======before function======= ", propertyKey);
+    const result = originalMethod.apply(this, args);
+    console.log("======after function======= ", propertyKey);
+    return result;
+  }
+}
+class Task {
+  @log
+  runTask(arg : any) : any {
+    console.log("task start run：", arg);
+    return "finished";
+  }
+}
+const task = new Task();
+const result = task.runTask("learn ts");
+console.log("result：", result);
+// 输出：
+// ======before function=======  runTask
+// task start run： learn ts
+// ======after function=======  runTask
+// result： finished
+```
+
+
+
+### 10.5、参数装饰器
+
+参数装饰器：装饰函数的参数，接收三个参数（被装饰的类、方法名、参数索引值）
+
+**参数装饰器声明模板：**
+
+```js
+declare type ParameterDecorator = (
+  target: Object, 
+  propertyKey: string | symbol, 
+  parameterIndex: number
+) => void;
+```
+
+**例子：**
+
+```js
+function log(target : Function, key : string, parameterIndex : number) {
+  const functionLogged = key || target.prototype.constructor.name;
+  console.log(`位于${functionLogged}第${parameterIndex}个参数`);
+}
+class Gretter {
+  greeting : string;
+  constructor(@log name : string, @log type : string) {
+    this.greeting = name;
+  }
+}
+```
 
 
 
