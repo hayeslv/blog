@@ -14,7 +14,7 @@
       </a-form-item>
     </a-form>
     <ChartType v-if="formState.sourceType === 'chart'"></ChartType>
-    <ArticalType v-if="formState.sourceType === 'article'"></ArticalType>
+    <ArticalType ref="RefArticle" v-if="formState.sourceType === 'article'"></ArticalType>
     <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
       <a-button>
         <upload-outlined></upload-outlined>
@@ -37,6 +37,7 @@ import { reactive, ref, toRaw } from "vue";
 
 import { CommonApi } from "@api";
 import { calculateFileHash } from '@/utils/file'
+import { ProjectFile, FileUploadOSS } from '@/core'
 
 export default {
   components: { UploadOutlined, ChartType, ArticalType },
@@ -45,6 +46,7 @@ export default {
       name: "",
       sourceType: 'chart', // 默认图表组件
     });
+    const RefArticle = ref()
     const fileList = ref([]);
     const uploading = ref(false);
     const handleRemove = (file) => {
@@ -61,6 +63,12 @@ export default {
     // 文件上传
     const fileUpload = async () => {
       const file = toRaw(fileList.value)[0]
+      const projectFile = new ProjectFile(file)
+      const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
+      const oss = new FileUploadOSS()
+      oss.uploadFile(file, url)
+      console.log(oss);
+      if(Math.random() < 1) return
       const fileHash = await calculateFileHash(file)
       const ext = file.name.split('.')[file.name.split('.').length - 1]
       const fileName = `${fileHash}.${ext}`
@@ -117,6 +125,7 @@ export default {
       labelCol: { style: { width: "70px" } },
       wrapperCol: { span: 14 },
       formState,
+      RefArticle,
       fileList,
       uploading,
       handleRemove,

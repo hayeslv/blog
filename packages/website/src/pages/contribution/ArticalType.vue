@@ -24,10 +24,15 @@ export default {
       type: 'algorithm', // 算法
     });
 
+    const getFormData = () => {
+      return formState
+    }
+
     return {
       labelCol: { style: { width: "70px" } },
       wrapperCol: { span: 14 },
       formState,
+      getFormData
     };
   }
 };
