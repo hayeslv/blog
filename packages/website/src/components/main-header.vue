@@ -33,20 +33,33 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link active-class="active" :to="`/algorithm`">
-              算法
-            </router-link>
-          </li>
-          <li class="nav-item">
             <router-link active-class="active" :to="`/test`">
               测试
             </router-link>
           </li>
-          <!-- <li class="nav-item">
+          <li class="nav-item">
+            <a-dropdown>
+              <a class="ant-dropdown-link" @click.prevent>
+                文章
+                <DownOutlined />
+              </a>
+              <template #overlay>
+                <a-menu @click="menuClickHandler">
+                  <a-menu-item key="/algorithm">
+                    <a active-class="active">算法</a>
+                  </a-menu-item>
+                  <a-menu-item key="2">2nd menu item</a-menu-item>
+                  <a-menu-item key="3">3rd menu item</a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
+          </li>
+          <li class="nav-item">
             <router-link active-class="active" :to="`/contribution`">
               贡献
             </router-link>
           </li>
+          <!--
           <li class="nav-item">
             <a active-class="active" @click="initDB">初始化数据库</a>
           </li> -->
@@ -59,8 +72,10 @@
 <script>
 import componentConfig from "../i18n/component.json";
 import { CommonApi } from "@api";
+import { DownOutlined } from '@ant-design/icons-vue';
 
 export default {
+  components: { DownOutlined },
   computed: {
     langConfig() {
       return componentConfig["header"];
@@ -70,6 +85,10 @@ export default {
     initDB() {
       CommonApi.initDB();
     },
+    menuClickHandler(e) {
+      const key = e.key || '/'
+      this.$router.push(key)
+    }
   },
 };
 </script>
