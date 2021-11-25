@@ -5,63 +5,55 @@
 -->
 <template>
   <div class="page-container">
-    <a-form
-      class="a-form"
-      :model="formState"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
-    >
+    <a-form class="a-form" :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-item label="文件类型">
         <a-radio-group v-model:value="formState.sourceType">
-          <a-radio :value="1">echart组件</a-radio>
-          <!-- <a-radio :value="2">文章</a-radio> -->
+          <a-radio value="chart">图表组件</a-radio>
+          <a-radio value="article">文章</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="图表类型">
-        <a-radio-group v-model:value="formState.chartType">
-          <a-radio :value="1">柱状图</a-radio>
-          <a-radio :value="2">折线图</a-radio>
-          <a-radio :value="3">饼图</a-radio>
-          <a-radio :value="9">其他图</a-radio>
-        </a-radio-group>
-      </a-form-item>
-      <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
-        <a-button>
-          <upload-outlined></upload-outlined>
-          Select File
-        </a-button>
-      </a-upload>
-      <a-button type="primary" :disabled="fileList.length === 0" :loading="uploading" style="margin-top: 16px" @click="handleUpload">
-        {{ uploading ? "Uploading" : "Start Upload" }}
-      </a-button>
     </a-form>
+    <ChartType v-if="formState.sourceType === 'chart'"></ChartType>
+    <ArticalType v-if="formState.sourceType === 'article'"></ArticalType>
+    <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload">
+      <a-button>
+        <upload-outlined></upload-outlined>
+        选择文件
+      </a-button>
+    </a-upload>
+    <a-button type="primary" :disabled="fileList.length === 0" :loading="uploading" style="margin-top: 16px" @click="handleUpload">
+      {{ uploading ? "上传中" : "开始上传" }}
+    </a-button>
   </div>
 </template>
 
 <script>
-import { CommonApi } from "@api";
-import { reactive, ref, toRaw } from "vue";
+import ChartType from './ChartType';
+import ArticalType from './ArticalType';
+import { UploadOutlined } from '@ant-design/icons-vue';
+
 import { message } from "ant-design-vue";
+import { reactive, ref, toRaw } from "vue";
+
+import { CommonApi } from "@api";
 import { calculateFileHash } from '@/utils/file'
 
 export default {
+  components: { UploadOutlined, ChartType, ArticalType },
   setup() {
     const formState = reactive({
       name: "",
-      sourceType: 1, // 1-echart，2-文章
-      chartType: 1, // 1柱状图、2折线图、3饼图，9其他类型图
+      sourceType: 'chart', // 默认图表组件
     });
     const fileList = ref([]);
     const uploading = ref(false);
     const handleRemove = (file) => {
-      // @ts-ignore
       const index = fileList.value.indexOf(file);
       const newFileList = fileList.value.slice();
       newFileList.splice(index, 1);
       fileList.value = newFileList;
     };
     const beforeUpload = (file) => {
-      // @ts-ignore
       fileList.value = [...fileList.value, file];
       return false;
     };
