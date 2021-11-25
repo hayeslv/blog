@@ -37,6 +37,11 @@
               算法
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link active-class="active" :to="`/test`">
+              测试
+            </router-link>
+          </li>
           <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/contribution`">
               贡献
@@ -77,7 +82,7 @@ export default {
   span{
     width: auto;
     font-size: 18px;
-    color: #1989fa;
+    color: #409eff;
     transform: translateY(-3px);
   }
 }

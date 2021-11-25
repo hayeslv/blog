@@ -304,12 +304,10 @@
         <img src="../assets/images/theme-index-red.png" alt="" />
       </div>
     </div>
-    <!-- <div v-html="htmlContent" draggable="true"></div> -->
   </div>
 </template>
 <script>
 import { throttle } from "throttle-debounce";
-// import Prism from "prismjs";
 
 export default {
   created() {
@@ -331,11 +329,6 @@ export default {
   data() {
     return {
       mainImgOffset: 0,
-      // htmlContent: `
-      // <pre>
-      //   <code class="language-js">const a = 1;</code>
-      // </pre>
-      // `
     };
   },
   beforeUnmount() {

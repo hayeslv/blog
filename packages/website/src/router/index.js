@@ -153,6 +153,11 @@ const staticRoutes = [
     name: "Contribution",
     component: () => import("@/pages/contribution"),
   },
+  {
+    path: "/test", // 测试
+    name: "Test",
+    component: () => import("@/pages/test"),
+  },
 ];
 
 routes = staticRoutes.concat(routes);
