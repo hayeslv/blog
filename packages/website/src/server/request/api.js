@@ -11,42 +11,42 @@ const CommonApi = {
   // 示例：另外一个系统的接口时
   normalUpload: (params) => {
     const httpClient = new HttpClient();
-    return httpClient.formData("/base/v1/file/normalUpload", params);
+    return httpClient.formData("/api/base/v1/file/normalUpload", params);
   },
   // 初始化数据库
   initDB: (params) => {
-    return http.get("/dbdata/initdb", params);
+    return http.get("/api/dbdata/initdb", params);
   },
   // 重置数据
   resetDB: (params) => {
-    return http.get("/dbdata/mockdata", params);
+    return http.get("/api/dbdata/mockdata", params);
   },
   // 文件上传（独立的文件）
   uploadfile: (params, config = {}) => {
-    return http.postFile("/uploadfile", params, config);
+    return http.postFile("/api/uploadfile", params, config);
   },
   // 文件切片上传
   uploadfileChunk: (params, config = {}) => {
-    return http.postFile("/uploadfileChunk", params, config);
+    return http.postFile("/api/uploadfileChunk", params, config);
   },
   // 切片合并
   mergefile: (params) => {
-    return http.post("/mergefile", params);
+    return http.post("/api/mergefile", params);
   },
   // 检查文件
   checkfile: (params) => {
-    return http.post("/checkfile", params);
+    return http.post("/api/checkfile", params);
   },
   // 存储文件路径
   saveFileUrl: (params) => {
-    return http.post("/saveFileUrl", params);
+    return http.post("/api/saveFileUrl", params);
   },
 };
 
 // 组件相关API
 const ComponentApi = {
   getFileByCompName: (params) => {
-    return http.get("/component/echart", params);
+    return http.get("/api/component/echart", params);
   },
 }
 
@@ -54,7 +54,7 @@ const ComponentApi = {
 const UserApi = {
   // 登录
   login: (params) => {
-    return http.get("/login", params);
+    return http.get("/api/login", params);
   },
 };
 

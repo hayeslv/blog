@@ -15,8 +15,7 @@ module.exports = {
     port: 7010,
     proxy: {
       '/api': {
-        // target: 'http://localhost:7001'
-        target: 'http://www.dylanlv.com:7011'
+        target: 'http://localhost:7011'
       }
     }
   },

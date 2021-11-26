@@ -20,12 +20,13 @@ export class FileUploadOSS{
       console.error('error：', e);
     }
   }
-  async getFile(url = 'markdown/object') {
+  async getFile(url : string) {
     try {
       const ret = await this.client.get(url);
-      return ret
+      return ret;
     } catch(e) {
-      console.error('error：', e);
+      // console.error('error：', e);
+      return null;
     }
   }
 }

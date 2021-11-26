@@ -64,10 +64,15 @@ export default {
     const fileUpload = async () => {
       const file = toRaw(fileList.value)[0]
       const projectFile = new ProjectFile(file)
+      // 组装url
       const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
+
       const oss = new FileUploadOSS()
-      oss.uploadFile(file, url)
-      console.log(oss);
+      if(await oss.getFile(url)) {
+        return message.error("文件已存在");
+      }
+      const fileRes = await oss.uploadFile(file, url)
+      console.log(fileRes);
       if(Math.random() < 1) return
       const fileHash = await calculateFileHash(file)
       const ext = file.name.split('.')[file.name.split('.').length - 1]
