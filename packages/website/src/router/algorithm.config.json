@@ -31,6 +31,16 @@
         "path": "/leetcode-202",
         "name": "快乐数",
         "filePath": "docs/algorithm/linklist/leetcode202-快乐数.md"
+      },
+      {
+        "path": "/leetcode-206",
+        "name": "反转链表",
+        "filePath": "docs/algorithm/linklist/leetcode206-反转链表.md"
+      },
+      {
+        "path": "/leetcode-92",
+        "name": "反转链表Ⅱ",
+        "filePath": "docs/algorithm/linklist/leetcode92-反转链表Ⅱ.md"
       }
     ]
   },
