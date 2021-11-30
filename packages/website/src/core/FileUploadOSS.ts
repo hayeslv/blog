@@ -16,6 +16,7 @@ export class FileUploadOSS{
     try {
       const ret = await this.client.put(url, file)
       console.log('upload file to oss success: ', ret);
+      return ret;
     } catch(e) {
       console.error('error：', e);
     }

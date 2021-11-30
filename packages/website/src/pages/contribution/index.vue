@@ -35,7 +35,7 @@ import { UploadOutlined } from '@ant-design/icons-vue';
 import { message } from "ant-design-vue";
 import { reactive, ref, toRaw } from "vue";
 
-import { CommonApi } from "@api";
+import { CommonApi, FileApi } from "@api";
 import { calculateFileHash } from '@/utils/file'
 import { ProjectFile, FileUploadOSS } from '@/core'
 
@@ -68,11 +68,19 @@ export default {
       const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
 
       const oss = new FileUploadOSS()
-      if(await oss.getFile(url)) {
-        return message.error("文件已存在");
-      }
+      if(await oss.getFile(url)) return message.error("文件已存在");
       const fileRes = await oss.uploadFile(file, url)
       console.log(fileRes);
+      const { name } = fileRes;
+      await FileApi.saveFileURL({ 
+        type: 'article', 
+        name: RefArticle.value.getFormData().name,
+        nav: RefArticle.value.getFormData().nav,
+        url: name
+      })
+
+
+
       if(Math.random() < 1) return
       const fileHash = await calculateFileHash(file)
       const ext = file.name.split('.')[file.name.split('.').length - 1]

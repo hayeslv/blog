@@ -12,6 +12,12 @@
         <a-radio value="server">服务器</a-radio>
       </a-radio-group>
     </a-form-item>
+    <a-form-item label="文章标题">
+      <a-input v-model:value="formState.name" />
+    </a-form-item>
+    <a-form-item label="文章路由">
+      <a-input v-model:value="formState.nav" />
+    </a-form-item>
   </a-form>
   
 </template>
@@ -22,6 +28,8 @@ export default {
   setup() {
     const formState = reactive({
       type: 'algorithm', // 算法
+      name: '',
+      nav: ''
     });
 
     const getFormData = () => {

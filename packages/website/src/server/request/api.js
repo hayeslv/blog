@@ -13,14 +13,6 @@ const CommonApi = {
     const httpClient = new HttpClient();
     return httpClient.formData("/api/base/v1/file/normalUpload", params);
   },
-  // 初始化数据库
-  initDB: (params) => {
-    return http.get("/api/dbdata/initdb", params);
-  },
-  // 重置数据
-  resetDB: (params) => {
-    return http.get("/api/dbdata/mockdata", params);
-  },
   // 文件上传（独立的文件）
   uploadfile: (params, config = {}) => {
     return http.postFile("/api/uploadfile", params, config);
@@ -43,6 +35,13 @@ const CommonApi = {
   },
 };
 
+// 文件API
+const FileApi = {
+  saveFileURL: (params) => {
+    return http.post("/api/file/saveFileURL", params);
+  },
+}
+
 // 组件相关API
 const ComponentApi = {
   getFileByCompName: (params) => {
@@ -50,12 +49,5 @@ const ComponentApi = {
   },
 }
 
-// 用户API
-const UserApi = {
-  // 登录
-  login: (params) => {
-    return http.get("/api/login", params);
-  },
-};
 
-export { UserApi, CommonApi, ComponentApi };
+export { CommonApi, ComponentApi, FileApi };
