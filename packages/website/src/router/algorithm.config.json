@@ -15,16 +15,19 @@
       {
         "path": "/linklist-base-use",
         "name": "创建链表",
+        "url": "markdown/article/algorithm/linklist/base-use.md",
         "filePath": "docs/algorithm/linklist/base-use.md"
       },
       {
         "path": "/leetcode-141",
         "name": "环形链表",
+        "url": "markdown/article/algorithm/linklist/leetcode141-环形链表.md",
         "filePath": "docs/algorithm/linklist/leetcode141-环形链表.md"
       },
       {
         "path": "/leetcode-142",
         "name": "环形链表Ⅱ",
+        "url": "markdown/article/algorithm/linklist/leetcode142-环形链表Ⅱ.md",
         "filePath": "docs/algorithm/linklist/leetcode142-环形链表Ⅱ.md"
       },
       {

@@ -22,7 +22,7 @@ function addDocRoute(route, page) {
     path: page.path.slice(1),
     meta: {
       title: page.title || page.name,
-      description: page.description,
+      url: page.url,
       filePath: page.filePath || "docs",
     },
     name: "component" + (page.title || page.name),

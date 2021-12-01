@@ -16,7 +16,7 @@ export default {
     const route = useRoute();
 
     // 获取文件路径
-    const filePath = toRaw(route).meta.value.filePath;
+    const { filePath, url } = toRaw(route).meta.value
 
     // !test
     let code = ref('');
@@ -33,15 +33,27 @@ export default {
     //   code.value = marked(markdown)
     // }
 
-    const markdown = require(`@/${filePath}`);
-    code.value = marked(markdown)
     
+
+    
+    const getCode = async () => {
+      let markdown = null
+      if(url) {
+        const response = await fetch(process.env.VUE_APP_OSS_ADDRESS + url)
+        markdown = await response.text()
+      } else {
+        markdown = require(`@/${filePath}`);
+      }
+      code.value = marked(markdown)
+    }
     
     watch(route, () => {
       nextTick(() => {
         Prism.highlightAll()
       })
     })
+
+    getCode()
     return { code };
   },
   render() {

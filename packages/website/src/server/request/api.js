@@ -44,9 +44,10 @@ const FileApi = {
 
 // 文章API
 const ArticleApi = {
-  getArticleInfo: (params) => {
-    return http.get("/api/article/getArticleInfo", params);
-  },
+  // 获取文章信息
+  getArticleInfo: (params) => http.get("/api/article/getArticleInfo", params),
+  // 获取文章分组列表
+  getArticleGroupList: (params) => http.get("/api/article/getArticleGroupList", params)
 }
 
 // 组件相关API

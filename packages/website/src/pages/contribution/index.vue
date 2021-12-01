@@ -64,21 +64,26 @@ export default {
     const fileUpload = async () => {
       const file = toRaw(fileList.value)[0]
       const projectFile = new ProjectFile(file)
+      const groupName = RefArticle.value.getFormData().groupName
+      console.log(groupName);
       // 组装url
-      const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
+      // const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
+      const url = `markdown/${formState.sourceType}/${RefArticle.value.getFormData().type}${groupName ? '/' + groupName : ''}/${projectFile.getName()}`
 
       const oss = new FileUploadOSS()
       if(await oss.getFile(url)) return message.error("文件已存在");
       const fileRes = await oss.uploadFile(file, url)
       console.log(fileRes);
       const { name } = fileRes;
-      await FileApi.saveFileURL({ 
+      const dbSaveFile = await FileApi.saveFileURL({ 
         projectType: 'article', // 项目类型：文章
         articleType: RefArticle.value.getFormData().type, // 文章类型
-        name: RefArticle.value.getFormData().name,
+        groupId: RefArticle.value.getFormData().groupId, // 分组id
+        title: RefArticle.value.getFormData().title,
         nav: RefArticle.value.getFormData().nav,
         url: name
       })
+      console.log(dbSaveFile);
 
 
 
@@ -119,21 +124,22 @@ export default {
       }
     }
 
-    const saveDB = async (file) => {
-      const res = await CommonApi.saveFileUrl({
-        chartType: file.chartType,
-        sourceType: file.sourceType,
-        url: file.url,
-        hash: file.hash
-      });
-      console.log(res);
-    }
+    // const saveDB = async (file) => {
+    //   const res = await CommonApi.saveFileUrl({
+    //     chartType: file.chartType,
+    //     sourceType: file.sourceType,
+    //     url: file.url,
+    //     hash: file.hash
+    //   });
+    //   console.log(res);
+    // }
     
     const handleUpload = async () => {
-      const file = await fileUpload() // 文件上传
-      if(!file) return;
-      // 保存至数据库
-      await saveDB(file)
+      await fileUpload() // 文件上传
+      // const file = await fileUpload() // 文件上传
+      // if(!file) return;
+      // // 保存至数据库
+      // await saveDB(file)
     };
     return {
       labelCol: { style: { width: "70px" } },
@@ -151,6 +157,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.page-container{
+  width: 600px;
+}
 .a-form {
   margin-top: 20px;
 }

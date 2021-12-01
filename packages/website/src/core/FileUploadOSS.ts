@@ -15,7 +15,7 @@ export class FileUploadOSS{
   async uploadFile(file : File, url : string) {
     try {
       const ret = await this.client.put(url, file)
-      console.log('upload file to oss success: ', ret);
+      console.log('上传文件至OSS成功: ', ret);
       return ret;
     } catch(e) {
       console.error('error：', e);
@@ -28,6 +28,15 @@ export class FileUploadOSS{
     } catch(e) {
       // console.error('error：', e);
       return null;
+    }
+  }
+  async deleteFile(url : string) {
+    try {
+      const ret = await this.client.delete(url)
+      console.log('删除OSS文件成功：', ret);
+      return ret;
+    } catch(e) {
+      console.error('error：', e);
     }
   }
 }

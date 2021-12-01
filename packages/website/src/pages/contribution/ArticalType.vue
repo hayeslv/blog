@@ -12,35 +12,57 @@
         <a-radio value="server">服务器</a-radio>
       </a-radio-group>
     </a-form-item>
+    <a-form-item label="文章分组">
+      <a-select v-model:value="formState.groupId" @change="groupChange" style="width: 250px">
+        <a-select-option v-for="item in groupList" :key="item.id" :value="item.id">{{ item.name }}</a-select-option>
+      </a-select>
+    </a-form-item>
     <a-form-item label="文章标题">
-      <a-input v-model:value="formState.name" />
+      <a-input v-model:value="formState.title" style="width: 250px" />
     </a-form-item>
     <a-form-item label="文章路由">
-      <a-input v-model:value="formState.nav" />
+      <a-input v-model:value="formState.nav" style="width: 250px" />
     </a-form-item>
   </a-form>
   
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
+import {ArticleApi} from '@api';
 export default {
   setup() {
     const formState = reactive({
       type: 'algorithm', // 算法
-      name: '',
+      groupId: '',
+      groupName: null,
+      title: '',
       nav: ''
     });
+    const groupList = ref([])
 
     const getFormData = () => {
       return formState
     }
 
+    const groupChange = () => {
+      const selectItem = groupList.value.find(item => item.id === formState.groupId)
+      formState.groupName = selectItem.value
+    }
+
+    onMounted(async () => {
+      const groupRes = await ArticleApi.getArticleGroupList()
+      const { data } = groupRes
+      groupList.value = data || []
+    })
+
     return {
       labelCol: { style: { width: "70px" } },
       wrapperCol: { span: 14 },
       formState,
-      getFormData
+      groupList,
+      getFormData,
+      groupChange
     };
   }
 };
