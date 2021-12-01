@@ -73,7 +73,8 @@ export default {
       console.log(fileRes);
       const { name } = fileRes;
       await FileApi.saveFileURL({ 
-        type: 'article', 
+        projectType: 'article', // 项目类型：文章
+        articleType: RefArticle.value.getFormData().type, // 文章类型
         name: RefArticle.value.getFormData().name,
         nav: RefArticle.value.getFormData().nav,
         url: name

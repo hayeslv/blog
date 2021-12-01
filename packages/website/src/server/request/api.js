@@ -42,6 +42,13 @@ const FileApi = {
   },
 }
 
+// 文章API
+const ArticleApi = {
+  getArticleInfo: (params) => {
+    return http.get("/api/article/getArticleInfo", params);
+  },
+}
+
 // 组件相关API
 const ComponentApi = {
   getFileByCompName: (params) => {
@@ -50,4 +57,4 @@ const ComponentApi = {
 }
 
 
-export { CommonApi, ComponentApi, FileApi };
+export { CommonApi, ComponentApi, FileApi, ArticleApi };
