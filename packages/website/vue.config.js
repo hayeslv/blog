@@ -7,10 +7,14 @@
 
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir);
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const isProduction = process.env.VUE_APP_ENV === 'production'; 
+
 module.exports = {
   publicPath: '/',
   // outputDir: 'dist',
   // assetsDir: 'assets',
+  productionSourceMap: false, // 生产环境不需要sourcemap
   devServer: {
     port: 7010,
     proxy: {
@@ -57,6 +61,32 @@ module.exports = {
       })
       .end();
   },
+  configureWebpack: (config) => {
+    const plugins = [];
+    if (isProduction) {
+      plugins.push(
+        new CompressionWebpackPlugin({
+          filename: "[path].gz[query]",
+          algorithm: "gzip",
+          test: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      )
+    }
+    config.plugins = [...config.plugins, ...plugins];
+  },
+  // configureWebpack: config => {
+  //   if (isProduction) {
+  //     // 开启gzip压缩
+  //     config.plugins.push(new CompressionWebpackPlugin({
+  //       algorithm: 'gzip',
+  //       test: /\.js$|\.html$|\.json$|\.css/,
+  //       threshold: 10240,
+  //       minRatio: 0.8
+  //     }))
+  //   }
+  // },
   css: {
     loaderOptions: {
       scss: {
