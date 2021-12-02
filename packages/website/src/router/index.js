@@ -5,6 +5,7 @@
  */
 import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import { CommonApi } from "@api";
 import componentConfig from "./component.config";
 import articleConfig from "./article.config.json";
 import algorithmConfig from "./algorithm.config.json";
@@ -187,19 +188,34 @@ function hasRoute(to) {
 }
 
 // 添加路由
-function addRoute() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      router.addRoute("名称1", {
-        path: '/haha',
-        name: '测一下',
-        meta: {
-          url: 'markdown/article/algorithm/linklist/leetcode142-环形链表Ⅱ.md',
-        },
-        component: () => import('@/pages/markdownTemp.vue')
+async function addRoute() {
+  const articleTypeRes = await CommonApi.getArticleRoutes()
+  const articleRoutes = articleTypeRes.data || []
+
+  articleRoutes.forEach(parent => {
+    // 没有分组，且没有子项：直接跳过当前---类continue
+    if(!parent.group && (!parent.children || parent.children.length === 0)) return;
+    if(parent.children) {
+      const route = {
+        path: '/' + parent.type,
+        name: parent.name,
+        component: load("component"),
+        redirect: `/${parent.type}/${parent.children[0].nav}`,
+        children: []
+      }
+      parent.children.forEach(child => {
+        route.children.push({
+          path: child.nav,
+          name: child.title,
+          component: () => import('@/pages/markdownTemp.vue'),
+          meta: {
+            url: child.url
+          }
+        })
       })
-      resolve()
-    }, 1000);
+
+      router.addRoute(route)
+    }
   })
 }
 

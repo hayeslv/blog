@@ -45,13 +45,16 @@
               </a>
               <template #overlay>
                 <a-menu @click="menuClickHandler">
-                  <a-menu-item key="/algorithm">
+                  <a-menu-item v-for="item in articleTypeList" :key="'/' + item.type">
+                    <a active-class="active">{{ item.name }}</a>
+                  </a-menu-item>
+                  <!-- <a-menu-item key="/algorithm">
                     <a active-class="active">算法</a>
                   </a-menu-item>
                   <a-menu-item key="2">
                     <a active-class="active">插件使用</a>
                   </a-menu-item>
-                  <a-menu-item key="3">3rd menu item</a-menu-item>
+                  <a-menu-item key="3">3rd menu item</a-menu-item> -->
                 </a-menu>
               </template>
             </a-dropdown>
@@ -73,11 +76,24 @@
 
 <script>
 import componentConfig from "../i18n/component.json";
-import { CommonApi } from "@api";
+import { CommonApi, ArticleApi } from "@api";
 import { DownOutlined } from '@ant-design/icons-vue';
+import { ref, onMounted } from 'vue';
 
 export default {
   components: { DownOutlined },
+  setup() {
+    const articleTypeList = ref([])
+    const getArticleType = async () => {
+      const list = await ArticleApi.getArticleType()
+      articleTypeList.value = list.data || []
+    }
+    onMounted(() => {
+      getArticleType()
+    })
+
+    return { articleTypeList }
+  },
   computed: {
     langConfig() {
       return componentConfig["header"];

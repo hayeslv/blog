@@ -33,6 +33,10 @@ const CommonApi = {
   saveFileUrl: (params) => {
     return http.post("/api/saveFileUrl", params);
   },
+
+  // ==================== 上述接口待优化 =====================
+  // 获取文章路由
+  getArticleRoutes: (params) => http.get("/api/common/getArticleRoutes", params)
 };
 
 // 文件API

@@ -237,6 +237,7 @@ export default {
       const reg = /\/(\S*)\//;
       if (!routePath.match(reg)) return;
       const [, path] = routePath.match(reg);
+      console.log(path);
       switch (path) {
         case "component":
           this.navList = componentData;
@@ -248,7 +249,24 @@ export default {
           break;
         case "algorithm":
           this.navList = algorithmData;
-          this.baseURL = "/algorithm"
+          this.baseURL = "/algorithm";
+          break;
+        case "haha": {
+          this.baseURL = "/haha";
+          this.navList = [
+            {
+              "name": "我是分组1",
+              "children": [
+                {
+                  "path": "/leetcode-53",
+                  "name": "leetcode35111",
+                  "url": "markdown/article/algorithm/array/leetcode53-最大子序和.md"
+                }
+              ]
+            },
+          ]
+        }
+
       }
     },
     handleResize() {
