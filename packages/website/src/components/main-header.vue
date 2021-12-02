@@ -32,11 +32,11 @@
               {{ langConfig.article }}
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/test`">
               测试
             </router-link>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a-dropdown>
               <a class="ant-dropdown-link" @click.prevent>
@@ -48,7 +48,9 @@
                   <a-menu-item key="/algorithm">
                     <a active-class="active">算法</a>
                   </a-menu-item>
-                  <a-menu-item key="2">2nd menu item</a-menu-item>
+                  <a-menu-item key="2">
+                    <a active-class="active">插件使用</a>
+                  </a-menu-item>
                   <a-menu-item key="3">3rd menu item</a-menu-item>
                 </a-menu>
               </template>

@@ -44,7 +44,7 @@ export default {
   setup() {
     const formState = reactive({
       name: "",
-      sourceType: 'chart', // 默认图表组件
+      sourceType: 'article', // 默认图表组件
     });
     const RefArticle = ref()
     const fileList = ref([]);
@@ -67,17 +67,17 @@ export default {
       const groupName = RefArticle.value.getFormData().groupName
       console.log(groupName);
       // 组装url
-      // const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().type + '/' + projectFile.getName()
-      const url = `markdown/${formState.sourceType}/${RefArticle.value.getFormData().type}${groupName ? '/' + groupName : ''}/${projectFile.getName()}`
+      // const url = 'markdown/' + formState.sourceType + '/' + RefArticle.value.getFormData().typeCode + '/' + projectFile.getName()
+      const url = `markdown/${formState.sourceType}/${RefArticle.value.getFormData().typeCode}${groupName ? '/' + groupName : ''}/${projectFile.getName()}`
 
       const oss = new FileUploadOSS()
       if(await oss.getFile(url)) return message.error("文件已存在");
       const fileRes = await oss.uploadFile(file, url)
-      console.log(fileRes);
+
       const { name } = fileRes;
       const dbSaveFile = await FileApi.saveFileURL({ 
         projectType: 'article', // 项目类型：文章
-        articleType: RefArticle.value.getFormData().type, // 文章类型
+        articleTypeId: RefArticle.value.getFormData().typeId, // 文章类型
         groupId: RefArticle.value.getFormData().groupId, // 分组id
         title: RefArticle.value.getFormData().title,
         nav: RefArticle.value.getFormData().nav,

@@ -31,9 +31,9 @@ module.exports = {
       .test(/\.md$/)
       .use('html-loader')
       .loader('html-loader')
-      .options({
-        minimize: false
-      })
+      // .options({
+      //   minimize: false // 是否压缩
+      // })
       .end()
 
     // ts、tsx支持 
