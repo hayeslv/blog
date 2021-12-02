@@ -18,6 +18,8 @@ export default {
     // 获取文件路径
     const { filePath, url } = toRaw(route).meta.value
 
+    console.log(url);
+
     // !test
     let code = ref('');
 

@@ -56,6 +56,7 @@ function registerCompoentRoute(routeConfig) {
 
   route.push({
     path: `/component`,
+    name: "组件",
     redirect: `/component/column`,
     component: load("component"),
     children: [],
@@ -86,6 +87,7 @@ function retisterArticleRoute(routeConfig) {
   const route = [];
   route.push({
     path: `/article`,
+    name: '文章',
     redirect: `/article/plugin-marked`,
     component: load("component"),
     children: [],
@@ -114,6 +116,7 @@ function registerAlgorithmRoute(routeConfig) {
   const route = [];
   route.push({
     path: `/algorithm`,
+    name: '算法',
     redirect: `/algorithm/leetcode-53`,
     component: load("component"),
     children: [],
@@ -166,5 +169,41 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+// 路由守卫
+router.beforeResolve(async (to, from, next) => {
+  // 如果没有路由，则添加路由；有路由则直接跳转
+  if(!hasRoute(to)) {
+    await addRoute();
+    next(to.fullPath);
+  } else {
+    next();
+  }
+})
+
+// 判断当前路由是否存在
+function hasRoute(to) {
+  return !!router.getRoutes().find(item => item.name === to.name)
+}
+
+// 添加路由
+function addRoute() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      router.addRoute("名称1", {
+        path: '/haha',
+        name: '测一下',
+        meta: {
+          url: 'markdown/article/algorithm/linklist/leetcode142-环形链表Ⅱ.md',
+        },
+        component: () => import('@/pages/markdownTemp.vue')
+      })
+      resolve()
+    }, 1000);
+  })
+}
+
+addRoute()
+
 
 export default router;

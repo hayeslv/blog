@@ -33,7 +33,7 @@
             </router-link>
           </li>
           <!-- <li class="nav-item">
-            <router-link active-class="active" :to="`/test`">
+            <router-link active-class="active" :to="`/haha`">
               测试
             </router-link>
           </li> -->

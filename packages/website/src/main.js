@@ -23,6 +23,7 @@ app.use(ElementUI);
 app.use(GlobalComp);
 app.use(Antd);
 
+
 // app.component("el-progresss", ElProgress);
 
 router.isReady().then(() => {
