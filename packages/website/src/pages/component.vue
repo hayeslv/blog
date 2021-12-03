@@ -166,7 +166,7 @@
   </el-scrollbar>
 </template>
 <script>
-import bus from "../bus";
+import bus from "@/utils/bus";
 
 import { throttle } from "throttle-debounce";
 import SideNav from "@/components/side-nav.vue";

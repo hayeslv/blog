@@ -183,11 +183,12 @@
   </div>
 </template>
 <script>
-import bus from "../bus";
+import bus from '@/utils/bus';
 import compoLang from "../i18n/component.json";
 import componentData from "../router/component.config.json";
 import articleData from "../router/article.config.json";
 import algorithmData from "../router/algorithm.config.json";
+import { StorageKey, getStorage } from '@/utils/storage.ts'
 
 export default {
   props: {
@@ -236,8 +237,25 @@ export default {
     selectNav(routePath) {
       const reg = /\/(\S*)\//;
       if (!routePath.match(reg)) return;
+      const routes = getStorage(StorageKey.AsyncRoutes);
       const [, path] = routePath.match(reg);
       console.log(path);
+      console.log(routes);
+      const nowPath = routes.find(route => route.path === '/' + path)
+      if(nowPath) { // 没有分组的路由
+        this.baseURL = nowPath.path;
+        const childRoutes = []
+        nowPath.children.forEach(child => {
+          childRoutes.push({
+            path: '/' + child.path,
+            name: child.name,
+            url: child.meta.url
+          })
+        })
+        this.navList = [{ name: nowPath.name, children: childRoutes }]
+        return 
+      }
+
       switch (path) {
         case "component":
           this.navList = componentData;
