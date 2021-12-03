@@ -1,5 +1,5 @@
 .DS_Store
-packages
+packages/website/src/config/config.default
 node_modules
 /dist
 

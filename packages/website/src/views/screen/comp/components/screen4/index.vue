@@ -60,6 +60,7 @@ export default {
     };
   },
   mounted() {
+    // !顶层使用rem这类插件，这里需要用setTimeout整个包起来（因为插件会对真实宽度做一些调整）
     const navList = document.getElementsByClassName("scroll-bottom-nav");
     this.everWidth = navList[0].clientWidth; // 动态获取每个nav的宽度
 
@@ -68,14 +69,12 @@ export default {
     this.curIndex = this.maxLenth || 0; // 当前位置
 
     // 可视区总宽度
-    const totalWidth =
-      document.getElementsByClassName("bottom-nav")[0].clientWidth;
+    const totalWidth = document.getElementsByClassName("bottom-nav")[0].clientWidth;
 
     // 1、先向左移动一段完整的长度（总共三段），此时第一项应该是顶在起始位置的
     // 2、再向右移动可视区宽度的一半，此时第一项应该是顶在half后面的
     // 3、最后向左移动block的一半，使其整体居中
-    this.xPoint =
-      this.everWidth * this.curIndex - totalWidth / 2 + this.everWidth / 2;
+    this.xPoint = this.everWidth * this.curIndex - totalWidth / 2 + this.everWidth / 2;
   },
   methods: {
     routeTo(val, index) {

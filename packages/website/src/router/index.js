@@ -5,6 +5,7 @@
  */
 import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import { StorageKey, setStorage } from '@/utils/storage.ts';
 import { CommonApi } from "@api";
 import componentConfig from "./component.config";
 import articleConfig from "./article.config.json";
@@ -191,6 +192,7 @@ function hasRoute(to) {
 async function addRoute() {
   const articleTypeRes = await CommonApi.getArticleRoutes()
   const articleRoutes = articleTypeRes.data || []
+  const waitAddRoutes = []
 
   articleRoutes.forEach(parent => {
     // 没有分组，且没有子项：直接跳过当前---类continue
@@ -213,10 +215,11 @@ async function addRoute() {
           }
         })
       })
-
-      router.addRoute(route)
+      waitAddRoutes.push(route);
     }
   })
+  setStorage(StorageKey.AsyncRoutes, waitAddRoutes)
+  waitAddRoutes.forEach(route => router.addRoute(route))
 }
 
 addRoute()
