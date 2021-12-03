@@ -1,3 +1,238 @@
+<template>
+  <div
+    class="side-nav"
+    @mouseenter="isFade = false"
+    :class="{ 'is-fade': isFade }"
+    :style="navStyle"
+  >
+    <ul>
+      <li class="nav-item" v-for="item in navList" :key="item.name">
+        <a v-if="!item.path && !item.href" @click="expandMenu">{{
+          item.name
+        }}</a>
+        <a v-if="item.href" :href="item.href" target="_blank">{{
+          item.name
+        }}</a>
+        <router-link
+          v-if="item.path"
+          active-class="active"
+          :to="baseURL + item.path"
+          exact
+          v-text="item.title || item.name"
+        >
+        </router-link>
+        <ul class="pure-menu-list sub-nav" v-if="item.children">
+          <li
+            class="nav-item"
+            v-for="(navItem, key) in item.children"
+            :key="key"
+          >
+            <router-link
+              class=""
+              active-class="active"
+              :to="baseURL + navItem.path"
+              exact
+              v-text="navItem.title || navItem.name"
+            >
+            </router-link>
+          </li>
+        </ul>
+        <template v-if="item.groups">
+          <div class="nav-group" v-for="(group, key) in item.groups" :key="key">
+            <div class="nav-group__title" @click="expandMenu">
+              {{ group.groupName }}
+            </div>
+            <ul class="pure-menu-list">
+              <li
+                class="nav-item"
+                v-for="(navItem, key) in group.list"
+                v-show="!navItem.disabled"
+                :key="key"
+              >
+                <router-link
+                  active-class="active"
+                  :to="baseURL + navItem.path"
+                  exact
+                  v-text="navItem.title"
+                ></router-link>
+              </li>
+            </ul>
+          </div>
+        </template>
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+import bus from '@/utils/bus';
+import compoLang from "../i18n/component.json";
+import componentData from "../router/component.config.json";
+// import articleData from "../router/article.config.json";
+// import algorithmData from "../router/algorithm.config.json";
+import { StorageKey, getStorage } from '@/utils/storage.ts'
+
+export default {
+  props: {
+    data: Array,
+    base: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      navList: [],
+      baseURL: "",
+      highlights: [],
+      navState: [],
+      isSmallScreen: false,
+      isFade: false,
+    };
+  },
+  watch: {
+    "$route.path"(val) {
+      this.selectNav(val);
+      this.handlePathChange();
+    },
+    navList() {
+      // console.log(val);
+    },
+    isFade(val) {
+      bus.$emit("navFade", val);
+    },
+  },
+  computed: {
+    navStyle() {
+      const style = {};
+      if (this.isSmallScreen) {
+        style.paddingBottom = "60px";
+      }
+      style.opacity = this.isFade ? "0.5" : "1";
+      return style;
+    },
+    langConfig() {
+      return compoLang["nav"];
+    },
+  },
+  methods: {
+    selectNav(routePath) {
+      const reg = /\/(\S*)\//;
+      if (!routePath.match(reg)) return;
+      const routes = getStorage(StorageKey.AsyncRoutes);
+      const [, path] = routePath.match(reg);
+      const nowPath = routes.find(route => route.type === path)
+      if(nowPath) { // 匹配到的动态路由，（下面的switch需要慢慢全部删掉）
+        this.baseURL = '/' + nowPath.type;
+        if(nowPath.children) { // 当前路由没有分组
+          const childRoutes = []
+          nowPath.children.forEach(child => {
+            childRoutes.push({
+              path: '/' + child.nav,
+              name: child.title,
+              url: child.url
+            })
+          })
+          this.navList = [{ name: nowPath.name, children: childRoutes }]
+        } else {
+          const list = []
+          nowPath.group.forEach(item => {
+            const obj = { name: item.name }
+            obj.children = item.list.map(child => ({
+              path: '/' + item.value + '-' + child.nav,
+              name: child.title,
+              url: child.url
+            }))
+            list.push(obj)
+          })
+          this.navList = list
+        }
+        return 
+      }
+
+      switch (path) {
+        case "component":
+          this.navList = componentData;
+          this.baseURL = "/component";
+          break;
+        // case "algorithm":
+        //   this.navList = algorithmData;
+        //   this.baseURL = "/algorithm";
+        //   break;
+        case "haha": {
+          this.baseURL = "/haha";
+          this.navList = [
+            {
+              "name": "我是分组1",
+              "children": [
+                {
+                  "path": "/leetcode-53",
+                  "name": "leetcode35111",
+                  "url": "markdown/article/algorithm/array/leetcode53-最大子序和.md"
+                }
+              ]
+            },
+          ]
+        }
+
+      }
+    },
+    handleResize() {
+      this.isSmallScreen = document.documentElement.clientWidth < 768;
+      this.handlePathChange();
+    },
+    handlePathChange() {
+      if (!this.isSmallScreen) {
+        this.expandAllMenu();
+        return;
+      }
+      this.$nextTick(() => {
+        this.hideAllMenu();
+        let activeAnchor = this.$el.querySelector("a.active");
+        let ul = activeAnchor.parentNode;
+        while (ul.tagName !== "UL") {
+          ul = ul.parentNode;
+        }
+        ul.style.height = "auto";
+      });
+    },
+    hideAllMenu() {
+      [].forEach.call(this.$el.querySelectorAll(".pure-menu-list"), (ul) => {
+        ul.style.height = "0";
+      });
+    },
+    expandAllMenu() {
+      [].forEach.call(this.$el.querySelectorAll(".pure-menu-list"), (ul) => {
+        ul.style.height = "auto";
+      });
+    },
+    expandMenu(event) {
+      if (!this.isSmallScreen) return;
+      let target = event.currentTarget;
+      if (
+        !target.nextElementSibling ||
+        target.nextElementSibling.tagName !== "UL"
+      )
+        return;
+      this.hideAllMenu();
+      event.currentTarget.nextElementSibling.style.height = "auto";
+    },
+  },
+  created() {
+    this.selectNav(this.$route.path);
+
+    bus.$on("fadeNav", () => {
+      this.isFade = true;
+    });
+  },
+  mounted() {
+    this.handleResize();
+    window.addEventListener("resize", this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  },
+};
+</script>
 <style lang="scss">
 .side-nav {
   width: 100%;
@@ -117,230 +352,3 @@
   }
 }
 </style>
-<template>
-  <div
-    class="side-nav"
-    @mouseenter="isFade = false"
-    :class="{ 'is-fade': isFade }"
-    :style="navStyle"
-  >
-    <ul>
-      <li class="nav-item" v-for="item in navList" :key="item.name">
-        <a v-if="!item.path && !item.href" @click="expandMenu">{{
-          item.name
-        }}</a>
-        <a v-if="item.href" :href="item.href" target="_blank">{{
-          item.name
-        }}</a>
-        <router-link
-          v-if="item.path"
-          active-class="active"
-          :to="baseURL + item.path"
-          exact
-          v-text="item.title || item.name"
-        >
-        </router-link>
-        <ul class="pure-menu-list sub-nav" v-if="item.children">
-          <li
-            class="nav-item"
-            v-for="(navItem, key) in item.children"
-            :key="key"
-          >
-            <router-link
-              class=""
-              active-class="active"
-              :to="baseURL + navItem.path"
-              exact
-              v-text="navItem.title || navItem.name"
-            >
-            </router-link>
-          </li>
-        </ul>
-        <template v-if="item.groups">
-          <div class="nav-group" v-for="(group, key) in item.groups" :key="key">
-            <div class="nav-group__title" @click="expandMenu">
-              {{ group.groupName }}
-            </div>
-            <ul class="pure-menu-list">
-              <li
-                class="nav-item"
-                v-for="(navItem, key) in group.list"
-                v-show="!navItem.disabled"
-                :key="key"
-              >
-                <router-link
-                  active-class="active"
-                  :to="baseURL + navItem.path"
-                  exact
-                  v-text="navItem.title"
-                ></router-link>
-              </li>
-            </ul>
-          </div>
-        </template>
-      </li>
-    </ul>
-  </div>
-</template>
-<script>
-import bus from '@/utils/bus';
-import compoLang from "../i18n/component.json";
-import componentData from "../router/component.config.json";
-import articleData from "../router/article.config.json";
-import algorithmData from "../router/algorithm.config.json";
-import { StorageKey, getStorage } from '@/utils/storage.ts'
-
-export default {
-  props: {
-    data: Array,
-    base: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      navList: [],
-      baseURL: "",
-      highlights: [],
-      navState: [],
-      isSmallScreen: false,
-      isFade: false,
-    };
-  },
-  watch: {
-    "$route.path"(val) {
-      this.selectNav(val);
-      this.handlePathChange();
-    },
-    navList() {
-      // console.log(val);
-    },
-    isFade(val) {
-      bus.$emit("navFade", val);
-    },
-  },
-  computed: {
-    navStyle() {
-      const style = {};
-      if (this.isSmallScreen) {
-        style.paddingBottom = "60px";
-      }
-      style.opacity = this.isFade ? "0.5" : "1";
-      return style;
-    },
-    langConfig() {
-      return compoLang["nav"];
-    },
-  },
-  methods: {
-    selectNav(routePath) {
-      const reg = /\/(\S*)\//;
-      if (!routePath.match(reg)) return;
-      const routes = getStorage(StorageKey.AsyncRoutes);
-      const [, path] = routePath.match(reg);
-      console.log(path);
-      console.log(routes);
-      const nowPath = routes.find(route => route.path === '/' + path)
-      if(nowPath) { // 没有分组的路由
-        this.baseURL = nowPath.path;
-        const childRoutes = []
-        nowPath.children.forEach(child => {
-          childRoutes.push({
-            path: '/' + child.path,
-            name: child.name,
-            url: child.meta.url
-          })
-        })
-        this.navList = [{ name: nowPath.name, children: childRoutes }]
-        return 
-      }
-
-      switch (path) {
-        case "component":
-          this.navList = componentData;
-          this.baseURL = "/component";
-          break;
-        case "article":
-          this.navList = articleData;
-          this.baseURL = "/article";
-          break;
-        case "algorithm":
-          this.navList = algorithmData;
-          this.baseURL = "/algorithm";
-          break;
-        case "haha": {
-          this.baseURL = "/haha";
-          this.navList = [
-            {
-              "name": "我是分组1",
-              "children": [
-                {
-                  "path": "/leetcode-53",
-                  "name": "leetcode35111",
-                  "url": "markdown/article/algorithm/array/leetcode53-最大子序和.md"
-                }
-              ]
-            },
-          ]
-        }
-
-      }
-    },
-    handleResize() {
-      this.isSmallScreen = document.documentElement.clientWidth < 768;
-      this.handlePathChange();
-    },
-    handlePathChange() {
-      if (!this.isSmallScreen) {
-        this.expandAllMenu();
-        return;
-      }
-      this.$nextTick(() => {
-        this.hideAllMenu();
-        let activeAnchor = this.$el.querySelector("a.active");
-        let ul = activeAnchor.parentNode;
-        while (ul.tagName !== "UL") {
-          ul = ul.parentNode;
-        }
-        ul.style.height = "auto";
-      });
-    },
-    hideAllMenu() {
-      [].forEach.call(this.$el.querySelectorAll(".pure-menu-list"), (ul) => {
-        ul.style.height = "0";
-      });
-    },
-    expandAllMenu() {
-      [].forEach.call(this.$el.querySelectorAll(".pure-menu-list"), (ul) => {
-        ul.style.height = "auto";
-      });
-    },
-    expandMenu(event) {
-      if (!this.isSmallScreen) return;
-      let target = event.currentTarget;
-      if (
-        !target.nextElementSibling ||
-        target.nextElementSibling.tagName !== "UL"
-      )
-        return;
-      this.hideAllMenu();
-      event.currentTarget.nextElementSibling.style.height = "auto";
-    },
-  },
-  created() {
-    this.selectNav(this.$route.path);
-
-    bus.$on("fadeNav", () => {
-      this.isFade = true;
-    });
-  },
-  mounted() {
-    this.handleResize();
-    window.addEventListener("resize", this.handleResize);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.handleResize);
-  },
-};
-</script>

@@ -27,11 +27,12 @@
               {{ langConfig.components }}
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- 之前的文章路由 -->
+          <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/article`">
               {{ langConfig.article }}
             </router-link>
-          </li>
+          </li> -->
           <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/haha`">
               测试
@@ -59,11 +60,11 @@
               </template>
             </a-dropdown>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link active-class="active" :to="`/contribution`">
               贡献
             </router-link>
-          </li>
+          </li> -->
           <!--
           <li class="nav-item">
             <a active-class="active" @click="initDB">初始化数据库</a>
