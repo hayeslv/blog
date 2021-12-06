@@ -19,6 +19,7 @@
     "marked": "^3.0.7",
     "mitt": "^2.1.0",
     "prismjs": "^1.25.0",
+    "qs": "^6.10.1",
     "rxjs": "^7.4.0",
     "spark-md5": "^3.0.2",
     "throttle-debounce": "^3.0.1",

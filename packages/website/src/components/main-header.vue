@@ -33,11 +33,11 @@
               {{ langConfig.article }}
             </router-link>
           </li> -->
-          <!-- <li class="nav-item">
-            <router-link active-class="active" :to="`/haha`">
+          <li class="nav-item">
+            <router-link active-class="active" :to="`/test`">
               测试
             </router-link>
-          </li> -->
+          </li>
           <li class="nav-item">
             <a-dropdown>
               <a class="ant-dropdown-link" @click.prevent>

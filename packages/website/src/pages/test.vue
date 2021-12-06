@@ -12,6 +12,8 @@
 <script>
 import { aliOssConfig } from '@/config/config.default'
 import OSS from 'ali-oss'
+import { onMounted } from 'vue';
+import request from '@/utils/request/index.ts'
 export default {
   setup() {
     const uploadHandler = () => {
@@ -50,6 +52,10 @@ export default {
       
       
     }
+
+    onMounted(() => {
+      request.post('http://localhost:7011/api/test/testget', {name: 'dylan'})
+    })
 
     return { uploadHandler }
   }
