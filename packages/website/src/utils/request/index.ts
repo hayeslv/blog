@@ -6,6 +6,8 @@
 import HttpClient from "./HttpClient";
 
 const httpClient = new HttpClient();
-httpClient.setHeader('token', 123123123)
+
+// 设置header
+// httpClient.setHeader('token', 123123123)
 
 export default httpClient
