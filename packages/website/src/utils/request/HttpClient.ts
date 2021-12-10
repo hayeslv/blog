@@ -5,8 +5,14 @@
  */
 import qs from 'qs';
 export default class HttpClient {
-  headerConfig : any = {}
-  constructor() {}
+  headerConfig : any = {
+    'Content-Type': 'application/json'
+  }
+
+  constructor() {
+    
+  }
+
   setHeader(key : string, value : any) {
     this.headerConfig[key] = value
   }
@@ -15,7 +21,6 @@ export default class HttpClient {
       method: 'GET',
       headers: {
         ...this.headerConfig,
-        'Content-Type': 'application/json'
       }
     }
     const obj = qs.parse(url.split('?')[1])
@@ -29,7 +34,6 @@ export default class HttpClient {
       method: 'DELETE',
       headers: {
         ...this.headerConfig,
-        'Content-Type': 'application/json'
       }
     }
     const obj = qs.parse(url.split('?')[1])
@@ -43,7 +47,6 @@ export default class HttpClient {
       method: 'POST',
       headers: {
         ...this.headerConfig,
-        'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
     }
@@ -54,7 +57,6 @@ export default class HttpClient {
       method: 'PUT',
       headers: {
         ...this.headerConfig,
-        'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
     }

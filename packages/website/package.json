@@ -18,12 +18,15 @@
     "markdown-loader": "^6.0.0",
     "marked": "^3.0.7",
     "mitt": "^2.1.0",
+    "node-fetch": "^3.1.0",
     "prismjs": "^1.25.0",
     "qs": "^6.10.1",
+    "ramda": "^0.27.1",
     "rxjs": "^7.4.0",
     "spark-md5": "^3.0.2",
     "throttle-debounce": "^3.0.1",
-    "vue": "^3.0.4"
+    "vue": "^3.0.4",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
