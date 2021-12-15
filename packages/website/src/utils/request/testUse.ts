@@ -9,6 +9,19 @@
 // const fetchInterceptor = fetch.interceptor
 
 // fetchInterceptor.register({
-//   request
+//   request: function(...request : any[]) {
+//     console.log('request', request);
+//     return request;
+//   },
+//   response: function(response : any) {
+//     console.log('response', response);
+//     return response;
+//   }
 // })
+// fetch.newFetch('http://localhost:7011/api/article/getArticleType', {
+//   headers: new Headers({
+//     'content-type': 'application/json'
+//   })
+// }).then((res : any) => res.json())
+//   .then((res : any) => console.log(res))
 

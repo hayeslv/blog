@@ -4,13 +4,15 @@
  * @Description: Description
  */
 import qs from 'qs';
+import Fetch, { FetchEnv } from './Fetch';
 export default class HttpClient {
+  private newFetch : Fetch
   headerConfig : any = {
     'Content-Type': 'application/json'
   }
 
-  constructor() {
-    
+  constructor(env : FetchEnv, timeout: number) {
+    this.newFetch = new Fetch(env, timeout);
   }
 
   setHeader(key : string, value : any) {

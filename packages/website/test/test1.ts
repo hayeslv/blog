@@ -2,21 +2,25 @@
 
 const str = `<xml><div><p><a/></p><p></p></div></xml>`
 
+interface TNode {
+  name: string;
+  children: TNode[] | null;
+}
 
-const startTagReg = /\<(\w+)\>/; // 匹配开始标签
-const endTagReg = /\<\/(\w+)\>/; // 匹配结束标签
-const closeSelfTagReg = /\<(\w+)\/\>/; // 匹配自闭合标签
-// const textNodeReg = /\>(.*?)\<\//; // 匹配文本内容
-const tagReg = /\<\/?(\w+)\/?\>/g; // 全局匹配标签
+const startTagReg: RegExp = /\<(\w+)\>/; // 匹配开始标签
+const endTagReg: RegExp = /\<\/(\w+)\>/; // 匹配结束标签
+const closeSelfTagReg: RegExp = /\<(\w+)\/\>/; // 匹配自闭合标签
+const textNodeReg: RegExp = /\>(.*?)\<\//; // 匹配文本内容
+const tagReg: RegExp = /\<\/?(\w+)\/?\>/g; // 全局匹配标签
 
-const matchedTags = str.match(tagReg); // 在字符串中匹配到的标签数组
+const matchedTags: string[] = str.match(tagReg); // 在字符串中匹配到的标签数组
 
-let htmlTree = null; // 保存生成的节点树
-const nodeStacks = []; // 保存遍历过程中的节点栈
-let currentNode = undefined;
+let htmlTree: TNode = null; // 保存生成的节点树
+const nodeStacks: TNode[] = []; // 保存遍历过程中的节点栈
+let currentNode: TNode | undefined = undefined;
 
 // 根据标签创建新节点
-function createNode(tag) {
+function createNode(tag: string): TNode {
   const tagName = tag.replace(tagReg, "$1");
   return {
     name: tagName,
@@ -24,7 +28,7 @@ function createNode(tag) {
   };
 }
 // 将节点插入到当前操作栈的节点中
-function insertNode(node) {
+function insertNode(node: TNode) {
   if (htmlTree === null) {
     htmlTree = node;
   } else {
