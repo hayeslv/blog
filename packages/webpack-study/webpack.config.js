@@ -20,9 +20,27 @@ module.exports = {
   },
   module: {
     rules: [
+      // {
+      //   test: /.(png|gif|jpe?g)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader-test',
+      //       options: {
+      //         name: `pic_[hash].[ext]`
+      //       }
+      //     }
+      //   ]
+      // },
       {
         test: /.js$/,
-        use: ['drop-console-loader']
+        use: [
+          {
+            loader: 'loader-test',
+            options: `{
+              name: 'js_[hash].[ext]'
+            }`
+          }
+        ]
       }
     ]
   },

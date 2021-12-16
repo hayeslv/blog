@@ -15,7 +15,7 @@
   \**********************/
 /***/ (function() {
 
-eval("/*\n * @Author: Lvhz\n * @Date: 2021-12-14 15:11:48\n * @Description: Description\n */\nconst a = 1;\n\n//# sourceURL=webpack://webpack-study/./src/index.js?");
+eval("/*\n * @Author: Lvhz\n * @Date: 2021-12-14 15:11:48\n * @Description: Description\n */\n// import logo from '../assets/image/logo.png'\n// console.log('logo的值：', logo);\n\nconsole.log('123');\n\n//# sourceURL=webpack://webpack-study/./src/index.js?");
 
 /***/ })
 
