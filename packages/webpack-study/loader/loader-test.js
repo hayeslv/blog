@@ -5,14 +5,14 @@
  */
 
 // const { getOptions } = require('loader-utils')
-const {  } = require('../utils/loader-utils')
+// const {  } = require('../utils/loader-utils')
 
 
 
 module.exports = function(content) {
-  const options = getOptions(this);
-  // console.log(this.query);
-  console.log(options);
+  // const options = getOptions(this);
+  console.log(typeof this.query);
+  // console.log(options);
 
   return content;
 }
