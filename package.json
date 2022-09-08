@@ -20,6 +20,8 @@
     "prepare": "npx husky install"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "ant-design-vue": "^3.2.12",
     "express": "^4.18.1",
     "pinia": "^2.0.22",
     "vue": "^3.2.25",
