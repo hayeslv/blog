@@ -1,17 +1,20 @@
 import type { RouteRecordRaw } from "vue-router";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter as _createRrouter, createMemoryHistory, createWebHistory } from "vue-router";
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "Home",
-    component: () => import("~/pages/index.vue"),
+    component: () => import("~/pages/home.vue"),
+  },
+  {
+    path: "/about",
+    component: () => import("~/pages/about.vue"),
   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});
-
-export default router;
+export function createRouter() {
+  return _createRrouter({
+    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
+    routes,
+  });
+}

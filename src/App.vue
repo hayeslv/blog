@@ -1,11 +1,5 @@
-<script setup lang="ts">
-import "./style/common.scss";
-</script>
-
 <template>
-  <router-view />
+  <RouterLink to="/">HOME</RouterLink>
+  <RouterLink to="/about">ABOUT</RouterLink>
+  <RouterView />
 </template>
-
-<style>
-
-</style>
