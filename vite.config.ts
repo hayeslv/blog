@@ -3,6 +3,8 @@ import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import VueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from "unplugin-auto-import/vite";
+// 打包使用CDN
+// import importToCDN, { autoComplete } from 'vite-plugin-cdn-import'
 
 export default defineConfig({
   resolve: {
