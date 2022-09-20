@@ -16,7 +16,8 @@ npm install -g create-strapi-app
 
 ```bash
 yarn create strapi-app my-project --quickstart
-npx create strapi-app@latest my-project --quickstart
+npx create-strapi-app@latest my-project --quickstart
+npx create-strapi-app server --quickstart
 ```
 
 
