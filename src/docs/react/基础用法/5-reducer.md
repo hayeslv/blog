@@ -51,12 +51,13 @@ export default function App1() {
 ```js
 export default function App1() {
   const [count, countDispatch] = useReducer((state, action) => {
+    // 根据不同的类型，来执行对应的操作
     switch(action.type) {
       case "ADD": return state + 1;
       case "SUB": return state - 1;
       default: return state;
     }
-  }, 1)
+  }, 1) // 初始值设置为1
 
   const addHandler = () => {
     countDispatch({ type: "ADD" })
@@ -81,6 +82,7 @@ export default function App1() {
 为了避免 `reducer` 会重复创建，通常 `reducer` 会定义到组件的外部
 
 ```js
+// 将reducer提取到组件的外部
 const countReducer = (state, action) => {
   switch (action.type) {
     case "ADD": return state + 1;
@@ -89,6 +91,7 @@ const countReducer = (state, action) => {
   }
 };
 
+// 组件内部只写逻辑相关的内容
 export default function App1() {
   const [count, countDispatch] = useReducer(countReducer, 1)
 
